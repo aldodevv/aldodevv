@@ -7,6 +7,7 @@ import { techStack } from "../constants/techStack";
 export default function TechStackSection() {
     return (
         <section
+            id="TechStack"
             data-nav-theme="dark-pill"
             className="relative min-h-screen w-full flex flex-col items-center justify-center bg-zinc-900 text-white py-32 px-4"
         >

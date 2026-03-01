@@ -17,6 +17,7 @@ export default function HeroSection() {
 
     return (
         <section
+            id="Hero"
             ref={containerRef}
             data-nav-theme="transparent"
             className="relative h-screen min-h-[700px] w-full bg-linear-to-br from-[#8124d2] via-[#4629a4] to-[#250335] text-white overflow-hidden flex flex-col justify-end items-center"

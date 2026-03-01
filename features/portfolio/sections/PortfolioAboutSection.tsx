@@ -33,6 +33,7 @@ export default function PortfolioAboutSection() {
 
     return (
         <section
+            id="PortfolioAbout"
             ref={sectionRef}
             data-nav-theme="light-pill"
             className="relative w-full bg-neutral-100 text-black py-32 px-4 md:px-10 flex flex-col items-center justify-center overflow-hidden"

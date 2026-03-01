@@ -8,6 +8,7 @@ import { workExperiences } from "../constants/workExperience";
 export default function WorkExperienceSection() {
     return (
         <section
+            id="WorkExperience"
             data-nav-theme="dark-full"
             className="relative min-h-screen w-full flex flex-col items-center bg-black text-white py-32 px-4 md:px-10 border-t border-white/10 overflow-hidden"
         >

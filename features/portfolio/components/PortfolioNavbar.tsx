@@ -96,12 +96,17 @@ export default function PortfolioNavbar() {
                     className="hidden md:flex items-center gap-8 text-sm font-medium"
                 >
                     <AnimatePresence mode="popLayout">
-                        {["About", "Tech Stack", "Experience", "Projects"].map((item, i) => {
+                        {[
+                            { label: "Me", id: "Hero" },
+                            { label: "About", id: "PortfolioAbout" },
+                            { label: "Tech Stack", id: "TechStack" },
+                            { label: "Experience", id: "WorkExperience" },
+                        ].map((item, i) => {
                             const isHero = theme === "transparent" && !isScrolled;
 
                             return (
                                 <motion.li
-                                    key={item}
+                                    key={item.label}
                                     layout
                                     initial={isHero ? false : { opacity: 0, y: 10, filter: "blur(4px)" }}
                                     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -111,12 +116,18 @@ export default function PortfolioNavbar() {
                                         delay: isHero ? 0 : i * 0.1,
                                         ease: "easeOut"
                                     }}
+                                    onClick={() => {
+                                        const element = document.getElementById(item.id);
+                                        if (element) {
+                                            element.scrollIntoView({ behavior: "smooth" });
+                                        }
+                                    }}
                                     className={cn(
                                         "cursor-pointer hover:opacity-70 transition-all duration-300 relative group",
                                         getLogoColor() // match logo text color behavior
                                     )}
                                 >
-                                    {item}
+                                    {item.label}
                                     <span className="ml-1 text-[10px] inline-block align-middle transition-transform duration-300 group-hover:rotate-180">▼</span>
 
                                     {/* Hover underline effect only active on scrolled sections */}
