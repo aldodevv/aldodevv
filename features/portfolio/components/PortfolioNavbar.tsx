@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Github, Linkedin, Instagram } from "lucide-react";
 
 type NavTheme = "dark-full" | "light-pill" | "dark-pill" | "transparent";
 
@@ -142,20 +143,19 @@ export default function PortfolioNavbar() {
                     </AnimatePresence>
                 </motion.ul>
 
-                <motion.div layout="position" className="flex items-center gap-4 text-sm font-medium">
-                    <button className="hidden sm:block hover:opacity-70 transition-opacity">
-                        LOG IN
-                    </button>
-                    <button
-                        className={cn(
-                            "px-5 py-2.5 rounded-full font-semibold transition-all duration-300",
-                            (theme === "light-pill" || (theme === "transparent" && isScrolled))
-                                ? "bg-black text-white hover:bg-neutral-800"
-                                : "bg-white text-black hover:bg-neutral-200"
-                        )}
-                    >
-                        GET STARTED
-                    </button>
+                <motion.div layout="position" className={cn("flex items-center gap-4 md:gap-5", getLogoColor())}>
+                    <a href="https://github.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 hover:scale-110 transition-all duration-300">
+                        <Github className="w-5 h-5" />
+                        <span className="sr-only">GitHub</span>
+                    </a>
+                    <a href="https://linkedin.com/in/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 hover:scale-110 transition-all duration-300">
+                        <Linkedin className="w-5 h-5" />
+                        <span className="sr-only">LinkedIn</span>
+                    </a>
+                    <a href="https://instagram.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 hover:scale-110 transition-all duration-300">
+                        <Instagram className="w-5 h-5" />
+                        <span className="sr-only">Instagram</span>
+                    </a>
                 </motion.div>
             </motion.nav>
         </div>
