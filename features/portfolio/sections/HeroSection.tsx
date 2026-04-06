@@ -32,18 +32,7 @@ export default function HeroSection() {
             ref={containerRef}
             className="relative min-h-screen w-full bg-[#1b0a2f] overflow-hidden flex items-center justify-center font-sans selection:bg-yellow-400 selection:text-black py-16"
         >
-            {/* Background Style with Overlay */}
-            <div className="absolute inset-0 z-0 pointer-events-none">
-                <Image
-                    src={me}
-                    alt="Background"
-                    fill
-                    className="object-cover blur-[50px] md:blur-[80px] opacity-40 mix-blend-luminosity scale-110"
-                    priority
-                />
-                <div className="absolute inset-0 bg-linear-to-br from-[#8124d2]/60 via-[#4629a4]/70 to-[#250335]/90 mix-blend-multiply" />
-                <div className="absolute inset-0 bg-black/20" />
-            </div>
+
 
             {/* Huge Scrolling Text (Behind Everything) */}
             <div className="absolute top-1/2 -translate-y-[45%] left-0 w-[200vw] h-[300px] z-0 pointer-events-none hidden md:flex mix-blend-overlay overflow-hidden">
@@ -78,7 +67,7 @@ export default function HeroSection() {
             </motion.div>
 
             {/* Glass Card Container OVER the photo */}
-            <div className="relative z-30 w-[95%] md:w-[85%] max-w-[1400px] h-full min-h-[85vh] md:min-h-[700px] rounded-[-] md:rounded-3xl bg-white/10 backdrop-blur-sm md:backdrop-blur-md overflow-hidden flex shadow-[0_0_50px_rgba(0,0,0,0.5)] border-0 md:border md:border-white/20">
+            <div className="relative z-30 w-[95%] md:w-[85%] max-w-[1400px] h-full min-h-[85vh] md:min-h-[700px] rounded-[-] md:rounded-3xl bg-white/10 backdrop-blur-xl md:backdrop-blur-sm overflow-hidden flex shadow-[0_0_50px_rgba(0,0,0,0.5)] border-0 md:border md:border-white/20">
 
                 {/* Horizontal Divider Line inside Glass (Left side for intro) */}
                 <div className="absolute top-0 bottom-0 left-[40%] w-px bg-white/20 hidden lg:block border-l border-white/10" />
@@ -95,12 +84,10 @@ export default function HeroSection() {
 
                     {/* Middle Left: Main Typography */}
                     <div className="flex flex-col mb-12">
-                        <div className="flex items-center gap-6 mb-6">
-                            <ChevronLeft className="w-8 h-8 text-white/50 cursor-pointer hover:text-white transition-colors" />
-                            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-lg uppercase">
-                                ALDO.
-                            </h1>
-                        </div>
+                        <h1 className="text-4xl md:text-5xl lg:text-5xl font-bold text-white tracking-tight drop-shadow-lg uppercase">
+                            Akhmad Aldo Sari.
+                        </h1>
+
 
                         <p className="text-white/80 text-sm md:text-base font-light leading-relaxed mb-8 max-w-[90%] md:max-w-md drop-shadow-md pb-8 border-b border-white/20">
                             Berbalut warna ungu kreativitas, dia menari menjalani kehidupan dengan keanggunan seorang software engineer — Aldo, sebuah simfoni inovasi dalam setiap baris kode yang direalisasikannya.
@@ -161,6 +148,7 @@ export default function HeroSection() {
 
                 {/* Bottom Right Player Area */}
                 <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 bg-[#8124d2]/30 lg:bg-white/10 backdrop-blur-3xl border border-white/10 lg:border-white/20 p-4 md:px-6 rounded-3xl flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-12 z-40 w-[90%] md:w-auto shadow-2xl mx-auto md:mx-0 max-w-[400px]">
+
                     <div className="flex flex-col text-white text-center md:text-left drop-shadow-md w-full md:w-auto">
                         <span className="text-[10px] tracking-[0.3em] opacity-70 mb-1 uppercase">Playing Now</span>
                         <span className="text-xs md:text-sm font-bold tracking-[0.2em] mb-1 whitespace-nowrap">AKHMAD ALDO</span>
