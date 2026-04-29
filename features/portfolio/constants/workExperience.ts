@@ -33,7 +33,7 @@ export const workExperiences: WorkExperienceItem[] = [
         title: "QLola IB Token",
         period: "Juli 2025 - Sekarang",
         description: "QLola IB Token provides easy access to feature integration anywhere, anytime for corporate clients of Bank Rakyat Indonesia.",
-        image: "https://res.cloudinary.com/dyuol7xfx/image/upload/v1773130037/Screenshot_2026-03-10_at_15.00.22_vvw9je.png",
+        image: "https://res.cloudinary.com/dyuol7xfx/image/upload/v1773130036/Screenshot_2026-03-10_at_15.00.55_ehgpb2.png",
         icon: "https://res.cloudinary.com/dyuol7xfx/image/upload/v1773131334/qlola_ib_esqw6r.webp",
         link: "https://play.google.com/store/search?q=qlola+ib+token&c=apps",
         techStack: [
@@ -47,7 +47,8 @@ export const workExperiences: WorkExperienceItem[] = [
         title: "QLola Mobile by BRI",
         period: "Januari 2024 - Maret 2026",
         description: "Core mobile development for QLola by BRI, maintaining robust banking operations and integrating secure financial services for enterprise users.",
-        image: "https://res.cloudinary.com/dyuol7xfx/image/upload/v1773130036/Screenshot_2026-03-10_at_15.00.55_ehgpb2.png",
+        image: "https://res.cloudinary.com/dyuol7xfx/image/upload/v1773130037/Screenshot_2026-03-10_at_15.00.22_vvw9je.png",
+
         icon: "https://res.cloudinary.com/dyuol7xfx/image/upload/v1773131357/ql_ahxyej.webp",
         link: "https://play.google.com/store/apps/details?id=id.co.bri.qlola",
         techStack: [
