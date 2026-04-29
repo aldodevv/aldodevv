@@ -85,16 +85,16 @@ export default function CustomCursor() {
             backdropFilter: "blur(0px)",
         },
         "dark-pill": {
-            width: 90,
-            height: 90,
+            width: 20,
+            height: 20,
             backgroundColor: "rgba(255, 255, 255, 0.05)",
             border: "1px dashed rgba(255, 255, 255, 0.5)",
             mixBlendMode: "normal" as const,
             backdropFilter: "blur(4px)",
         },
         "dark-full": {
-            width: 120,
-            height: 120,
+            width: 10,
+            height: 10,
             backgroundColor: "rgba(255, 255, 255, 1)",
             border: "0px solid rgba(255, 255, 255, 0)",
             mixBlendMode: "difference" as const,
@@ -134,7 +134,7 @@ export default function CustomCursor() {
         <>
             {/* Outer delayed particle */}
             <motion.div
-                className="fixed top-0 left-0 pointer-events-none z-[9998] rounded-full flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2"
+                className="fixed top-0 left-0 pointer-events-none z-9998 rounded-full flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2"
                 style={{
                     x: ringX,
                     y: ringY,
@@ -146,7 +146,7 @@ export default function CustomCursor() {
             />
             {/* Inner fast pointer dot */}
             <motion.div
-                className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-full transform -translate-x-1/2 -translate-y-1/2"
+                className="fixed top-0 left-0 pointer-events-none z-9999 rounded-full transform -translate-x-1/2 -translate-y-1/2"
                 style={{
                     x: dotX,
                     y: dotY,

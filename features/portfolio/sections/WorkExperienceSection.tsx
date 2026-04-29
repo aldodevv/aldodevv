@@ -21,7 +21,7 @@ export default function WorkExperienceSection() {
                     className="mb-14 text-center"
                 >
                     <h2 className="text-5xl md:text-7xl font-bold tracking-tight mb-8">
-                        Work <span className="text-neutral-500 font-serif italic">Experience.</span>
+                        Work&nbsp;Experience.
                     </h2>
                     <p className="text-xl text-neutral-400 max-w-2xl mx-auto leading-relaxed">
                         A timeline of my professional journey, building scalable platforms, modern websites, and cross-platform mobile experiences.
@@ -69,12 +69,11 @@ export default function WorkExperienceSection() {
 
                                 {/* Mobile Background */}
                                 <div className="absolute inset-0 z-0 overflow-hidden md:hidden">
-                                    <div className="absolute inset-0 bg-black/60 z-10" />
-                                    <div className="absolute inset-0 bg-linear-to-t from-neutral-950 via-transparent to-transparent z-10" />
+                                    <div className="absolute inset-0 bg-linear-to-t from-neutral-950 via-neutral-950/70 to-neutral-950/20 z-10 transition-all duration-700 group-hover/card:via-neutral-950/50" />
                                     <img
                                         src={exp.image}
                                         alt=""
-                                        className="w-full h-full object-cover opacity-20 transition-all duration-700"
+                                        className="w-full h-full object-cover opacity-40 group-hover/card:opacity-80 group-hover/card:scale-105 transition-all duration-700"
                                     />
                                 </div>
 
