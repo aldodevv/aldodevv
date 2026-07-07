@@ -2,18 +2,18 @@ import { MetadataRoute } from 'next'
  
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Next.js Playground',
-    short_name: 'NextPlay',
-    description: 'A playground for Next.js features',
+    name: 'Akhmad Aldo Sari Portfolio',
+    short_name: 'Aldodevv',
+    description: 'Portfolio of Akhmad Aldo Sari, Mobile & Web Developer.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#fff',
-    theme_color: '#fff',
+    background_color: '#000000',
+    theme_color: '#000000',
     icons: [
       {
-        src: '/favicon.ico',
+        src: '/assets/logo.png',
         sizes: 'any',
-        type: 'image/x-icon',
+        type: 'image/png',
       },
     ],
   }

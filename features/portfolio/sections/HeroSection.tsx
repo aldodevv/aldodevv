@@ -41,12 +41,12 @@ export default function HeroSection() {
                     transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
                     className="flex whitespace-nowrap opacity-20"
                 >
-                    <h1 className="text-[10rem] md:text-[15rem] lg:text-[20rem] font-black text-white px-8 drop-shadow-2xl leading-[0.8] tracking-tighter">
+                    <span className="text-[10rem] md:text-[15rem] lg:text-[20rem] font-black text-white px-8 drop-shadow-2xl leading-[0.8] tracking-tighter">
                         MOBILE DEVELOPER
-                    </h1>
-                    <h1 className="text-[10rem] md:text-[15rem] lg:text-[20rem] font-black text-white px-8 drop-shadow-2xl leading-[0.8] tracking-tighter">
+                    </span>
+                    <span className="text-[10rem] md:text-[15rem] lg:text-[20rem] font-black text-white px-8 drop-shadow-2xl leading-[0.8] tracking-tighter">
                         MOBILE DEVELOPER
-                    </h1>
+                    </span>
                 </motion.div>
             </div>
 

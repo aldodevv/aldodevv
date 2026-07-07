@@ -1,12 +1,12 @@
 import { MetadataRoute } from 'next'
- 
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/private/',
+      disallow: ['/private/', '/dashboard/', '/feed/'],
     },
-    sitemap: 'https://acme.com/sitemap.xml',
+    sitemap: 'https://akhmadaldo.my.id/sitemap.xml',
   }
 }
