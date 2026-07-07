@@ -1,26 +1,81 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #08080a;
+  --foreground: #ffffff;
+  --primary: #fa520f;
+  --secondary: #ffb83e;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --font-sans: var(--font-vt323), system-ui;
+  --font-mono: var(--font-jetbrains-mono), monospace;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-vt323), system-ui;
+  image-rendering: pixelated;
+}
+
+/* Custom Retro Utilities */
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+  background-size: 100% 4px;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.retro-grid {
+  background-image: 
+    linear-gradient(to right, rgba(250, 82, 15, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(250, 82, 15, 0.15) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.retro-grid-fine {
+  background-image: 
+    linear-gradient(to right, rgba(255, 184, 62, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 184, 62, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Hard edge pixelated borders and flat offset shadows */
+.retro-border {
+  border: 4px solid #ffffff;
+}
+
+.retro-border-primary {
+  border: 4px solid var(--primary);
+}
+
+.retro-border-secondary {
+  border: 4px solid var(--secondary);
+}
+
+.retro-shadow-primary {
+  box-shadow: 6px 6px 0px 0px var(--primary);
+}
+
+.retro-shadow-secondary {
+  box-shadow: 6px 6px 0px 0px var(--secondary);
+}
+
+.retro-shadow-white {
+  box-shadow: 6px 6px 0px 0px #ffffff;
+}
+
+.retro-btn-active:active {
+  transform: translate(3px, 3px);
+  box-shadow: 3px 3px 0px 0px currentColor;
 }

@@ -42,23 +42,22 @@ export default function PortfolioNavbar() {
     const getNavbarStyles = () => {
         switch (theme) {
             case "dark-full":
-                return "bg-neutral-950 text-white w-full rounded-none border-b border-white/10 top-0 mt-0";
+                return "bg-black text-white w-full rounded-none border-b-4 border-primary top-0 mt-0";
             case "light-pill":
-                return "bg-white/90 backdrop-blur-md text-neutral-900 w-[90%] md:w-[70%] max-w-4xl mx-auto rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-neutral-200 top-6 mt-0";
+                return "bg-white text-black w-[95%] md:w-[80%] max-w-5xl mx-auto rounded-none shadow-[6px_6px_0px_0px_#4502FF] border-4 border-black top-4 mt-0";
             case "dark-pill":
-                return "bg-neutral-900/90 backdrop-blur-md text-white w-[90%] md:w-[70%] max-w-4xl mx-auto rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.4)] border border-neutral-700 top-6 mt-0";
+                return "bg-black text-white w-[95%] md:w-[80%] max-w-5xl mx-auto rounded-none shadow-[6px_6px_0px_0px_#FFDA14] border-4 border-primary top-4 mt-0";
             case "transparent":
             default:
                 return isScrolled
-                    ? "bg-white/80 backdrop-blur-md text-neutral-900 w-full rounded-none border-b border-neutral-200 top-0 mt-0"
-                    : "bg-transparent text-white w-full rounded-none border-b border-transparent top-0 mt-0";
+                    ? "bg-black text-white w-full rounded-none border-b-4 border-secondary top-0 mt-0"
+                    : "bg-transparent text-white w-full rounded-none border-b-4 border-transparent top-0 mt-0";
         }
     };
 
     const getLogoColor = () => {
-        if (theme === "transparent" && !isScrolled) return "text-white";
-        if (theme === "dark-full" || theme === "dark-pill") return "text-white";
-        return "text-black";
+        if (theme === "light-pill") return "text-black";
+        return "text-secondary";
     };
 
     return (
@@ -67,13 +66,13 @@ export default function PortfolioNavbar() {
                 layout
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className={cn(
-                    "pointer-events-auto flex items-center justify-between px-6 md:px-10 py-4 overflow-hidden transition-colors duration-500",
+                    "pointer-events-auto flex items-center justify-between px-6 md:px-10 py-4 overflow-hidden transition-colors duration-500 font-sans",
                     getNavbarStyles()
                 )}
             >
                 <motion.div
                     layout="position"
-                    className={cn("font-bold text-sm tracking-tighter flex items-center gap-2", getLogoColor())}
+                    className={cn("font-bold text-2xl tracking-widest flex items-center gap-2 font-sans", getLogoColor())}
                 >
                     {/* Mock Logo */}
                     <svg
@@ -82,10 +81,10 @@ export default function PortfolioNavbar() {
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="2"
+                        strokeWidth="3"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="transition-colors duration-500"
+                        className="transition-colors duration-500 text-secondary"
                     >
                         <path d="M12 4L4 20h16L12 4z" />
                     </svg>
@@ -94,7 +93,7 @@ export default function PortfolioNavbar() {
 
                 <motion.ul
                     layout="position"
-                    className="hidden md:flex items-center gap-8 text-sm font-medium"
+                    className="hidden md:flex items-center gap-8 text-2xl font-normal font-sans"
                 >
                     <AnimatePresence mode="popLayout">
                         {[
@@ -109,9 +108,9 @@ export default function PortfolioNavbar() {
                                 <motion.li
                                     key={item.label}
                                     layout
-                                    initial={isHero ? false : { opacity: 0, y: 10, filter: "blur(4px)" }}
-                                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                                    exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                                    initial={isHero ? false : { opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
                                     transition={{
                                         duration: 0.4,
                                         delay: isHero ? 0 : i * 0.1,
@@ -124,19 +123,12 @@ export default function PortfolioNavbar() {
                                         }
                                     }}
                                     className={cn(
-                                        "cursor-pointer hover:opacity-70 transition-all duration-300 relative group",
-                                        getLogoColor() // match logo text color behavior
+                                        "cursor-pointer hover:text-secondary uppercase transition-all duration-300 relative group flex items-center gap-1 font-sans",
+                                        theme === "light-pill" ? "text-black hover:text-primary" : "text-white"
                                     )}
                                 >
-                                    {item.label}
-                                    <span className="ml-1 text-[10px] inline-block align-middle transition-transform duration-300 group-hover:rotate-180">▼</span>
-
-                                    {/* Hover underline effect only active on scrolled sections */}
-                                    {!isHero && (
-                                        <motion.div
-                                            className="absolute -bottom-1 left-0 right-0 h-[2px] bg-current origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
-                                        />
-                                    )}
+                                    <span className="opacity-0 group-hover:opacity-100 text-secondary transition-opacity font-sans text-xl">►</span>
+                                    <span>{item.label}</span>
                                 </motion.li>
                             );
                         })}
@@ -144,16 +136,16 @@ export default function PortfolioNavbar() {
                 </motion.ul>
 
                 <motion.div layout="position" className={cn("flex items-center gap-4 md:gap-5", getLogoColor())}>
-                    <a href="https://github.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 hover:scale-110 transition-all duration-300">
-                        <Github className="w-5 h-5" />
+                    <a href="https://github.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition-all duration-300">
+                        <Github className="w-6 h-6" />
                         <span className="sr-only">GitHub</span>
                     </a>
-                    <a href="https://linkedin.com/in/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 hover:scale-110 transition-all duration-300">
-                        <Linkedin className="w-5 h-5" />
+                    <a href="https://linkedin.com/in/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition-all duration-300">
+                        <Linkedin className="w-6 h-6" />
                         <span className="sr-only">LinkedIn</span>
                     </a>
-                    <a href="https://instagram.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 hover:scale-110 transition-all duration-300">
-                        <Instagram className="w-5 h-5" />
+                    <a href="https://instagram.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition-all duration-300">
+                        <Instagram className="w-6 h-6" />
                         <span className="sr-only">Instagram</span>
                     </a>
                 </motion.div>

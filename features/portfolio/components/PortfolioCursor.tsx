@@ -58,75 +58,85 @@ export default function PortfolioCursor() {
 
     if (!isVisible) return null;
 
-    // Variants for the delayed trailing particle
+    // Variants for the delayed trailing particle (arcade style squares)
     const ringVariants = {
         default: {
-            width: 30,
-            height: 30,
-            backgroundColor: "rgba(255, 255, 255, 0)",
-            border: "2px solid rgba(255, 255, 255, 0.4)",
+            width: 24,
+            height: 24,
+            backgroundColor: "rgba(255, 184, 62, 0.05)",
+            border: "2px solid #ffb83e",
             mixBlendMode: "normal" as const,
             backdropFilter: "blur(0px)",
+            borderRadius: "0px",
         },
         transparent: {
-            width: 50,
-            height: 50,
-            backgroundColor: "rgba(255, 255, 255, 0.05)",
-            border: "1px solid rgba(255,255,255,0.2)",
-            mixBlendMode: "difference" as const,
-            backdropFilter: "blur(2px)",
+            width: 32,
+            height: 32,
+            backgroundColor: "rgba(250, 82, 15, 0.1)",
+            border: "2px solid #fa520f",
+            mixBlendMode: "normal" as const,
+            backdropFilter: "blur(1px)",
+            borderRadius: "0px",
         },
         "light-pill": {
-            width: 40,
-            height: 40,
-            backgroundColor: "rgba(0, 0, 0, 0)",
-            border: "2px solid rgba(0, 0, 0, 0.3)",
-            mixBlendMode: "normal" as const,
-            backdropFilter: "blur(0px)",
-        },
-        "dark-pill": {
-            width: 60,
-            height: 60,
-            backgroundColor: "rgba(255, 255, 255, 0.05)",
-            border: "1px dashed rgba(255, 255, 255, 0.5)",
-            mixBlendMode: "normal" as const,
-            backdropFilter: "blur(4px)",
-        },
-        "dark-full": {
             width: 30,
             height: 30,
-            backgroundColor: "rgba(255, 255, 255, 1)",
-            border: "0px solid rgba(255, 255, 255, 0)",
+            backgroundColor: "rgba(0, 0, 0, 0)",
+            border: "2px solid #ffb83e",
+            mixBlendMode: "normal" as const,
+            backdropFilter: "blur(0px)",
+            borderRadius: "0px",
+        },
+        "dark-pill": {
+            width: 40,
+            height: 40,
+            backgroundColor: "rgba(255, 255, 255, 0.05)",
+            border: "2px dashed #fa520f",
+            mixBlendMode: "normal" as const,
+            backdropFilter: "blur(2px)",
+            borderRadius: "0px",
+        },
+        "dark-full": {
+            width: 24,
+            height: 24,
+            backgroundColor: "#ffb83e",
+            border: "2px solid #ffffff",
             mixBlendMode: "difference" as const,
             backdropFilter: "blur(0px)",
+            borderRadius: "0px",
         },
     };
 
     const dotVariants = {
         default: {
-            width: 8,
-            height: 8,
-            backgroundColor: "rgba(255, 255, 255, 1)",
+            width: 6,
+            height: 6,
+            backgroundColor: "#ffb83e",
+            borderRadius: "0px",
         },
         transparent: {
-            width: 12,
-            height: 12,
-            backgroundColor: "rgba(255, 255, 255, 1)",
-        },
-        "light-pill": {
-            width: 10,
-            height: 10,
-            backgroundColor: "rgba(0, 0, 0, 1)",
-        },
-        "dark-pill": {
             width: 8,
             height: 8,
-            backgroundColor: "rgba(255, 255, 255, 1)",
+            backgroundColor: "#fa520f",
+            borderRadius: "0px",
+        },
+        "light-pill": {
+            width: 6,
+            height: 6,
+            backgroundColor: "#ffb83e",
+            borderRadius: "0px",
+        },
+        "dark-pill": {
+            width: 6,
+            height: 6,
+            backgroundColor: "#fa520f",
+            borderRadius: "0px",
         },
         "dark-full": {
             width: 0,
-            height: 0, // Hide the inner dot when the giant mask is active
+            height: 0,
             backgroundColor: "rgba(255, 255, 255, 0)",
+            borderRadius: "0px",
         },
     };
 
@@ -134,7 +144,7 @@ export default function PortfolioCursor() {
         <>
             {/* Outer delayed particle */}
             <motion.div
-                className="fixed top-0 left-0 pointer-events-none z-[9998] rounded-full flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2"
+                className="fixed top-0 left-0 pointer-events-none z-[9998] rounded-none flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2"
                 style={{
                     x: ringX,
                     y: ringY,
@@ -146,7 +156,7 @@ export default function PortfolioCursor() {
             />
             {/* Inner fast pointer dot */}
             <motion.div
-                className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-full transform -translate-x-1/2 -translate-y-1/2"
+                className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-none transform -translate-x-1/2 -translate-y-1/2"
                 style={{
                     x: dotX,
                     y: dotY,
