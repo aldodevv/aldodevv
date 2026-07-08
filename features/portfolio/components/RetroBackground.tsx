@@ -23,6 +23,24 @@ export default function RetroBackground() {
         let scrollDelta = 0;
         let tiltOffset = 0;  // Tilts horizon on scroll
 
+        // Mouse interaction variables
+        let mouseX = 0;      // Lerped X position (-1 to 1)
+        let mouseY = 0;      // Lerped Y position (-1 to 1)
+        let targetMouseX = 0;
+        let targetMouseY = 0;
+        
+        // Interactive spark particles spawned by mouse movement
+        const sparkParticles: { 
+            x: number; 
+            y: number; 
+            vx: number; 
+            vy: number; 
+            life: number; 
+            maxLife: number; 
+            color: string; 
+            size: number; 
+        }[] = [];
+
         // --- 3D Floating Shape Setup (Mistral.ai style, SEGA themed) ---
         // Octahedron (8 triangular faces, 6 vertices)
         const vertices = [
@@ -75,7 +93,7 @@ export default function RetroBackground() {
             const scrollPercent = maxScroll > 0 ? currentScrollY / maxScroll : 0;
 
             if (scrollPercent < 0.15) {
-                // Section 1 (Hero): Right side, aligned with avatar
+                // Section 1 (Hero): Right side, aligned with text
                 targetShapeX = width * 0.78;
                 targetShapeY = height * 0.38;
                 targetShapeScale = 1.0;
@@ -97,8 +115,29 @@ export default function RetroBackground() {
             }
         };
 
+        const handleMouseMove = (e: MouseEvent) => {
+            targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            targetMouseY = (e.clientY / window.innerHeight) * 2 - 1;
+            
+            // Spawn spark particles on cursor move
+            const colors = ["#fa520f", "#ffb83e", "#fff8e0", "#3b82f6"];
+            if (Math.random() < 0.65) {
+                sparkParticles.push({
+                    x: e.clientX,
+                    y: e.clientY,
+                    vx: (Math.random() - 0.5) * 1.8,
+                    vy: (Math.random() - 0.5) * 1.8 - 0.8, // floats up
+                    life: 1,
+                    maxLife: 30 + Math.random() * 25,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 2 + 1,
+                });
+            }
+        };
+
         window.addEventListener("resize", handleResize, { passive: true });
         window.addEventListener("scroll", handleScroll, { passive: true });
+        window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
         // Trigger initial calculation
         handleScroll();
@@ -127,7 +166,14 @@ export default function RetroBackground() {
 
         // --- Render Loop ---
         const render = () => {
-            const vanishingPointX = width / 2;
+            // Lerp mouse variables
+            mouseX = lerp(mouseX, targetMouseX, 0.08);
+            mouseY = lerp(mouseY, targetMouseY, 0.08);
+
+            // Shifting vanishing points based on mouse coordinates (Camera 3D Parallax!)
+            const vanishingPointX = width / 2 + mouseX * 50;
+            const vanishingPointY = height * 0.45 + mouseY * 25;
+
             // Lerp speed back to drift speed (2)
             speed = lerp(speed, targetSpeed, 0.08);
             targetSpeed = lerp(targetSpeed, 2, 0.05);
@@ -168,7 +214,7 @@ export default function RetroBackground() {
 
                 // Project to 2D
                 const k = 120 / star.z;
-                const px = star.x * k + width / 2;
+                const px = star.x * k + vanishingPointX; // project with camera parallax shift!
                 const py = star.y * k + vanishingPointY;
 
                 if (px >= 0 && px <= width && py >= 0 && py <= height * 0.6) {
@@ -183,7 +229,7 @@ export default function RetroBackground() {
                         // Stretch direction is away from the center vanishing point
                         const stretch = 1 + (speed * 0.04);
                         ctx.lineTo(
-                            (px - width / 2) * stretch + width / 2, 
+                            (px - vanishingPointX) * stretch + vanishingPointX, 
                             (py - vanishingPointY) * stretch + vanishingPointY
                         );
                         ctx.stroke();
@@ -240,10 +286,36 @@ export default function RetroBackground() {
                 ctx.stroke();
             }
 
-            // --- 3. Draw 3D Floating Shape (Mistral.ai style) ---
-            // Rotate the shape
+            // --- 3. Draw Interactive Mouse Spark Trail ---
+            for (let i = sparkParticles.length - 1; i >= 0; i--) {
+                const p = sparkParticles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy -= 0.02; // Spark floats upward
+                p.life -= 1 / p.maxLife;
+                
+                if (p.life <= 0) {
+                    sparkParticles.splice(i, 1);
+                    continue;
+                }
+
+                ctx.fillStyle = p.color;
+                ctx.shadowColor = p.color;
+                ctx.shadowBlur = 6;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.shadowBlur = 0; // reset
+
+            // --- 4. Draw 3D Floating Shape (Mistral.ai style) ---
+            // Rotate the shape, influenced slightly by scroll speed
             angleX += 0.006 + speed * 0.0008;
             angleY += 0.010 + speed * 0.0012;
+
+            // Apply camera parallax displacement to shape coordinates
+            const finalShapeX = shapeX + mouseX * 40;
+            const finalShapeY = shapeY + mouseY * 25;
 
             // Rotate and project 3D vertices
             const projectedVertices = vertices.map((v) => {
@@ -260,8 +332,8 @@ export default function RetroBackground() {
                 // Perspective projection constants
                 const distance = 3.8;
                 const sizeMultiplier = 130 * shapeScale;
-                const screenX = shapeX + (rx2 * sizeMultiplier) / (distance + rz2);
-                const screenY = shapeY + (ry2 * sizeMultiplier) / (distance + rz2);
+                const screenX = finalShapeX + (rx2 * sizeMultiplier) / (distance + rz2);
+                const screenY = finalShapeY + (ry2 * sizeMultiplier) / (distance + rz2);
 
                 return { x: screenX, y: screenY };
             });
@@ -290,7 +362,7 @@ export default function RetroBackground() {
             // Reset shadows
             ctx.shadowBlur = 0;
 
-            // --- 4. Draw Sunset Stripe Horizon Line ---
+            // --- 5. Draw Sunset Stripe Horizon Line ---
             const horizonGradient = ctx.createLinearGradient(0, 0, width, 0);
             horizonGradient.addColorStop(0, "#cc3a05");      // Deep Red/Orange
             horizonGradient.addColorStop(0.33, "#fa520f");   // Mistral Orange
@@ -322,6 +394,7 @@ export default function RetroBackground() {
         return () => {
             window.removeEventListener("resize", handleResize);
             window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("mousemove", handleMouseMove);
             cancelAnimationFrame(animationFrameId);
         };
     }, []);

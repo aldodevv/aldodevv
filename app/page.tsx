@@ -2,11 +2,14 @@ import { Metadata } from "next";
 import PortfolioView from "@/features/portfolio/PortfolioView";
 
 export const metadata: Metadata = {
-  title: "Akhmad Aldo Sari | Mobile & Web Developer",
-  description: "Portfolio of Akhmad Aldo Sari, an expert mobile and web developer based in Depok, Indonesia. Specializing in high-performance applications with Flutter, React Native, Kotlin, Swift, and Next.js.",
+  title: "Akhmad Aldo Sari (Aldo) | Mobile & Web Developer",
+  description: "Portfolio of Akhmad Aldo Sari (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer based in Depok, Indonesia. Specializing in high-performance applications with Flutter, React Native, Kotlin, Swift, and Next.js.",
   keywords: [
     "Akhmad Aldo Sari",
     "Akhmad Aldo",
+    "ahmad aldo",
+    "akhmadaldo",
+    "aldos",
     "aldodevv",
     "Mobile Developer Depok",
     "Web Developer Indonesia",
@@ -32,8 +35,8 @@ export const metadata: Metadata = {
     gender: "male",
     locale: "en_US",
     url: "https://akhmadaldo.my.id",
-    title: "Akhmad Aldo Sari | Mobile & Web Developer",
-    description: "Expert mobile and web developer based in Depok, Indonesia. Specializing in high-performance applications with Flutter, React Native, Kotlin, Swift, and Next.js.",
+    title: "Akhmad Aldo Sari (Aldo) | Mobile & Web Developer",
+    description: "Portfolio of Akhmad Aldo Sari (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer based in Depok, Indonesia. Specializing in high-performance applications with Flutter, React Native, Kotlin, Swift, and Next.js.",
     siteName: "Akhmad Aldo Sari Portfolio",
     images: [
       {
@@ -46,8 +49,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Akhmad Aldo Sari | Mobile & Web Developer",
-    description: "Expert mobile and web developer based in Depok, Indonesia. Specializing in high-performance applications with Flutter, React Native, Kotlin, Swift, and Next.js.",
+    title: "Akhmad Aldo Sari (Aldo) | Mobile & Web Developer",
+    description: "Portfolio of Akhmad Aldo Sari (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer based in Depok, Indonesia. Specializing in high-performance applications with Flutter, React Native, Kotlin, Swift, and Next.js.",
     creator: "@aldodevv",
     images: ["/assets/me.png"],
   },
@@ -74,7 +77,7 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Akhmad Aldo Sari",
-    "alternateName": ["Akhmad Aldo", "aldodevv"],
+    "alternateName": ["Ahmad Aldo", "Aldo", "Ahmad Aldo Sari", "Akhmad Aldo", "aldodevv", "akhmadaldo", "aldos"],
     "url": "https://akhmadaldo.my.id",
     "image": "https://akhmadaldo.my.id/assets/me.png",
     "jobTitle": "Mobile & Web Developer",

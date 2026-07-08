@@ -18,10 +18,10 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://akhmadaldo.my.id"),
   title: {
-    default: "Akhmad Aldo Sari | Mobile & Web Developer",
-    template: "%s | Akhmad Aldo Sari",
+    default: "Akhmad Aldo Sari (Aldo) | Mobile & Web Developer",
+    template: "%s | Akhmad Aldo Sari (Aldo)",
   },
-  description: "Portfolio of Akhmad Aldo Sari, an expert mobile and web developer specializing in Flutter, React Native, Kotlin, Swift, and Next.js.",
+  description: "Portfolio of Akhmad Aldo Sari (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer specializing in Flutter, React Native, Kotlin, Swift, and Next.js.",
   alternates: {
     canonical: "./",
   },

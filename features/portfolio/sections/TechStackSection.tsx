@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { techStack } from "../constants/techStack";
-import RetroScrambleText from "@/features/portfolio/components/RetroScrambleText";
+import RetroTypewriterText from "@/features/portfolio/components/RetroTypewriterText";
 
 export default function TechStackSection() {
     return (
@@ -22,7 +22,7 @@ export default function TechStackSection() {
                     viewport={{ once: true }}
                     className="text-5xl md:text-7xl font-bold tracking-widest mb-8 uppercase text-white font-sans"
                 >
-                    <RetroScrambleText text="ABILITY_LIST.EXE" />
+                    <RetroTypewriterText text="ABILITY_LIST.EXE" />
                 </motion.h2>
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
@@ -69,7 +69,10 @@ export default function TechStackSection() {
                                                 boxShadow: `4px 4px 0px ${catColor}`
                                             }}
                                         >
-                                            <div className="flex flex-col items-center justify-center bg-zinc-950 p-4 w-full h-full transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-x-2">
+                                            <div className={`flex flex-col items-center justify-center bg-zinc-950 p-4 w-full h-full transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] 
+                                                            ${idx % 2 === 0 
+                                                                ? "group-hover:-translate-x-1.5 group-hover:-translate-y-1.5 group-hover:rotate-[-2deg]" 
+                                                                : "group-hover:translate-x-1.5 group-hover:-translate-y-1.5 group-hover:rotate-[2deg]"}`}>
                                                 <div className="w-10 h-10 md:w-12 md:h-12 mb-3 bg-zinc-900 border-2 border-white/20 p-2 flex items-center justify-center transition-colors duration-300">
                                                     <img
                                                         src={item.image}

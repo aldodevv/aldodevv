@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { workExperiences } from "../constants/workExperience";
-import RetroScrambleText from "@/features/portfolio/components/RetroScrambleText";
+import RetroTypewriterText from "@/features/portfolio/components/RetroTypewriterText";
 
 const hoverColors = [
     "#fa520f", // Mistral Orange
@@ -20,7 +20,7 @@ export default function WorkExperienceSection() {
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start center", "end center"],
+        offset: ["start start", "end end"],
     });
     const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
@@ -42,7 +42,7 @@ export default function WorkExperienceSection() {
                     className="mb-16 text-center font-sans"
                 >
                     <h2 className="text-5xl md:text-7xl font-bold tracking-widest mb-8 uppercase text-white">
-                        <RetroScrambleText text="QUEST_LOG.EXE" />
+                        <RetroTypewriterText text="QUEST_LOG.EXE" />
                     </h2>
                     <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed font-mono">
                         A history of my professional journey, building scalable platforms, modern websites, and cross-platform mobile experiences.
@@ -84,7 +84,14 @@ export default function WorkExperienceSection() {
                                     }}
                                 >
                                     {/* Inner Container that shifts */}
-                                    <div className="relative w-full h-full bg-zinc-950/95 backdrop-blur-xl transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/card:-translate-x-4">
+                                    <div 
+                                        style={{
+                                            transform: `translate3d(0, 0, 0)`,
+                                        }}
+                                        className={`relative w-full h-full bg-zinc-950/95 backdrop-blur-xl transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] 
+                                                    group-hover/card:-translate-x-3 group-hover/card:-translate-y-3 
+                                                    ${index % 2 === 0 ? "group-hover/card:rotate-[-0.5deg]" : "group-hover/card:rotate-[0.5deg]"}`}
+                                    >
 
                                         {/* CRT overlay lines for card */}
                                         <div className="absolute inset-0 bg-retro-grid-fine pointer-events-none opacity-20 z-10" />

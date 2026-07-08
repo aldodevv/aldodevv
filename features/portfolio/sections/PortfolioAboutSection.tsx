@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import { motion, useInView, Variants } from "framer-motion";
 import { MapPin, GraduationCap, ArrowUpRight } from "lucide-react";
-import RetroScrambleText from "@/features/portfolio/components/RetroScrambleText";
+import RetroTypewriterText from "@/features/portfolio/components/RetroTypewriterText";
 
 export default function PortfolioAboutSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
@@ -54,7 +54,7 @@ export default function PortfolioAboutSection() {
                     {/* Retro Menu Header */}
                     <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b-4 border-white pb-6 font-sans">
                         <h2 className="text-5xl md:text-6xl font-bold tracking-widest uppercase text-white">
-                            <RetroScrambleText text="CHARACTER_BIO" /> <span className="text-secondary">[01]</span>
+                            <RetroTypewriterText text="CHARACTER_BIO" /> <span className="text-secondary">[01]</span>
                         </h2>
                         <div className="flex items-center gap-2 text-xl font-bold uppercase tracking-widest text-secondary font-sans">
                             <MapPin className="w-5 h-5" />
@@ -69,7 +69,7 @@ export default function PortfolioAboutSection() {
                                 variants={itemVariants}
                                 className="w-full aspect-[4/5] relative overflow-hidden border-4 border-white bg-[#fa520f] shadow-[6px_6px_0px_#fa520f] group/avatar"
                             >
-                                <div className="absolute inset-0 w-full h-full bg-zinc-950 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/avatar:-translate-x-3">
+                                <div className="absolute inset-0 w-full h-full bg-zinc-950 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/avatar:translate-x-3 group-hover/avatar:-translate-y-3 group-hover/avatar:rotate-[0.5deg]">
                                     <motion.img
                                         src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop"
                                         alt="Akhmad Aldo Sari"
@@ -87,7 +87,7 @@ export default function PortfolioAboutSection() {
                         <div className="md:col-span-7 flex flex-col justify-between gap-8">
                             <motion.div variants={itemVariants} className="flex flex-col gap-6">
                                 <div className="border-4 border-white bg-[#fa520f] shadow-[6px_6px_0px_#fa520f] overflow-hidden group/bio">
-                                    <div className="p-6 bg-zinc-950 font-mono text-base leading-relaxed text-zinc-300 flex flex-col gap-4 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/bio:-translate-x-3 w-full h-full">
+                                    <div className="p-6 bg-zinc-950 font-mono text-base leading-relaxed text-zinc-300 flex flex-col gap-4 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/bio:translate-x-3 group-hover/bio:translate-y-3 group-hover/bio:rotate-[-0.5deg] w-full h-full">
                                         <p className="text-lg md:text-xl font-bold text-secondary font-mono tracking-wider">
                                             &quot;{aboutIntro}&quot;
                                         </p>
@@ -103,7 +103,7 @@ export default function PortfolioAboutSection() {
                                     ACADEMIC_STATS
                                 </h3>
                                 <div className="border-4 border-white bg-[#ffb83e] shadow-[6px_6px_0px_#ffb83e] overflow-hidden group/stats cursor-pointer">
-                                    <div className="flex items-center gap-6 p-4 bg-zinc-950 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/stats:-translate-x-3 w-full h-full">
+                                    <div className="flex items-center gap-6 p-4 bg-zinc-950 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/stats:-translate-x-3 group-hover/stats:-translate-y-3 group-hover/stats:rotate-[0.5deg] w-full h-full">
                                         <div className="w-16 h-16 bg-primary border-2 border-white text-white flex items-center justify-center shrink-0">
                                             <GraduationCap className="w-8 h-8 text-secondary" />
                                         </div>
