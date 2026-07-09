@@ -18,14 +18,12 @@ export default function PortfolioCursor() {
     const dotX = useSpring(mouseX, springFast);
     const dotY = useSpring(mouseY, springFast);
 
-    // SLOW spring for the outer particle (~500ms delay feel)
-    // Lower stiffness and higher mass creates a beautiful dragging delay
-    const springSlow = { damping: 20, stiffness: 35, mass: 0.6 };
+    // SLOW spring for the outer trailing circle (lag dragging feel)
+    const springSlow = { damping: 22, stiffness: 45, mass: 0.65 };
     const ringX = useSpring(mouseX, springSlow);
     const ringY = useSpring(mouseY, springSlow);
 
     useEffect(() => {
-        // Only run on client
         if (typeof window === "undefined") return;
 
         const handleMouseMove = (e: MouseEvent) => {
@@ -34,7 +32,7 @@ export default function PortfolioCursor() {
             mouseX.set(e.clientX);
             mouseY.set(e.clientY);
 
-            // Detect which section the mouse is currently hovering over
+            // Detect current section data-nav-theme
             const element = document.elementFromPoint(e.clientX, e.clientY);
             const section = element?.closest("[data-nav-theme]");
 
@@ -58,52 +56,52 @@ export default function PortfolioCursor() {
 
     if (!isVisible) return null;
 
-    // Variants for the delayed trailing particle (arcade style squares)
+    // Variants for trailing ring (Neo-Brutalist colored circles with black borders)
     const ringVariants = {
         default: {
             width: 24,
             height: 24,
-            backgroundColor: "rgba(255, 184, 62, 0.05)",
-            border: "2px solid #ffb83e",
+            backgroundColor: "rgba(255, 94, 94, 0.4)", // Salmon pink
+            border: "2px solid #000000",
+            borderRadius: "9999px",
             mixBlendMode: "normal" as const,
             backdropFilter: "blur(0px)",
-            borderRadius: "0px",
         },
         transparent: {
             width: 32,
             height: 32,
-            backgroundColor: "rgba(250, 82, 15, 0.1)",
-            border: "2px solid #fa520f",
+            backgroundColor: "rgba(255, 213, 79, 0.5)", // Yellow
+            border: "2px solid #000000",
+            borderRadius: "9999px",
             mixBlendMode: "normal" as const,
-            backdropFilter: "blur(1px)",
-            borderRadius: "0px",
+            backdropFilter: "blur(0px)",
         },
         "light-pill": {
             width: 30,
             height: 30,
-            backgroundColor: "rgba(0, 0, 0, 0)",
-            border: "2px solid #ffb83e",
+            backgroundColor: "rgba(176, 136, 249, 0.4)", // Lilac
+            border: "2px solid #000000",
+            borderRadius: "9999px",
             mixBlendMode: "normal" as const,
             backdropFilter: "blur(0px)",
-            borderRadius: "0px",
         },
         "dark-pill": {
-            width: 40,
-            height: 40,
-            backgroundColor: "rgba(255, 255, 255, 0.05)",
-            border: "2px dashed #fa520f",
+            width: 36,
+            height: 36,
+            backgroundColor: "rgba(60, 208, 112, 0.5)", // Lime Green
+            border: "2px dashed #000000",
+            borderRadius: "9999px",
             mixBlendMode: "normal" as const,
-            backdropFilter: "blur(2px)",
-            borderRadius: "0px",
+            backdropFilter: "blur(0px)",
         },
         "dark-full": {
-            width: 24,
-            height: 24,
-            backgroundColor: "#ffb83e",
-            border: "2px solid #ffffff",
-            mixBlendMode: "difference" as const,
+            width: 28,
+            height: 28,
+            backgroundColor: "rgba(63, 193, 232, 0.5)", // Sky Blue
+            border: "2px solid #000000",
+            borderRadius: "9999px",
+            mixBlendMode: "normal" as const,
             backdropFilter: "blur(0px)",
-            borderRadius: "0px",
         },
     };
 
@@ -111,40 +109,40 @@ export default function PortfolioCursor() {
         default: {
             width: 6,
             height: 6,
-            backgroundColor: "#ffb83e",
-            borderRadius: "0px",
+            backgroundColor: "#000000",
+            borderRadius: "9999px",
         },
         transparent: {
             width: 8,
             height: 8,
-            backgroundColor: "#fa520f",
-            borderRadius: "0px",
+            backgroundColor: "#000000",
+            borderRadius: "9999px",
         },
         "light-pill": {
             width: 6,
             height: 6,
-            backgroundColor: "#ffb83e",
-            borderRadius: "0px",
+            backgroundColor: "#000000",
+            borderRadius: "9999px",
         },
         "dark-pill": {
             width: 6,
             height: 6,
-            backgroundColor: "#fa520f",
-            borderRadius: "0px",
+            backgroundColor: "#000000",
+            borderRadius: "9999px",
         },
         "dark-full": {
-            width: 0,
-            height: 0,
-            backgroundColor: "rgba(255, 255, 255, 0)",
-            borderRadius: "0px",
+            width: 6,
+            height: 6,
+            backgroundColor: "#000000",
+            borderRadius: "9999px",
         },
     };
 
     return (
         <>
-            {/* Outer delayed particle */}
+            {/* Outer delayed trailing circle */}
             <motion.div
-                className="fixed top-0 left-0 pointer-events-none z-[9998] rounded-none flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2"
+                className="fixed top-0 left-0 pointer-events-none z-[9998] flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2"
                 style={{
                     x: ringX,
                     y: ringY,
@@ -156,7 +154,7 @@ export default function PortfolioCursor() {
             />
             {/* Inner fast pointer dot */}
             <motion.div
-                className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-none transform -translate-x-1/2 -translate-y-1/2"
+                className="fixed top-0 left-0 pointer-events-none z-[9999] transform -translate-x-1/2 -translate-y-1/2"
                 style={{
                     x: dotX,
                     y: dotY,
@@ -166,12 +164,12 @@ export default function PortfolioCursor() {
                 variants={dotVariants}
                 transition={{ duration: 0.3, ease: "easeOut" }}
             />
-            {/* Global style to hide default cursor over interactive elements using the custom cursor */}
+            {/* Global style to hide default cursor over screen */}
             <style dangerouslySetInnerHTML={{
                 __html: `
         @media (pointer: fine) {
           body {
-            /* Optional: To hide original cursor everywhere uncomment the next line */
+            /* Optional: uncomment to hide regular OS cursor */
             /* cursor: none; */ 
           }
         }

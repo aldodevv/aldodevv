@@ -29,7 +29,7 @@ export default function RetroBackground() {
         let targetMouseX = 0;
         let targetMouseY = 0;
         
-        // Interactive spark particles spawned by mouse movement
+        // Interactive spark particles spawned by mouse movement (Neo-Brutalist colored dots)
         const sparkParticles: { 
             x: number; 
             y: number; 
@@ -41,7 +41,7 @@ export default function RetroBackground() {
             size: number; 
         }[] = [];
 
-        // --- 3D Floating Shape Setup (Mistral.ai style, SEGA themed) ---
+        // --- 3D Floating Shape Setup (Neo-Brutalist wireframe with vertex beads) ---
         // Octahedron (8 triangular faces, 6 vertices)
         const vertices = [
             { x: 0, y: 1.2, z: 0 },
@@ -88,27 +88,23 @@ export default function RetroBackground() {
             const direction = currentScrollY > lastScrollY ? 1 : -1;
             tiltOffset = direction * Math.min(scrollDelta * 0.4, 25);
 
-            // Map scroll progress to screen position (Mistral style)
+            // Map scroll progress to screen position
             const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
             const scrollPercent = maxScroll > 0 ? currentScrollY / maxScroll : 0;
 
             if (scrollPercent < 0.15) {
-                // Section 1 (Hero): Right side, aligned with text
                 targetShapeX = width * 0.78;
                 targetShapeY = height * 0.38;
                 targetShapeScale = 1.0;
             } else if (scrollPercent < 0.45) {
-                // Section 2 (About): Left side, opposite to bio card
                 targetShapeX = width * 0.22;
                 targetShapeY = height * 0.5;
                 targetShapeScale = 1.25;
             } else if (scrollPercent < 0.75) {
-                // Section 3 (Tech Stack): Top right, floating high
                 targetShapeX = width * 0.8;
                 targetShapeY = height * 0.3;
                 targetShapeScale = 0.95;
             } else {
-                // Section 4 (Work Experience): Center top, guiding the eye down
                 targetShapeX = width * 0.5;
                 targetShapeY = height * 0.22;
                 targetShapeScale = 1.15;
@@ -119,18 +115,18 @@ export default function RetroBackground() {
             targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
             targetMouseY = (e.clientY / window.innerHeight) * 2 - 1;
             
-            // Spawn spark particles on cursor move
-            const colors = ["#fa520f", "#ffb83e", "#fff8e0", "#3b82f6"];
-            if (Math.random() < 0.65) {
+            // Spawn spark shapes on cursor move (Neo-Brutalist circles)
+            const colors = ["#ff5e5e", "#ffd54f", "#b088f9", "#3cd070", "#3fc1e8", "#ff8a5c"];
+            if (Math.random() < 0.5) {
                 sparkParticles.push({
                     x: e.clientX,
                     y: e.clientY,
-                    vx: (Math.random() - 0.5) * 1.8,
-                    vy: (Math.random() - 0.5) * 1.8 - 0.8, // floats up
+                    vx: (Math.random() - 0.5) * 2.0,
+                    vy: (Math.random() - 0.5) * 1.5 - 1.2, // floats up
                     life: 1,
-                    maxLife: 30 + Math.random() * 25,
+                    maxLife: 35 + Math.random() * 20,
                     color: colors[Math.floor(Math.random() * colors.length)],
-                    size: Math.random() * 2 + 1,
+                    size: Math.random() * 4 + 3, // slightly larger for visibility
                 });
             }
         };
@@ -142,15 +138,16 @@ export default function RetroBackground() {
         // Trigger initial calculation
         handleScroll();
 
-        // --- Stars Setup ---
-        const numStars = 60;
-        const stars: { x: number; y: number; z: number; size: number }[] = [];
+        // --- Stars Setup (Floating Crosses and Squares in Neo-Brutalist style) ---
+        const numStars = 50;
+        const stars: { x: number; y: number; z: number; size: number; isCross: boolean }[] = [];
         for (let i = 0; i < numStars; i++) {
             stars.push({
                 x: Math.random() * width - width / 2,
                 y: Math.random() * (height * 0.6) - (height * 0.3), // mostly top half
                 z: Math.random() * width,
-                size: Math.random() * 1.5 + 0.5,
+                size: Math.random() * 1.8 + 0.8,
+                isCross: Math.random() > 0.5
             });
         }
 
@@ -185,26 +182,26 @@ export default function RetroBackground() {
             shapeY = lerp(shapeY, targetShapeY, 0.04);
             shapeScale = lerp(shapeScale, targetShapeScale, 0.04);
 
-            // Clean background
-            ctx.fillStyle = "#08080a";
+            // Clean background (Warm Neo-Brutalist Eggshell)
+            ctx.fillStyle = "#f7f6f0";
             ctx.fillRect(0, 0, width, height);
 
-            // --- Draw Ambient Sunset Glow (Mistral.ai style) ---
+            // --- Draw Ambient Radial Glow (Soft Neo-Brutalist tints) ---
             const glowGradient = ctx.createRadialGradient(
                 vanishingPointX, horizonY, 10,
                 vanishingPointX, horizonY, Math.max(width, height) * 0.5
             );
-            glowGradient.addColorStop(0, "rgba(250, 82, 15, 0.16)"); // Glowing Mistral Orange
-            glowGradient.addColorStop(0.4, "rgba(255, 184, 62, 0.05)"); // Soft Sunshine Yellow
-            glowGradient.addColorStop(1, "rgba(8, 8, 10, 0)"); // Fade into background
+            glowGradient.addColorStop(0, "rgba(255, 94, 94, 0.08)"); // Soft salmon pink glow
+            glowGradient.addColorStop(0.4, "rgba(255, 213, 79, 0.04)"); // Soft yellow glow
+            glowGradient.addColorStop(1, "rgba(247, 246, 240, 0)"); // Fade into background
             ctx.fillStyle = glowGradient;
             ctx.fillRect(0, 0, width, height);
 
-            // --- 1. Draw Starfield ---
+            // --- 1. Draw Starfield (Floating crosses and dots in solid black/dark grey) ---
             for (let i = 0; i < numStars; i++) {
                 const star = stars[i];
                 
-                // Move star closer (decrease Z)
+                // Move star closer
                 star.z -= speed * 1.5;
                 if (star.z <= 0) {
                     star.z = width;
@@ -214,33 +211,32 @@ export default function RetroBackground() {
 
                 // Project to 2D
                 const k = 120 / star.z;
-                const px = star.x * k + vanishingPointX; // project with camera parallax shift!
+                const px = star.x * k + vanishingPointX; 
                 const py = star.y * k + vanishingPointY;
 
                 if (px >= 0 && px <= width && py >= 0 && py <= height * 0.6) {
-                    const alpha = Math.min(1, (1 - star.z / width) * 1.2);
+                    const alpha = Math.min(1, (1 - star.z / width) * 1.2) * 0.5; // faint dark markers
                     
-                    // Warp effect: stretch stars into lines when moving fast
-                    if (speed > 4) {
-                        ctx.strokeStyle = `rgba(255, 248, 224, ${alpha * 0.7})`;
-                        ctx.lineWidth = star.size;
+                    ctx.strokeStyle = `rgba(0, 0, 0, ${alpha})`;
+                    ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`;
+                    ctx.lineWidth = 1.5;
+
+                    if (star.isCross) {
+                        // Draw tiny '+' cross
                         ctx.beginPath();
-                        ctx.moveTo(px, py);
-                        // Stretch direction is away from the center vanishing point
-                        const stretch = 1 + (speed * 0.04);
-                        ctx.lineTo(
-                            (px - vanishingPointX) * stretch + vanishingPointX, 
-                            (py - vanishingPointY) * stretch + vanishingPointY
-                        );
+                        ctx.moveTo(px - 4, py);
+                        ctx.lineTo(px + 4, py);
+                        ctx.moveTo(px, py - 4);
+                        ctx.lineTo(px, py + 4);
                         ctx.stroke();
                     } else {
-                        ctx.fillStyle = `rgba(255, 248, 224, ${alpha})`;
-                        ctx.fillRect(px, py, star.size, star.size);
+                        // Draw small solid square
+                        ctx.fillRect(px - 2, py - 2, 4, 4);
                     }
                 }
             }
 
-            // --- 2. Draw 3D Perspective Grid (Tron/Sega Style) ---
+            // --- 2. Draw 3D Perspective Grid (High contrast black lines) ---
             gridOffset += speed * 0.8;
             if (gridOffset >= gridSpacing) {
                 gridOffset = 0;
@@ -248,20 +244,17 @@ export default function RetroBackground() {
 
             const gridStartHeight = height - horizonY;
 
-            ctx.strokeStyle = "#fa520f"; // Primary Mistral Orange
-            ctx.lineWidth = 2;
-
             // Draw horizontal lines (converging depth)
             const numHorizontalLines = 15;
             for (let i = 0; i < numHorizontalLines; i++) {
-                // Exponential spacing for 3D perspective feel
                 const progress = (i * gridSpacing + gridOffset) / (numHorizontalLines * gridSpacing);
-                const ratio = Math.pow(progress, 2.5); // Curves spacing closer to horizon
+                const ratio = Math.pow(progress, 2.5); 
                 
                 const lineY = horizonY + ratio * gridStartHeight;
 
                 if (lineY >= horizonY && lineY <= height) {
-                    ctx.strokeStyle = `rgba(250, 82, 15, ${ratio * 0.8})`; // fade out closer to horizon
+                    ctx.strokeStyle = `rgba(0, 0, 0, ${ratio * 0.15})`; // thin black lines fading out
+                    ctx.lineWidth = 1.5;
                     ctx.beginPath();
                     ctx.moveTo(0, lineY);
                     ctx.lineTo(width, lineY);
@@ -269,16 +262,15 @@ export default function RetroBackground() {
                 }
             }
 
-            // Draw vertical perspective lines (converging at vanishing point)
+            // Draw vertical perspective lines
             const numVerticalLines = 24;
-
             for (let i = 0; i <= numVerticalLines; i++) {
                 const fraction = i / numVerticalLines;
-                const bottomX = fraction * width * 2 - width / 2; // Spread lines wider at the bottom
+                const bottomX = fraction * width * 2 - width / 2;
 
-                // Fade intensity based on distance from center
                 const distFromCenter = Math.abs(fraction - 0.5) * 2;
-                ctx.strokeStyle = `rgba(250, 82, 15, ${0.7 - distFromCenter * 0.3})`;
+                ctx.strokeStyle = `rgba(0, 0, 0, ${0.12 - distFromCenter * 0.04})`;
+                ctx.lineWidth = 1.5;
 
                 ctx.beginPath();
                 ctx.moveTo(vanishingPointX, horizonY);
@@ -286,12 +278,12 @@ export default function RetroBackground() {
                 ctx.stroke();
             }
 
-            // --- 3. Draw Interactive Mouse Spark Trail ---
+            // --- 3. Draw Interactive Mouse Spark Trail (Sticker circles with black outlines) ---
             for (let i = sparkParticles.length - 1; i >= 0; i--) {
                 const p = sparkParticles[i];
                 p.x += p.vx;
                 p.y += p.vy;
-                p.vy -= 0.02; // Spark floats upward
+                p.vy -= 0.015; // Particle floats upward
                 p.life -= 1 / p.maxLife;
                 
                 if (p.life <= 0) {
@@ -299,37 +291,38 @@ export default function RetroBackground() {
                     continue;
                 }
 
-                ctx.fillStyle = p.color;
-                ctx.shadowColor = p.color;
-                ctx.shadowBlur = 6;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-                ctx.fill();
-            }
-            ctx.shadowBlur = 0; // reset
+                const currentSize = p.size * p.life * 1.5;
 
-            // --- 4. Draw 3D Floating Shape (Mistral.ai style) ---
-            // Rotate the shape, influenced slightly by scroll speed
+                // Fill color
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Thick solid black outline (Neo-Brutalist sticker style)
+                ctx.strokeStyle = "#000000";
+                ctx.lineWidth = 1.8;
+                ctx.stroke();
+            }
+
+            // --- 4. Draw 3D Floating Shape (Thick solid black outlines, colorful vertex beads) ---
             angleX += 0.006 + speed * 0.0008;
             angleY += 0.010 + speed * 0.0012;
 
-            // Apply camera parallax displacement to shape coordinates
+            // Apply camera parallax displacement
             const finalShapeX = shapeX + mouseX * 40;
             const finalShapeY = shapeY + mouseY * 25;
 
             // Rotate and project 3D vertices
             const projectedVertices = vertices.map((v) => {
-                // Rotate around X axis
                 const rx1 = v.x;
                 const ry1 = v.y * Math.cos(angleX) - v.z * Math.sin(angleX);
                 const rz1 = v.y * Math.sin(angleX) + v.z * Math.cos(angleX);
 
-                // Rotate around Y axis
                 const rx2 = rx1 * Math.cos(angleY) + rz1 * Math.sin(angleY);
                 const ry2 = ry1;
                 const rz2 = -rx1 * Math.sin(angleY) + rz1 * Math.cos(angleY);
 
-                // Perspective projection constants
                 const distance = 3.8;
                 const sizeMultiplier = 130 * shapeScale;
                 const screenX = finalShapeX + (rx2 * sizeMultiplier) / (distance + rz2);
@@ -338,11 +331,10 @@ export default function RetroBackground() {
                 return { x: screenX, y: screenY };
             });
 
-            // Draw 3D edges (triangular wireframe)
-            ctx.strokeStyle = "#fa520f"; // Mistral Orange neon accent
-            ctx.lineWidth = 2.5;
-            ctx.shadowColor = "#fa520f";
-            ctx.shadowBlur = 12;
+            // Draw 3D edges (thick solid black outline)
+            ctx.strokeStyle = "#000000"; 
+            ctx.lineWidth = 3.5;
+            ctx.shadowBlur = 0; // No glow in Neo-Brutalism!
 
             edges.forEach(([p1, p2]) => {
                 ctx.beginPath();
@@ -351,40 +343,40 @@ export default function RetroBackground() {
                 ctx.stroke();
             });
 
-            // Draw 3D vertex points (squares for 8-bit style)
-            ctx.fillStyle = "#fff8e0"; // Mistral Cream vertices
-            ctx.shadowColor = "#fff8e0";
-            ctx.shadowBlur = 6;
-            projectedVertices.forEach((p) => {
-                ctx.fillRect(p.x - 3.5, p.y - 3.5, 7, 7);
+            // Draw 3D vertex points as colorful beads with black outlines
+            const vertexColors = ["#ff5e5e", "#ffd54f", "#3cd070", "#b088f9", "#3fc1e8", "#ff8a5c"];
+            projectedVertices.forEach((p, idx) => {
+                ctx.fillStyle = vertexColors[idx % vertexColors.length];
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 7.5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = "#000000";
+                ctx.lineWidth = 2.2;
+                ctx.stroke();
             });
 
-            // Reset shadows
-            ctx.shadowBlur = 0;
-
-            // --- 5. Draw Sunset Stripe Horizon Line ---
-            const horizonGradient = ctx.createLinearGradient(0, 0, width, 0);
-            horizonGradient.addColorStop(0, "#cc3a05");      // Deep Red/Orange
-            horizonGradient.addColorStop(0.33, "#fa520f");   // Mistral Orange
-            horizonGradient.addColorStop(0.66, "#ffb83e");   // Sunshine Yellow
-            horizonGradient.addColorStop(1, "#fff8e0");      // Cream
-
-            ctx.strokeStyle = horizonGradient;
-            ctx.lineWidth = 3;
+            // --- 5. Draw Horizon Line (Thick black line separating sky & ground) ---
+            ctx.strokeStyle = "#000000";
+            ctx.lineWidth = 4;
             ctx.beginPath();
             ctx.moveTo(0, horizonY);
             ctx.lineTo(width, horizonY);
             ctx.stroke();
 
-            // Horizon neon glow
-            ctx.shadowColor = "#fa520f";
-            ctx.shadowBlur = 10;
-            ctx.strokeStyle = "rgba(250, 82, 15, 0.4)";
-            ctx.lineWidth = 1;
+            // Accent stripe underneath the horizon (pink & yellow combo stripe)
+            ctx.strokeStyle = "#ffd54f"; // yellow accent stripe
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, horizonY + 3);
+            ctx.lineTo(width, horizonY + 3);
             ctx.stroke();
-            
-            // Reset shadows for next frame (important for canvas performance)
-            ctx.shadowBlur = 0;
+
+            ctx.strokeStyle = "#ff5e5e"; // red/salmon accent stripe
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, horizonY + 5);
+            ctx.lineTo(width, horizonY + 5);
+            ctx.stroke();
 
             animationFrameId = requestAnimationFrame(render);
         };

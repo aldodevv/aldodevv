@@ -1,10 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #08080a;
-  --foreground: #ffffff;
-  --primary: #fa520f;
-  --secondary: #ffb83e;
+  --background: #f7f6f0;      /* Warm neo-brutalist eggshell cream background */
+  --foreground: #000000;      /* High contrast solid black */
+  --primary: #ff5e5e;         /* Bright Salmon/Red */
+  --secondary: #ffd54f;       /* Canary Yellow */
+  --accent-purple: #b088f9;   /* Saturated Lilac */
+  --accent-green: #3cd070;    /* Lime Green */
+  --accent-cyan: #3fc1e8;     /* Sky Blue */
+  --accent-orange: #ff8a5c;   /* Pastel Orange */
 }
 
 @theme inline {
@@ -12,70 +16,64 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
-  --font-sans: var(--font-vt323), system-ui;
+  --color-accent-purple: var(--accent-purple);
+  --color-accent-green: var(--accent-green);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-orange: var(--accent-orange);
+  --font-sans: var(--font-space-grotesk), system-ui;
   --font-mono: var(--font-jetbrains-mono), monospace;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-vt323), system-ui;
-  image-rendering: pixelated;
+  font-family: var(--font-space-grotesk), system-ui;
+  image-rendering: auto;
 }
 
-/* Custom Retro Utilities */
-.crt-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
-  background-size: 100% 4px;
-  z-index: 9999;
-  pointer-events: none;
+/* Custom Neo-Brutalist Utilities */
+.neo-grid-dots {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.15) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
 }
 
 .retro-grid {
   background-image: 
-    linear-gradient(to right, rgba(250, 82, 15, 0.15) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(250, 82, 15, 0.15) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
 .retro-grid-fine {
   background-image: 
-    linear-gradient(to right, rgba(255, 184, 62, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 184, 62, 0.08) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
-/* Hard edge pixelated borders and flat offset shadows */
-.retro-border {
-  border: 4px solid #ffffff;
+/* Neo-Brutalist Borders & Shadows */
+.neo-border {
+  border: 4px solid #000000;
 }
 
-.retro-border-primary {
-  border: 4px solid var(--primary);
+.neo-border-sm {
+  border: 2px solid #000000;
 }
 
-.retro-border-secondary {
-  border: 4px solid var(--secondary);
+.neo-shadow {
+  box-shadow: 6px 6px 0px 0px #000000;
 }
 
-.retro-shadow-primary {
-  box-shadow: 6px 6px 0px 0px var(--primary);
+.neo-shadow-sm {
+  box-shadow: 4px 4px 0px 0px #000000;
 }
 
-.retro-shadow-secondary {
-  box-shadow: 6px 6px 0px 0px var(--secondary);
+.neo-shadow-lg {
+  box-shadow: 8px 8px 0px 0px #000000;
 }
 
-.retro-shadow-white {
-  box-shadow: 6px 6px 0px 0px #ffffff;
-}
-
-.retro-btn-active:active {
+.neo-btn-active:active {
   transform: translate(3px, 3px);
-  box-shadow: 3px 3px 0px 0px currentColor;
+  box-shadow: 3px 3px 0px 0px #000000;
 }
+

@@ -13,7 +13,6 @@ export default function PortfolioNavbar() {
 
     useEffect(() => {
         const handleScroll = () => {
-            // Check if scrolled passing first section
             if (window.scrollY > 50) {
                 setIsScrolled(true);
             } else {
@@ -42,22 +41,17 @@ export default function PortfolioNavbar() {
     const getNavbarStyles = () => {
         switch (theme) {
             case "dark-full":
-                return "bg-black text-white w-full rounded-none border-b-4 border-primary top-0 mt-0";
+                return "bg-[#ffd54f] text-black w-full rounded-none border-b-4 border-black top-0 mt-0 shadow-sm";
             case "light-pill":
-                return "bg-white text-black w-[95%] md:w-[80%] max-w-5xl mx-auto rounded-none shadow-[6px_6px_0px_0px_#4502FF] border-4 border-black top-4 mt-0";
+                return "bg-white text-black w-[95%] md:w-[80%] max-w-5xl mx-auto rounded-none shadow-[6px_6px_0px_0px_#000000] border-4 border-black top-4 mt-0";
             case "dark-pill":
-                return "bg-black text-white w-[95%] md:w-[80%] max-w-5xl mx-auto rounded-none shadow-[6px_6px_0px_0px_#FFDA14] border-4 border-primary top-4 mt-0";
+                return "bg-[#b088f9] text-black w-[95%] md:w-[80%] max-w-5xl mx-auto rounded-none shadow-[6px_6px_0px_0px_#000000] border-4 border-black top-4 mt-0";
             case "transparent":
             default:
                 return isScrolled
-                    ? "bg-black text-white w-full rounded-none border-b-4 border-secondary top-0 mt-0"
-                    : "bg-transparent text-white w-full rounded-none border-b-4 border-transparent top-0 mt-0";
+                    ? "bg-white text-black w-full rounded-none border-b-4 border-black top-0 mt-0 shadow-sm"
+                    : "bg-transparent text-black w-full rounded-none border-b-4 border-transparent top-0 mt-0";
         }
-    };
-
-    const getLogoColor = () => {
-        if (theme === "light-pill") return "text-black";
-        return "text-secondary";
     };
 
     return (
@@ -72,19 +66,19 @@ export default function PortfolioNavbar() {
             >
                 <motion.div
                     layout="position"
-                    className={cn("font-bold text-2xl tracking-widest flex items-center gap-2 font-sans", getLogoColor())}
+                    className="font-black text-2xl tracking-tight flex items-center gap-2 font-sans text-black"
                 >
-                    {/* Mock Logo */}
+                    {/* Neo-Brutalist Triangle Logo */}
                     <svg
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="transition-colors duration-500 text-secondary"
+                        strokeWidth="3.5"
+                        strokeLinecap="square"
+                        strokeLinejoin="miter"
+                        className="transition-colors duration-500 text-black fill-[#ffd54f]"
                     >
                         <path d="M12 4L4 20h16L12 4z" />
                     </svg>
@@ -93,7 +87,7 @@ export default function PortfolioNavbar() {
 
                 <motion.ul
                     layout="position"
-                    className="hidden md:flex items-center gap-8 text-2xl font-normal font-sans"
+                    className="hidden md:flex items-center gap-8 text-lg font-black font-sans"
                 >
                     <AnimatePresence mode="popLayout">
                         {[
@@ -122,12 +116,9 @@ export default function PortfolioNavbar() {
                                             element.scrollIntoView({ behavior: "smooth" });
                                         }
                                     }}
-                                    className={cn(
-                                        "cursor-pointer hover:text-secondary uppercase transition-all duration-300 relative group flex items-center gap-1 font-sans",
-                                        theme === "light-pill" ? "text-black hover:text-primary" : "text-white"
-                                    )}
+                                    className="cursor-pointer text-black hover:text-[#ff5e5e] uppercase transition-all duration-350 relative group flex items-center gap-1 font-sans font-black"
                                 >
-                                    <span className="opacity-0 group-hover:opacity-100 text-secondary transition-opacity font-sans text-xl">►</span>
+                                    <span className="opacity-0 group-hover:opacity-100 text-[#ff5e5e] transition-opacity font-sans text-xs">►</span>
                                     <span>{item.label}</span>
                                 </motion.li>
                             );
@@ -135,17 +126,17 @@ export default function PortfolioNavbar() {
                     </AnimatePresence>
                 </motion.ul>
 
-                <motion.div layout="position" className={cn("flex items-center gap-4 md:gap-5", getLogoColor())}>
-                    <a href="https://github.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition-all duration-300">
-                        <Github className="w-6 h-6" />
+                <motion.div layout="position" className="flex items-center gap-4 md:gap-5 text-black">
+                    <a href="https://github.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff5e5e] hover:scale-110 transition-all duration-300">
+                        <Github className="w-5 h-5 stroke-[2.5]" />
                         <span className="sr-only">GitHub</span>
                     </a>
-                    <a href="https://linkedin.com/in/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition-all duration-300">
-                        <Linkedin className="w-6 h-6" />
+                    <a href="https://linkedin.com/in/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff5e5e] hover:scale-110 transition-all duration-300">
+                        <Linkedin className="w-5 h-5 stroke-[2.5]" />
                         <span className="sr-only">LinkedIn</span>
                     </a>
-                    <a href="https://instagram.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition-all duration-300">
-                        <Instagram className="w-6 h-6" />
+                    <a href="https://instagram.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff5e5e] hover:scale-110 transition-all duration-300">
+                        <Instagram className="w-5 h-5 stroke-[2.5]" />
                         <span className="sr-only">Instagram</span>
                     </a>
                 </motion.div>

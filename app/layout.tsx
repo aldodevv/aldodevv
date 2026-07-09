@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { VT323, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const vt323 = VT323({
-  weight: "400",
-  variable: "--font-vt323",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
 });
 
@@ -35,9 +34,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${vt323.variable} ${jetbrainsMono.variable} antialiased bg-black text-white font-sans`}
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased bg-[#f7f6f0] text-black font-sans`}
       >
-        <div className="crt-overlay" />
+        <div className="fixed inset-0 w-screen h-screen pointer-events-none neo-grid-dots -z-20 opacity-30" />
         {children}
         <Analytics />
         <SpeedInsights />
