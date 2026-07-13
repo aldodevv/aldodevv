@@ -75,45 +75,87 @@ export const metadata: Metadata = {
 export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Akhmad Aldo Sari",
-    "alternateName": ["Ahmad Aldo", "Aldo", "Ahmad Aldo Sari", "Akhmad Aldo", "aldodevv", "akhmadaldo", "aldos"],
-    "url": "https://akhmadaldo.my.id",
-    "image": "https://akhmadaldo.my.id/assets/me.png",
-    "jobTitle": "Mobile & Web Developer",
-    "gender": "Male",
-    "nationality": {
-      "@type": "Country",
-      "name": "Indonesia"
-    },
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Depok",
-      "addressRegion": "West Java",
-      "addressCountry": "ID"
-    },
-    "alumniOf": {
-      "@type": "EducationalOrganization",
-      "name": "Universitas Bina Sarana Informatika"
-    },
-    "knowsAbout": [
-      "Mobile Application Development",
-      "Web Development",
-      "Software Engineering",
-      "Flutter",
-      "React Native",
-      "Kotlin",
-      "Swift",
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Go"
-    ],
-    "sameAs": [
-      "https://github.com/aldodevv",
-      "https://linkedin.com/in/aldodevv",
-      "https://instagram.com/aldodevv",
-      "https://play.google.com/store/apps/details?id=id.co.bri.qlola"
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://akhmadaldo.my.id/#person",
+        "name": "Akhmad Aldo Sari",
+        "alternateName": ["Ahmad Aldo", "Aldo", "Ahmad Aldo Sari", "Akhmad Aldo", "aldodevv", "akhmadaldo", "aldos"],
+        "url": "https://akhmadaldo.my.id",
+        "image": "https://akhmadaldo.my.id/assets/me.png",
+        "jobTitle": "Mobile & Web Developer",
+        "gender": "Male",
+        "nationality": {
+          "@type": "Country",
+          "name": "Indonesia"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Depok",
+          "addressRegion": "West Java",
+          "addressCountry": "ID"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universitas Bina Sarana Informatika"
+        },
+        "knowsAbout": [
+          "Mobile Application Development",
+          "Mobile Application Design",
+          "Web Development",
+          "Software Engineering",
+          "Flutter",
+          "React Native",
+          "Kotlin",
+          "Swift",
+          "Next.js",
+          "React",
+          "TypeScript",
+          "Go"
+        ],
+        "sameAs": [
+          "https://github.com/aldodevv",
+          "https://linkedin.com/in/aldodevv",
+          "https://instagram.com/aldodevv",
+          "https://play.google.com/store/apps/details?id=id.co.bri.qlola"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://akhmadaldo.my.id/#website",
+        "url": "https://akhmadaldo.my.id",
+        "name": "Akhmad Aldo Sari (Aldo) | Mobile & Web Developer",
+        "description": "Portfolio of Akhmad Aldo Sari (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer based in Depok, Indonesia.",
+        "publisher": {
+          "@id": "https://akhmadaldo.my.id/#person"
+        }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://akhmadaldo.my.id/#navigation",
+        "hasPart": [
+          {
+            "@type": "WebPage",
+            "name": "Me",
+            "url": "https://akhmadaldo.my.id/#Hero"
+          },
+          {
+            "@type": "WebPage",
+            "name": "About",
+            "url": "https://akhmadaldo.my.id/#PortfolioAbout"
+          },
+          {
+            "@type": "WebPage",
+            "name": "Tech Stack",
+            "url": "https://akhmadaldo.my.id/#TechStack"
+          },
+          {
+            "@type": "WebPage",
+            "name": "Experience",
+            "url": "https://akhmadaldo.my.id/#WorkExperience"
+          }
+        ]
+      }
     ]
   };
 
