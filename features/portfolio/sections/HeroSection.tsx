@@ -226,12 +226,12 @@ export default function HeroSection() {
                             <div className="bg-white border-4 border-black p-4 w-full max-w-[340px] shadow-[6px_6px_0px_#000000] flex flex-col gap-3 group/tape select-none">
                                 <div className="flex items-center justify-between border-b-2 border-black pb-1.5 font-mono text-[9px] font-black text-black">
                                     <span>SYSTEM_PLAYER.DLL</span>
-                                    <span className="bg-red-500 text-white px-1">LIVE</span>
+                                    <span className="bg-red-700 text-white px-1">LIVE</span>
                                 </div>
                                 
                                 <div className="flex items-center justify-between gap-4">
                                     <div className="flex flex-col text-left font-mono">
-                                        <span className="text-[9px] font-black text-[#ff5e5e] uppercase">▶ BGM LOADED</span>
+                                        <span className="text-[9px] font-black text-[#c52c2c] uppercase">▶ BGM LOADED</span>
                                         <span className="text-[11px] font-bold text-black truncate max-w-[150px]">PORTFOLIO_THEME.WAV</span>
                                     </div>
                                     
@@ -343,12 +343,12 @@ export default function HeroSection() {
                         <div className="bg-white border-4 border-black p-3 w-full max-w-[270px] shadow-[4px_4px_0px_#000000] flex flex-col gap-2 mx-auto mb-4 select-none">
                             <div className="flex items-center justify-between border-b-2 border-black pb-1 font-mono text-[8px] font-black">
                                 <span>SYS_PLAY.DLL</span>
-                                <span className="bg-red-500 text-white px-1">LIVE</span>
+                                <span className="bg-red-700 text-white px-1">LIVE</span>
                             </div>
                             
                             <div className="flex items-center justify-between gap-3">
                                 <div className="flex flex-col text-left font-mono">
-                                    <span className="text-[8px] font-black text-[#ff5e5e] uppercase">▶ BGM</span>
+                                    <span className="text-[8px] font-black text-[#c52c2c] uppercase">▶ BGM</span>
                                     <span className="text-[10px] font-bold text-black truncate max-w-[110px]">PORTFOLIO_THEME.WAV</span>
                                 </div>
                                 

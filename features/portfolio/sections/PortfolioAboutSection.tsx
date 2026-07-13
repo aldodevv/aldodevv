@@ -132,9 +132,9 @@ export default function PortfolioAboutSection() {
                                                 <GraduationCap className="w-8 h-8 text-[#ffd54f]" />
                                             </div>
                                             <div className="flex flex-col justify-center">
-                                                <h4 className="text-2xl font-black tracking-tight text-black uppercase font-sans leading-none">
+                                                <h3 className="text-2xl font-black tracking-tight text-black uppercase font-sans leading-none">
                                                     Univ. Bina Sarana Informatika
-                                                </h4>
+                                                </h3>
                                                 <p className="text-[#ff5e5e] font-mono text-sm uppercase tracking-widest font-black mt-1.5">
                                                     DEPT: Computer Science (GRADUATE)
                                                 </p>
