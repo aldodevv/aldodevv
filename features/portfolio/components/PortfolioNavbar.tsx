@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Github, Linkedin, Instagram } from "lucide-react";
+import Link from "next/link";
 
 type NavTheme = "dark-full" | "light-pill" | "dark-pill" | "transparent";
 
@@ -91,10 +92,10 @@ export default function PortfolioNavbar() {
                 >
                     <AnimatePresence mode="popLayout">
                         {[
-                            { label: "Me", id: "Hero" },
-                            { label: "About", id: "PortfolioAbout" },
-                            { label: "Tech Stack", id: "TechStack" },
-                            { label: "Experience", id: "WorkExperience" },
+                            { label: "Me", id: "Hero", path: "/" },
+                            { label: "About", id: "PortfolioAbout", path: "/about" },
+                            { label: "Tech Stack", id: "TechStack", path: "/tech-stack" },
+                            { label: "Experience", id: "WorkExperience", path: "/experience" },
                         ].map((item, i) => {
                             const isHero = theme === "transparent" && !isScrolled;
 
@@ -110,16 +111,22 @@ export default function PortfolioNavbar() {
                                         delay: isHero ? 0 : i * 0.1,
                                         ease: "easeOut"
                                     }}
-                                    onClick={() => {
-                                        const element = document.getElementById(item.id);
-                                        if (element) {
-                                            element.scrollIntoView({ behavior: "smooth" });
-                                        }
-                                    }}
-                                    className="cursor-pointer text-black hover:text-[#ff5e5e] uppercase transition-all duration-350 relative group flex items-center gap-1 font-sans font-black"
+                                    className="list-none"
                                 >
-                                    <span className="opacity-0 group-hover:opacity-100 text-[#ff5e5e] transition-opacity font-sans text-xs">►</span>
-                                    <span>{item.label}</span>
+                                    <Link
+                                        href={item.path}
+                                        onClick={(e) => {
+                                            const element = document.getElementById(item.id);
+                                            if (element) {
+                                                e.preventDefault();
+                                                element.scrollIntoView({ behavior: "smooth" });
+                                            }
+                                        }}
+                                        className="cursor-pointer text-black hover:text-[#ff5e5e] uppercase transition-all duration-350 relative group flex items-center gap-1 font-sans font-black"
+                                    >
+                                        <span className="opacity-0 group-hover:opacity-100 text-[#ff5e5e] transition-opacity font-sans text-xs">►</span>
+                                        <span>{item.label}</span>
+                                    </Link>
                                 </motion.li>
                             );
                         })}
