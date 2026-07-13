@@ -62,10 +62,10 @@ export default function HeroSection() {
         <section
             id="Hero"
             ref={containerRef}
-            className="relative w-full h-[200vh] bg-[#f7f6f0] font-sans select-none selection:bg-[#ffd54f] selection:text-black"
+            className="relative w-full lg:h-[200vh] h-auto bg-[#f7f6f0] font-sans select-none selection:bg-[#ffd54f] selection:text-black"
         >
             {/* Sticky viewport container (keeps contents pinned during transition) */}
-            <div className="sticky top-0 h-screen w-full overflow-hidden">
+            <div className="relative lg:sticky lg:top-0 lg:h-screen w-full overflow-visible lg:overflow-hidden">
                 
                 {/* Global Scrolling Ticker (Brutalist Marquee at Bottom) */}
                 <div className="absolute bottom-0 left-0 right-0 h-10 bg-[#3cd070] border-t-4 border-black flex items-center overflow-hidden z-30">
@@ -81,7 +81,7 @@ export default function HeroSection() {
                     {/* Left Column (Headline + Colored Grid) */}
                     <motion.div
                         style={{ width: leftWidth, opacity: leftOpacity, x: leftX }}
-                        className="h-full bg-[#ffd54f] flex flex-col justify-between border-r-4 border-black shrink-0 origin-left neo-grid-dots"
+                        className="w-[70%] h-full bg-[#ffd54f] flex flex-col justify-between border-r-4 border-black shrink-0 origin-left neo-grid-dots"
                     >
                         {/* Top Area: Logo HUD & Speech-Bubble Main Headline */}
                         <div className="flex-grow flex flex-col justify-between p-16 pt-8 pb-6">
@@ -136,12 +136,12 @@ export default function HeroSection() {
                     {/* Right Column (Intro text, Icons, MP3 BGM Widget, expanding to full screen) */}
                     <motion.div
                         style={{ width: rightWidth }}
-                        className="h-full bg-[#fefcf0] text-black flex flex-col justify-between p-16 pt-8 pb-14 shrink-0 relative overflow-hidden"
+                        className="w-[30%] h-full bg-[#fefcf0] text-black flex flex-col justify-between p-16 pt-8 pb-14 shrink-0 relative overflow-hidden"
                     >
                         {/* Top Area: Minimizable Window Tabs */}
                         <motion.div
                             style={{ opacity: iconsOpacity, y: iconsY }}
-                            className="flex justify-center gap-6 mb-4 mt-6"
+                            className="flex justify-center gap-6 mb-4 mt-6 opacity-0 lg:opacity-0"
                         >
                             {/* Briefcase Tab */}
                             <div className="bg-white border-4 border-black p-2 flex items-center gap-2 shadow-[4px_4px_0px_#000000] hover:-translate-y-1 transition-transform cursor-pointer">
@@ -183,7 +183,7 @@ export default function HeroSection() {
                         <div className="flex-1 flex flex-col justify-center items-center">
                             <motion.div
                                 style={{ scale: textScale, maxWidth: textMaxW }}
-                                className="border-4 border-black bg-[#b088f9] shadow-[8px_8px_0px_#000000] overflow-hidden group/alert select-none w-full origin-center cursor-pointer"
+                                className="border-4 border-black bg-[#b088f9] shadow-[8px_8px_0px_#000000] overflow-hidden group/alert select-none w-full max-w-[400px] origin-center cursor-pointer"
                             >
                                 <div className="bg-white border-2 border-black overflow-hidden flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/alert:translate-x-1 group-hover/alert:translate-y-1">
                                     {/* OS Window header */}
@@ -274,7 +274,7 @@ export default function HeroSection() {
                 </div>
 
                 {/* 2. MOBILE RESPONSIVE STATIC STACKED CONTAINER */}
-                <div className="lg:hidden flex flex-col h-full w-full bg-[#f7f6f0] overflow-y-auto pt-20 pb-14">
+                <div className="lg:hidden flex flex-col w-full bg-[#f7f6f0] pt-20 pb-14">
                     {/* Top Panel (Yellow, Headline) */}
                     <div className="bg-[#ffd54f] p-6 pt-8 border-b-4 border-black flex flex-col justify-between shrink-0 neo-grid-dots">
                         <div className="text-black font-mono text-[9px] uppercase tracking-widest font-black mb-4">
