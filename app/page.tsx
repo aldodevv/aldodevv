@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import PortfolioView from "@/features/portfolio/PortfolioView";
 
 export const metadata: Metadata = {
-  title: "Akhmad Aldo Sari (Aldo) | Mobile & Web Developer",
-  description: "Portfolio of Akhmad Aldo Sari (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer based in Depok, Indonesia. Specializing in high-performance applications with Flutter, React Native, Kotlin, Swift, and Next.js.",
+  title: "Akhmad Aldo (Aldo) | Mobile & Web Developer",
+  description: "Portfolio of Akhmad Aldo (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer based in Depok, Indonesia. Specializing in high-performance applications with Flutter, React Native, Kotlin, Swift, and Next.js.",
   keywords: [
     "Akhmad Aldo Sari",
     "Akhmad Aldo",
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
     "Aldo",
     "Aldodevv"
   ],
-  authors: [{ name: "Akhmad Aldo Sari", url: "https://akhmadaldo.my.id" }],
-  creator: "Akhmad Aldo Sari",
+  authors: [{ name: "Akhmad Aldo", url: "https://akhmadaldo.my.id" }],
+  creator: "Akhmad Aldo",
   openGraph: {
     type: "profile",
     firstName: "Akhmad Aldo",
@@ -35,22 +35,22 @@ export const metadata: Metadata = {
     gender: "male",
     locale: "en_US",
     url: "https://akhmadaldo.my.id",
-    title: "Akhmad Aldo Sari (Aldo) | Mobile & Web Developer",
-    description: "Portfolio of Akhmad Aldo Sari (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer based in Depok, Indonesia. Specializing in high-performance applications with Flutter, React Native, Kotlin, Swift, and Next.js.",
-    siteName: "Akhmad Aldo Sari Portfolio",
+    title: "Akhmad Aldo (Aldo) | Mobile & Web Developer",
+    description: "Portfolio of Akhmad Aldo (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer based in Depok, Indonesia. Specializing in high-performance applications with Flutter, React Native, Kotlin, Swift, and Next.js.",
+    siteName: "Akhmad Aldo Portfolio",
     images: [
       {
         url: "/assets/me.png",
         width: 1200,
         height: 630,
-        alt: "Akhmad Aldo Sari",
+        alt: "Akhmad Aldo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Akhmad Aldo Sari (Aldo) | Mobile & Web Developer",
-    description: "Portfolio of Akhmad Aldo Sari (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer based in Depok, Indonesia. Specializing in high-performance applications with Flutter, React Native, Kotlin, Swift, and Next.js.",
+    title: "Akhmad Aldo (Aldo) | Mobile & Web Developer",
+    description: "Portfolio of Akhmad Aldo (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer based in Depok, Indonesia. Specializing in high-performance applications with Flutter, React Native, Kotlin, Swift, and Next.js.",
     creator: "@aldodevv",
     images: ["/assets/me.png"],
   },
@@ -79,7 +79,7 @@ export default function Home() {
       {
         "@type": "Person",
         "@id": "https://akhmadaldo.my.id/#person",
-        "name": "Akhmad Aldo Sari",
+        "name": "Akhmad Aldo",
         "alternateName": ["Ahmad Aldo", "Aldo", "Ahmad Aldo Sari", "Akhmad Aldo", "aldodevv", "akhmadaldo", "aldos"],
         "url": "https://akhmadaldo.my.id",
         "image": "https://akhmadaldo.my.id/assets/me.png",
@@ -124,8 +124,8 @@ export default function Home() {
         "@type": "WebSite",
         "@id": "https://akhmadaldo.my.id/#website",
         "url": "https://akhmadaldo.my.id",
-        "name": "Akhmad Aldo Sari (Aldo) | Mobile & Web Developer",
-        "description": "Portfolio of Akhmad Aldo Sari (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer based in Depok, Indonesia.",
+        "name": "Akhmad Aldo (Aldo) | Mobile & Web Developer",
+        "description": "Portfolio of Akhmad Aldo (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer based in Depok, Indonesia.",
         "publisher": {
           "@id": "https://akhmadaldo.my.id/#person"
         }

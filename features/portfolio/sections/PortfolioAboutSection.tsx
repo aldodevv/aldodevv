@@ -72,7 +72,7 @@ export default function PortfolioAboutSection() {
                                 <div className="absolute inset-0 w-full h-full bg-white border-2 border-black transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/avatar:translate-x-3 group-hover/avatar:-translate-y-3">
                                     <motion.img
                                         src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop"
-                                        alt="Akhmad Aldo Sari"
+                                        alt="Akhmad Aldo"
                                         className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-300 group-hover/avatar:grayscale-0 group-hover/avatar:scale-105"
                                     />
                                     <div className="absolute inset-0 bg-[#ff5e5e]/10 transition-colors duration-500 group-hover/avatar:bg-transparent" />
