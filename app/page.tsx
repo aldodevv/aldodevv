@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     "Aldo",
     "Aldodevv"
   ],
-  authors: [{ name: "Akhmad Aldo", url: "https://akhmadaldo.my.id" }],
+  authors: [{ name: "Akhmad Aldo", url: "https://www.akhmadaldo.my.id" }],
   creator: "Akhmad Aldo",
   openGraph: {
     type: "profile",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     username: "aldodevv",
     gender: "male",
     locale: "en_US",
-    url: "https://akhmadaldo.my.id",
+    url: "https://www.akhmadaldo.my.id",
     title: "Akhmad Aldo (Aldo) | Mobile & Web Developer",
     description: "Portfolio of Akhmad Aldo (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer based in Depok, Indonesia. Specializing in high-performance applications with Flutter, React Native, Kotlin, Swift, and Next.js.",
     siteName: "Akhmad Aldo Portfolio",
@@ -78,11 +78,11 @@ export default function Home() {
     "@graph": [
       {
         "@type": "Person",
-        "@id": "https://akhmadaldo.my.id/#person",
+        "@id": "https://www.akhmadaldo.my.id/#person",
         "name": "Akhmad Aldo",
         "alternateName": ["Ahmad Aldo", "Aldo", "Ahmad Aldo Sari", "Akhmad Aldo", "aldodevv", "akhmadaldo", "aldos"],
-        "url": "https://akhmadaldo.my.id",
-        "image": "https://akhmadaldo.my.id/assets/me.png",
+        "url": "https://www.akhmadaldo.my.id",
+        "image": "https://www.akhmadaldo.my.id/assets/me.png",
         "jobTitle": "Mobile & Web Developer",
         "gender": "Male",
         "nationality": {
@@ -122,37 +122,37 @@ export default function Home() {
       },
       {
         "@type": "WebSite",
-        "@id": "https://akhmadaldo.my.id/#website",
-        "url": "https://akhmadaldo.my.id",
+        "@id": "https://www.akhmadaldo.my.id/#website",
+        "url": "https://www.akhmadaldo.my.id",
         "name": "Akhmad Aldo (Aldo) | Mobile & Web Developer",
         "description": "Portfolio of Akhmad Aldo (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer based in Depok, Indonesia.",
         "publisher": {
-          "@id": "https://akhmadaldo.my.id/#person"
+          "@id": "https://www.akhmadaldo.my.id/#person"
         }
       },
       {
         "@type": "SiteNavigationElement",
-        "@id": "https://akhmadaldo.my.id/#navigation",
+        "@id": "https://www.akhmadaldo.my.id/#navigation",
         "hasPart": [
           {
             "@type": "WebPage",
             "name": "Me",
-            "url": "https://akhmadaldo.my.id/#Hero"
+            "url": "https://www.akhmadaldo.my.id/#Hero"
           },
           {
             "@type": "WebPage",
             "name": "About",
-            "url": "https://akhmadaldo.my.id/#PortfolioAbout"
+            "url": "https://www.akhmadaldo.my.id/#PortfolioAbout"
           },
           {
             "@type": "WebPage",
             "name": "Tech Stack",
-            "url": "https://akhmadaldo.my.id/#TechStack"
+            "url": "https://www.akhmadaldo.my.id/#TechStack"
           },
           {
             "@type": "WebPage",
             "name": "Experience",
-            "url": "https://akhmadaldo.my.id/#WorkExperience"
+            "url": "https://www.akhmadaldo.my.id/#WorkExperience"
           }
         ]
       }

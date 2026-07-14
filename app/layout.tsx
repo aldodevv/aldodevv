@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://akhmadaldo.my.id"),
+  metadataBase: new URL("https://www.akhmadaldo.my.id"),
   title: {
     default: "Akhmad Aldo (Aldo) | Mobile & Web Developer",
     template: "%s | Akhmad Aldo (Aldo)",

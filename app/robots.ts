@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/private/', '/dashboard/', '/feed/'],
     },
-    sitemap: 'https://akhmadaldo.my.id/sitemap.xml',
+    sitemap: 'https://www.akhmadaldo.my.id/sitemap.xml',
   }
 }
