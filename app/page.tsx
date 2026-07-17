@@ -137,22 +137,27 @@ export default function Home() {
           {
             "@type": "WebPage",
             "name": "Me",
-            "url": "https://www.akhmadaldo.my.id/#Hero"
+            "url": "https://www.akhmadaldo.my.id/"
           },
           {
             "@type": "WebPage",
             "name": "About",
-            "url": "https://www.akhmadaldo.my.id/#PortfolioAbout"
+            "url": "https://www.akhmadaldo.my.id/about"
           },
           {
             "@type": "WebPage",
             "name": "Tech Stack",
-            "url": "https://www.akhmadaldo.my.id/#TechStack"
+            "url": "https://www.akhmadaldo.my.id/tech-stack"
           },
           {
             "@type": "WebPage",
             "name": "Experience",
-            "url": "https://www.akhmadaldo.my.id/#WorkExperience"
+            "url": "https://www.akhmadaldo.my.id/experience"
+          },
+          {
+            "@type": "WebPage",
+            "name": "Blog",
+            "url": "https://www.akhmadaldo.my.id/blog"
           }
         ]
       }
