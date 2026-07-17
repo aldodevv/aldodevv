@@ -5,7 +5,6 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/private/', '/dashboard/', '/feed/'],
     },
     sitemap: 'https://www.akhmadaldo.my.id/sitemap.xml',
   }
