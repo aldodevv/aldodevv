@@ -1,107 +1,144 @@
 import Link from "next/link";
-import { ArrowLeft, User, MapPin, Award, BookOpen } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Akhmad Aldo | Mobile & Web Developer",
-  description: "Learn more about Akhmad Aldo (Aldo), his background in software engineering, education, and credentials.",
+  title: "About Akhmad Aldo | Software Engineer",
+  description: "Learn more about Akhmad Aldo (Aldo), his background in software engineering, education, and banking architecture.",
 };
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col gap-8 text-black">
-      {/* Back Button */}
-      <Link 
-        href="/"
-        className="self-start flex items-center gap-2 px-4 py-2 bg-[#ff5e5e] hover:bg-[#ffd54f] border-4 border-black text-black font-black font-sans uppercase tracking-widest text-xs shadow-[4px_4px_0px_#000000] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back To Dashboard
-      </Link>
+    <div className="flex flex-col gap-10">
+      {/* Navigation Breadcrumb / Back Link */}
+      <div className="flex items-center justify-between border-b border-[#eaeaea] pb-5">
+        <Link 
+          href="/"
+          className="btn-secondary-minimal px-3.5 py-1.5 text-xs font-mono inline-flex items-center gap-2 text-[#787774] hover:text-[#111111]"
+        >
+          <span>←</span>
+          <span>Back to Overview</span>
+        </Link>
+        <div className="font-mono text-xs text-[#787774]">
+          about.profile.tsx
+        </div>
+      </div>
 
-      {/* Main OS Window Card */}
-      <div className="border-4 border-black bg-[#ffd54f] shadow-[10px_10px_0px_#000000] overflow-hidden">
-        {/* Header Bar */}
-        <div className="bg-black text-white px-4 py-3 flex items-center justify-between font-black font-mono tracking-widest text-xs uppercase">
-          <div className="flex gap-2">
-            <span className="w-3.5 h-3.5 rounded-full bg-[#ff5e5e] border-2 border-black" />
-            <span className="w-3.5 h-3.5 rounded-full bg-[#ffd54f] border-2 border-black" />
-            <span className="w-3.5 h-3.5 rounded-full bg-[#3cd070] border-2 border-black" />
+      {/* Main Faux-OS Window Container */}
+      <div className="minimal-card overflow-hidden">
+        {/* Titlebar */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-[#eaeaea] bg-white">
+          <div className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#eaeaea] border border-[#d8d8d8]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#eaeaea] border border-[#d8d8d8]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#eaeaea] border border-[#d8d8d8]" />
           </div>
-          <span>CHARACTER_BIO_DETAILED.EXE</span>
-          <Link href="/" className="hover:text-[#ff5e5e] transition-colors">✕</Link>
+          <span className="font-mono text-xs text-[#787774]">
+            character_bio.md
+          </span>
+          <div className="w-8" />
         </div>
 
-        {/* Content */}
-        <div className="p-8 bg-white border-t-4 border-black flex flex-col md:flex-row gap-8">
-          {/* Avatar side */}
-          <div className="w-full md:w-1/3 shrink-0 flex flex-col gap-6">
-            <div className="w-full aspect-[4/5] relative border-4 border-black bg-[#b088f9] shadow-[6px_6px_0px_#000000] overflow-hidden">
+        {/* Content Body */}
+        <div className="p-8 md:p-12 flex flex-col md:flex-row gap-10 bg-white">
+          {/* Left Column: Portrait & Quick Stats */}
+          <div className="w-full md:w-5/12 shrink-0 flex flex-col gap-6">
+            <div className="relative aspect-[4/5] rounded-xl overflow-hidden border border-[#eaeaea] bg-[#f7f6f3]">
               <img
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop"
+                src="/assets/me.png"
                 alt="Akhmad Aldo"
-                className="absolute inset-0 w-full h-full object-cover grayscale"
+                className="w-full h-full object-cover object-top filter grayscale contrast-105"
               />
+              <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded border border-[#eaeaea] text-[11px] font-mono text-[#111111]">
+                Depok, Indonesia
+              </div>
             </div>
-            
-            {/* Quick Stats Block */}
-            <div className="border-4 border-black bg-[#3fc1e8] p-4 shadow-[4px_4px_0px_#000000] font-mono text-xs text-black">
-              <div className="font-black border-b-2 border-black pb-1 mb-2 uppercase">SYS_METRICS.LOG</div>
-              <div className="flex justify-between py-0.5"><span>NAME:</span><span className="font-black">AKHMAD ALDO</span></div>
-              <div className="flex justify-between py-0.5"><span>CLASS:</span><span className="font-black">DEVELOPER</span></div>
-              <div className="flex justify-between py-0.5"><span>LOC:</span><span className="font-black">DEPOK, ID</span></div>
-              <div className="flex justify-between py-0.5"><span>STATUS:</span><span className="font-black text-[#3cd070]">ACTIVE</span></div>
+
+            {/* Quick Metrics Bento Card */}
+            <div className="rounded-xl border border-[#eaeaea] bg-[#fbfbfa] p-5 font-mono text-xs text-[#787774] space-y-2.5">
+              <div className="text-[11px] font-medium uppercase tracking-wider text-[#111111] border-b border-[#eaeaea] pb-2">
+                Engineering Metrics
+              </div>
+              <div className="flex justify-between">
+                <span>Domain:</span>
+                <span className="text-[#111111]">Mobile & Fullstack Web</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Enterprise:</span>
+                <span className="text-[#111111]">Bank Rakyat Indonesia</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Core Stack:</span>
+                <span className="text-[#111111]">Flutter, React Native, Next.js</span>
+              </div>
+              <div className="flex justify-between items-center pt-1 border-t border-[#eaeaea]">
+                <span>Status:</span>
+                <span className="tag-pastel-green px-2 py-0.5 rounded-full text-[10px] font-medium">
+                  Available for Hire
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* Details side */}
-          <div className="flex-1 flex flex-col gap-6 font-sans">
-            <div>
-              <div className="inline-block bg-[#3cd070] text-black font-black uppercase text-xs px-2.5 py-1 border-2 border-black shadow-sm mb-3">
-                BIOGRAPHY
+          {/* Right Column: Detailed Narrative */}
+          <div className="flex-1 flex flex-col justify-between gap-8">
+            <div className="flex flex-col gap-5">
+              <div className="flex items-center gap-2 font-mono text-xs text-[#787774]">
+                <span className="tag-pastel-blue px-2.5 py-0.5 rounded-full text-[10px] uppercase font-medium">
+                  Biography
+                </span>
+                <span>/</span>
+                <span>Akhmad Aldo Sari</span>
               </div>
-              <h2 className="text-3xl font-black uppercase tracking-tight mb-4">
-                Akhmad Aldo (Aldo)
-              </h2>
-              <p className="text-base font-medium leading-relaxed text-black/85 mb-4">
-                I am an expert Mobile and Web Developer based in Depok, West Java, Indonesia. With years of experience in creating production-grade software architectures, I specialize in delivering robust systems that balance cutting-edge user interfaces with strict engineering practices.
-              </p>
-              <p className="text-base font-medium leading-relaxed text-black/85">
-                My technical philosophy centers on optimization, clean state management, and strict security compliance. Whether architecting banking applications with complex cryptography or crafting fluid micro-interactions with WebGL and React, I guarantee high-speed, reliable delivery.
-              </p>
-            </div>
 
-            <div className="border-t-4 border-black pt-6">
-              <div className="inline-block bg-[#b088f9] text-black font-black uppercase text-xs px-2.5 py-1 border-2 border-black shadow-sm mb-3">
-                EDUCATION
-              </div>
-              <div className="flex gap-4 items-start bg-[#f7f6f0] p-4 border-4 border-black shadow-[4px_4px_0px_#000000]">
-                <BookOpen className="w-8 h-8 shrink-0 text-black border-2 border-black p-1 bg-white" />
-                <div>
-                  <h3 className="font-black text-lg uppercase leading-tight">Universitas Bina Sarana Informatika</h3>
-                  <span className="font-mono text-xs text-black/70 font-bold block mb-1">DEPOK, INDONESIA</span>
-                  <p className="text-sm font-medium">
-                    Focused on Computer Science and Information Systems. Built a strong foundational knowledge in algorithm complexity, database modeling, and software patterns.
-                  </p>
-                </div>
+              <h1 className="font-serif text-3xl sm:text-4xl text-[#111111] font-normal tracking-tight leading-tight">
+                Architecting dependable digital products with clean engineering discipline.
+              </h1>
+
+              <div className="space-y-4 text-sm md:text-base text-[#787774] leading-relaxed font-sans">
+                <p>
+                  I am a Software Engineer based in Depok, Indonesia. My work centers on crafting production-ready mobile architectures and high-performance web applications, balancing clean interface ergonomics with resilient systems engineering.
+                </p>
+                <p>
+                  At Bank Rakyat Indonesia, I contributed directly to the core development of corporate mobile solutions, including <strong className="text-[#111111] font-medium">QLola Mobile</strong> and <strong className="text-[#111111] font-medium">QLola IB Token</strong>. This work required strict compliance with financial security standards, biometric cryptographic authentication, and zero-downtime offline functionality.
+                </p>
+                <p>
+                  My engineering ethos prioritizes maintainable state machines, predictable cross-platform bridges (Kotlin, Swift, Dart), and type-safe web systems powered by Next.js and TypeScript.
+                </p>
               </div>
             </div>
 
-            <div className="border-t-4 border-black pt-6">
-              <div className="inline-block bg-[#ff5e5e] text-white font-black uppercase text-xs px-2.5 py-1 border-2 border-black shadow-sm mb-3">
-                CORE VALUE
+            {/* Academic Credentials Card */}
+            <div className="rounded-xl border border-[#eaeaea] p-5 flex items-center gap-4 bg-[#fbfbfa]">
+              <div className="w-10 h-10 rounded-lg bg-white border border-[#eaeaea] flex items-center justify-center shrink-0 text-[#111111]">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                  <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                </svg>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-white border-2 border-black p-3 flex gap-2.5">
-                  <Award className="w-5 h-5 text-[#ff5e5e] shrink-0" />
-                  <span className="text-sm font-black uppercase">PERFORMANCE DRIVEN</span>
-                </div>
-                <div className="bg-white border-2 border-black p-3 flex gap-2.5">
-                  <User className="w-5 h-5 text-[#3cd070] shrink-0" />
-                  <span className="text-sm font-black uppercase">CLEAN CODE PATTERNS</span>
-                </div>
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#787774]">
+                  Academic Foundation
+                </span>
+                <h3 className="text-sm font-medium text-[#111111]">
+                  Universitas Bina Sarana Informatika
+                </h3>
+                <p className="text-xs text-[#787774] font-mono">
+                  Bachelor of Computer Science (Graduate)
+                </p>
               </div>
             </div>
+
+            {/* Direct Contact CTA */}
+            <div className="pt-2">
+              <a
+                href="mailto:akhmadaldo12@gmail.com"
+                className="btn-primary-minimal px-5 py-2.5 text-xs font-mono uppercase tracking-wider inline-flex items-center gap-2"
+              >
+                <span>Get in Touch</span>
+                <span>→</span>
+              </a>
+            </div>
+
           </div>
         </div>
       </div>

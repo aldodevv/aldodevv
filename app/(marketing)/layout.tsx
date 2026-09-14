@@ -12,7 +12,7 @@ export default function MarketingLayout({
       <PortfolioCursor />
       <PortfolioNavbar />
       <RetroBackground />
-      <main className="w-full relative z-10 bg-transparent min-h-screen pt-28 pb-16 px-4 md:px-8 max-w-6xl mx-auto">
+      <main className="w-full relative z-10 bg-transparent min-h-[100dvh] pt-32 pb-24 px-6 max-w-5xl mx-auto">
         {children}
       </main>
     </>
