@@ -1,55 +1,42 @@
 ---
-name: Mistral Arcade
+name: Industrial Brutalism & Tactical Telemetry
+archetype: Tactical Telemetry & CRT Terminal
 colors:
-  primary: "#fa520f"
-  secondary: "#ffb83e"
-  success: "#16A34A"
-  warning: "#D97706"
-  danger: "#DC2626"
-  surface: "#FFFFFF"
-  text: "#111827"
-  neutral: "#FFFFFF"
+  background: "#0A0A0A"
+  surface: "#121212"
+  surface-hover: "#1A1A1A"
+  border: "#262626"
+  border-highlight: "#404040"
+  text-primary: "#EAEAEA"
+  text-muted: "#888888"
+  accent-hazard: "#FF2A2A"
+  accent-status: "#4AF626"
 typography:
-  h1:
-    fontFamily: "VT323"
-    fontSize: 2.1875rem
-  body-md:
-    fontFamily: "VT323"
-    fontSize: 0.9375rem
-  label-caps:
-    fontFamily: "JetBrains Mono"
-    fontSize: 0.8125rem
-  sourceScale: "13/15/17/21/27/35"
-  weights: "100, 200, 300, 400, 500, 600, 700, 800, 900"
-rounded:
-  sm: 4px
-  md: 8px
-spacing:
-  sm: 4px
-  md: 8px
-  sourceScale: "4/8/12/16/24/32"
+  macro:
+    fontFamily: "Space Grotesk, system-ui, sans-serif"
+    transform: "uppercase"
+    tracking: "-0.04em"
+    leading: "0.9"
+    weights: "700, 800, 900"
+  micro:
+    fontFamily: "JetBrains Mono, monospace"
+    transform: "uppercase"
+    tracking: "0.08em"
+    leading: "1.3"
+    size: "10px - 14px"
+geometry:
+  radius: "0px"
+  borderWidth: "1px"
+  style: "Rigid modular grid, razor-thin dividing lines, ASCII framing, crosshair anchors"
 ---
 
 ## Overview
 
-Arcade-inspired game interface with pixel typography, hard edges, and physically punchy, offset-shadow controls.
+A rugged, mechanical digital interface fusing 1960s Swiss industrial blueprints with retro-futuristic aerospace and military telemetry terminals. Deliberately rejects soft consumer patterns in favor of uncompromising structural rigidity, high-density telemetry, and simulated analog display characteristics.
 
-## Style Foundations
+## Directives
 
-- **Visual style:** modern, playful
-- **Typography scale:** 13/15/17/21/27/35
-- **Typography fonts:** primary=VT323, display=VT323, mono=JetBrains Mono
-- **Typography weights:** 100, 200, 300, 400, 500, 600, 700, 800, 900
-- **Color palette:** primary, secondary, neutral, success, warning, danger
-- **Spacing scale:** 4/8/12/16/24/32
-
-## Colors
-
-- **Primary (#fa520f):** Token from style foundations.
-- **Secondary (#ffb83e):** Token from style foundations.
-- **Success (#16A34A):** Token from style foundations.
-- **Warning (#D97706):** Token from style foundations.
-- **Danger (#DC2626):** Token from style foundations.
-- **Surface (#FFFFFF):** Token from style foundations.
-- **Text (#111827):** Token from style foundations.
-- **Neutral (#FFFFFF):** Derived from the surface token for official format compatibility.
+1. **Absolute Zero Radius**: `border-radius: 0px` globally. Every container, button, and indicator is strictly 90-degree orthogonal.
+2. **Monochrome Dominance with Singular Hazard Accent**: Dark CRT substrate (`#0A0A0A`), phosphor white text (`#EAEAEA`), with `#FF2A2A` reserved for vital notices, highlights, and structural alerts. `#4AF626` strictly for active telemetry status.
+3. **Grid Determinism**: Built with mathematically precise 1px dividing lines (`gap: 1px` over `#262626` grid track borders).
+4. **Telemetry Micro-Syntax**: ASCII brackets `[ SYS // 01 ]`, crosshair coordinates `+`, warning chevrons `///`, and technical designation codes.

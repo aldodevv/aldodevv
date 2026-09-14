@@ -16,367 +16,207 @@ export default function RetroBackground() {
         let width = (canvas.width = window.innerWidth);
         let height = (canvas.height = window.innerHeight);
 
-        // Scroll tracking variables
-        let lastScrollY = window.scrollY;
-        let targetSpeed = 2; // Default drifting speed
-        let speed = 2;       // Lerped speed
-        let scrollDelta = 0;
-        let tiltOffset = 0;  // Tilts horizon on scroll
+        // Interaction state
+        let mouseX = width / 2;
+        let mouseY = height / 2;
+        let radarAngle = 0;
+        let tick = 0;
 
-        // Mouse interaction variables
-        let mouseX = 0;      // Lerped X position (-1 to 1)
-        let mouseY = 0;      // Lerped Y position (-1 to 1)
-        let targetMouseX = 0;
-        let targetMouseY = 0;
-        
-        // Interactive spark particles spawned by mouse movement (Neo-Brutalist colored dots)
-        const sparkParticles: { 
-            x: number; 
-            y: number; 
-            vx: number; 
-            vy: number; 
-            life: number; 
-            maxLife: number; 
-            color: string; 
-            size: number; 
-        }[] = [];
+        // Telemetry pulses from click / move
+        const pulses: { x: number; y: number; radius: number; maxRadius: number; opacity: number; color: string }[] = [];
 
-        // --- 3D Floating Shape Setup (Neo-Brutalist wireframe with vertex beads) ---
-        // Octahedron (8 triangular faces, 6 vertices)
+        // 3D Telemetry Gimbal / Wireframe Radar Octahedron
         const vertices = [
-            { x: 0, y: 1.2, z: 0 },
-            { x: 1, y: 0, z: 1 },
-            { x: -1, y: 0, z: 1 },
-            { x: -1, y: 0, z: -1 },
-            { x: 1, y: 0, z: -1 },
-            { x: 0, y: -1.2, z: 0 }
+            { x: 0, y: 1.4, z: 0 },
+            { x: 1.1, y: 0, z: 1.1 },
+            { x: -1.1, y: 0, z: 1.1 },
+            { x: -1.1, y: 0, z: -1.1 },
+            { x: 1.1, y: 0, z: -1.1 },
+            { x: 0, y: -1.4, z: 0 },
         ];
 
         const edges = [
-            [0, 1], [0, 2], [0, 3], [0, 4], // Top pyramid edges
-            [5, 1], [5, 2], [5, 3], [5, 4], // Bottom pyramid edges
-            [1, 2], [2, 3], [3, 4], [4, 1]  // Middle ring edges
+            [0, 1], [0, 2], [0, 3], [0, 4],
+            [5, 1], [5, 2], [5, 3], [5, 4],
+            [1, 2], [2, 3], [3, 4], [4, 1],
         ];
 
-        let angleX = 0;
-        let angleY = 0;
-
-        // Coordinates of shape center (lerped for smooth movement)
-        let shapeX = width * 0.75;
-        let shapeY = height * 0.35;
-        let targetShapeX = width * 0.75;
-        let targetShapeY = height * 0.35;
-        let shapeScale = 1.0;
-        let targetShapeScale = 1.0;
+        let angleX = 0.2;
+        let angleY = 0.4;
 
         const handleResize = () => {
             if (!canvas) return;
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
-            handleScroll();
-        };
-
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-            scrollDelta = Math.abs(currentScrollY - lastScrollY);
-            lastScrollY = currentScrollY;
-
-            // Increase speed based on how fast the user is scrolling
-            targetSpeed = 2 + Math.min(scrollDelta * 0.5, 30);
-            
-            // Horizon tilt based on scroll direction
-            const direction = currentScrollY > lastScrollY ? 1 : -1;
-            tiltOffset = direction * Math.min(scrollDelta * 0.4, 25);
-
-            // Map scroll progress to screen position
-            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = maxScroll > 0 ? currentScrollY / maxScroll : 0;
-
-            if (scrollPercent < 0.15) {
-                targetShapeX = width * 0.78;
-                targetShapeY = height * 0.38;
-                targetShapeScale = 1.0;
-            } else if (scrollPercent < 0.45) {
-                targetShapeX = width * 0.22;
-                targetShapeY = height * 0.5;
-                targetShapeScale = 1.25;
-            } else if (scrollPercent < 0.75) {
-                targetShapeX = width * 0.8;
-                targetShapeY = height * 0.3;
-                targetShapeScale = 0.95;
-            } else {
-                targetShapeX = width * 0.5;
-                targetShapeY = height * 0.22;
-                targetShapeScale = 1.15;
-            }
         };
 
         const handleMouseMove = (e: MouseEvent) => {
-            targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
-            targetMouseY = (e.clientY / window.innerHeight) * 2 - 1;
-            
-            // Spawn spark shapes on cursor move (Neo-Brutalist circles)
-            const colors = ["#ff5e5e", "#ffd54f", "#b088f9", "#3cd070", "#3fc1e8", "#ff8a5c"];
-            if (Math.random() < 0.5) {
-                sparkParticles.push({
-                    x: e.clientX,
-                    y: e.clientY,
-                    vx: (Math.random() - 0.5) * 2.0,
-                    vy: (Math.random() - 0.5) * 1.5 - 1.2, // floats up
-                    life: 1,
-                    maxLife: 35 + Math.random() * 20,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    size: Math.random() * 4 + 3, // slightly larger for visibility
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            if (Math.random() < 0.1) {
+                pulses.push({
+                    x: mouseX,
+                    y: mouseY,
+                    radius: 4,
+                    maxRadius: 40 + Math.random() * 30,
+                    opacity: 0.6,
+                    color: Math.random() < 0.2 ? "#ff2a2a" : "#eaeaea",
                 });
             }
         };
 
-        window.addEventListener("resize", handleResize, { passive: true });
-        window.addEventListener("scroll", handleScroll, { passive: true });
-        window.addEventListener("mousemove", handleMouseMove, { passive: true });
-
-        // Trigger initial calculation
-        handleScroll();
-
-        // --- Stars Setup (Floating Crosses and Squares in Neo-Brutalist style) ---
-        const numStars = 50;
-        const stars: { x: number; y: number; z: number; size: number; isCross: boolean }[] = [];
-        for (let i = 0; i < numStars; i++) {
-            stars.push({
-                x: Math.random() * width - width / 2,
-                y: Math.random() * (height * 0.6) - (height * 0.3), // mostly top half
-                z: Math.random() * width,
-                size: Math.random() * 1.8 + 0.8,
-                isCross: Math.random() > 0.5
+        const handleClick = (e: MouseEvent) => {
+            pulses.push({
+                x: e.clientX,
+                y: e.clientY,
+                radius: 4,
+                maxRadius: 80,
+                opacity: 0.8,
+                color: "#ff2a2a",
             });
-        }
-
-        // --- Grid Setup ---
-        let gridOffset = 0;
-        const gridSpacing = 45; // Spacing of grid lines
-        const vanishingPointY = height * 0.45; // Horizon height
-
-        // Lerp helper
-        const lerp = (start: number, end: number, amt: number) => {
-            return (1 - amt) * start + amt * end;
         };
 
-        // --- Render Loop ---
+        window.addEventListener("resize", handleResize, { passive: true });
+        window.addEventListener("mousemove", handleMouseMove, { passive: true });
+        window.addEventListener("click", handleClick, { passive: true });
+
         const render = () => {
-            // Lerp mouse variables
-            mouseX = lerp(mouseX, targetMouseX, 0.08);
-            mouseY = lerp(mouseY, targetMouseY, 0.08);
+            tick++;
+            radarAngle += 0.012;
+            angleX += 0.005;
+            angleY += 0.008;
 
-            // Shifting vanishing points based on mouse coordinates (Camera 3D Parallax!)
-            const vanishingPointX = width / 2 + mouseX * 50;
-            const vanishingPointY = height * 0.45 + mouseY * 25;
+            ctx.clearRect(0, 0, width, height);
 
-            // Lerp speed back to drift speed (2)
-            speed = lerp(speed, targetSpeed, 0.08);
-            targetSpeed = lerp(targetSpeed, 2, 0.05);
-            tiltOffset = lerp(tiltOffset, 0, 0.05);
-            const horizonY = vanishingPointY + tiltOffset;
+            // 1. Draw Grid Crosshair Reticles
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.035)";
+            ctx.lineWidth = 1;
 
-            // Lerp floating 3D shape position & scale
-            shapeX = lerp(shapeX, targetShapeX, 0.04);
-            shapeY = lerp(shapeY, targetShapeY, 0.04);
-            shapeScale = lerp(shapeScale, targetShapeScale, 0.04);
+            const gridSize = 120;
+            const xOffset = (width % gridSize) / 2;
+            const yOffset = (height % gridSize) / 2;
 
-            // Clean background (Warm Neo-Brutalist Eggshell)
-            ctx.fillStyle = "#f7f6f0";
-            ctx.fillRect(0, 0, width, height);
-
-            // --- Draw Ambient Radial Glow (Soft Neo-Brutalist tints) ---
-            const glowGradient = ctx.createRadialGradient(
-                vanishingPointX, horizonY, 10,
-                vanishingPointX, horizonY, Math.max(width, height) * 0.5
-            );
-            glowGradient.addColorStop(0, "rgba(255, 94, 94, 0.08)"); // Soft salmon pink glow
-            glowGradient.addColorStop(0.4, "rgba(255, 213, 79, 0.04)"); // Soft yellow glow
-            glowGradient.addColorStop(1, "rgba(247, 246, 240, 0)"); // Fade into background
-            ctx.fillStyle = glowGradient;
-            ctx.fillRect(0, 0, width, height);
-
-            // --- 1. Draw Starfield (Floating crosses and dots in solid black/dark grey) ---
-            for (let i = 0; i < numStars; i++) {
-                const star = stars[i];
-                
-                // Move star closer
-                star.z -= speed * 1.5;
-                if (star.z <= 0) {
-                    star.z = width;
-                    star.x = Math.random() * width - width / 2;
-                    star.y = Math.random() * (height * 0.6) - (height * 0.3);
-                }
-
-                // Project to 2D
-                const k = 120 / star.z;
-                const px = star.x * k + vanishingPointX; 
-                const py = star.y * k + vanishingPointY;
-
-                if (px >= 0 && px <= width && py >= 0 && py <= height * 0.6) {
-                    const alpha = Math.min(1, (1 - star.z / width) * 1.2) * 0.5; // faint dark markers
-                    
-                    ctx.strokeStyle = `rgba(0, 0, 0, ${alpha})`;
-                    ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`;
-                    ctx.lineWidth = 1.5;
-
-                    if (star.isCross) {
-                        // Draw tiny '+' cross
-                        ctx.beginPath();
-                        ctx.moveTo(px - 4, py);
-                        ctx.lineTo(px + 4, py);
-                        ctx.moveTo(px, py - 4);
-                        ctx.lineTo(px, py + 4);
-                        ctx.stroke();
-                    } else {
-                        // Draw small solid square
-                        ctx.fillRect(px - 2, py - 2, 4, 4);
-                    }
-                }
-            }
-
-            // --- 2. Draw 3D Perspective Grid (High contrast black lines) ---
-            gridOffset += speed * 0.8;
-            if (gridOffset >= gridSpacing) {
-                gridOffset = 0;
-            }
-
-            const gridStartHeight = height - horizonY;
-
-            // Draw horizontal lines (converging depth)
-            const numHorizontalLines = 15;
-            for (let i = 0; i < numHorizontalLines; i++) {
-                const progress = (i * gridSpacing + gridOffset) / (numHorizontalLines * gridSpacing);
-                const ratio = Math.pow(progress, 2.5); 
-                
-                const lineY = horizonY + ratio * gridStartHeight;
-
-                if (lineY >= horizonY && lineY <= height) {
-                    ctx.strokeStyle = `rgba(0, 0, 0, ${ratio * 0.15})`; // thin black lines fading out
-                    ctx.lineWidth = 1.5;
+            for (let x = xOffset; x < width; x += gridSize) {
+                for (let y = yOffset; y < height; y += gridSize) {
                     ctx.beginPath();
-                    ctx.moveTo(0, lineY);
-                    ctx.lineTo(width, lineY);
+                    // Small + crosshairs at intersections
+                    ctx.moveTo(x - 4, y);
+                    ctx.lineTo(x + 4, y);
+                    ctx.moveTo(x, y - 4);
+                    ctx.lineTo(x, y + 4);
                     ctx.stroke();
                 }
             }
 
-            // Draw vertical perspective lines
-            const numVerticalLines = 24;
-            for (let i = 0; i <= numVerticalLines; i++) {
-                const fraction = i / numVerticalLines;
-                const bottomX = fraction * width * 2 - width / 2;
+            // 2. Draw Target Reticle Radar Center (Right aligned on desktop for architectural depth)
+            const radarCenterX = width > 1024 ? width * 0.75 : width * 0.5;
+            const radarCenterY = height * 0.45;
+            const radarRadius = Math.min(width, height) * 0.28;
 
-                const distFromCenter = Math.abs(fraction - 0.5) * 2;
-                ctx.strokeStyle = `rgba(0, 0, 0, ${0.12 - distFromCenter * 0.04})`;
-                ctx.lineWidth = 1.5;
+            // Concentric radar rings
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.06)";
+            ctx.beginPath();
+            ctx.arc(radarCenterX, radarCenterY, radarRadius, 0, Math.PI * 2);
+            ctx.arc(radarCenterX, radarCenterY, radarRadius * 0.66, 0, Math.PI * 2);
+            ctx.arc(radarCenterX, radarCenterY, radarRadius * 0.33, 0, Math.PI * 2);
+            ctx.stroke();
 
+            // Radar Axis Lines
+            ctx.beginPath();
+            ctx.moveTo(radarCenterX - radarRadius - 20, radarCenterY);
+            ctx.lineTo(radarCenterX + radarRadius + 20, radarCenterY);
+            ctx.moveTo(radarCenterX, radarCenterY - radarRadius - 20);
+            ctx.lineTo(radarCenterX, radarCenterY + radarRadius + 20);
+            ctx.stroke();
+
+            // Rotating sweep beam
+            const sweepX = radarCenterX + Math.cos(radarAngle) * radarRadius;
+            const sweepY = radarCenterY + Math.sin(radarAngle) * radarRadius;
+            const sweepGrad = ctx.createLinearGradient(radarCenterX, radarCenterY, sweepX, sweepY);
+            sweepGrad.addColorStop(0, "rgba(255, 42, 42, 0.2)");
+            sweepGrad.addColorStop(1, "rgba(255, 42, 42, 0)");
+
+            ctx.strokeStyle = sweepGrad;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(radarCenterX, radarCenterY);
+            ctx.lineTo(sweepX, sweepY);
+            ctx.stroke();
+            ctx.lineWidth = 1;
+
+            // 3. Render 3D Telemetry Gimbal (Grounded at radarCenter)
+            const projectedVertices = vertices.map((v) => {
+                // Rotation around X
+                const cosX = Math.cos(angleX);
+                const sinX = Math.sin(angleX);
+                const y1 = v.y * cosX - v.z * sinX;
+                const z1 = v.y * sinX + v.z * cosX;
+
+                // Rotation around Y
+                const cosY = Math.cos(angleY);
+                const sinY = Math.sin(angleY);
+                const x2 = v.x * cosY + z1 * sinY;
+                const z2 = -v.x * sinY + z1 * cosY;
+
+                const distance = 4.2;
+                const scaleFactor = 160;
+                const screenX = radarCenterX + (x2 * scaleFactor) / (distance + z2);
+                const screenY = radarCenterY + (y1 * scaleFactor) / (distance + z2);
+
+                return { x: screenX, y: screenY, z: z2 };
+            });
+
+            // Draw Wireframe Edges
+            ctx.strokeStyle = "rgba(234, 234, 234, 0.16)";
+            edges.forEach(([start, end]) => {
+                const p1 = projectedVertices[start];
+                const p2 = projectedVertices[end];
                 ctx.beginPath();
-                ctx.moveTo(vanishingPointX, horizonY);
-                ctx.lineTo(bottomX, height);
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
                 ctx.stroke();
-            }
+            });
 
-            // --- 3. Draw Interactive Mouse Spark Trail (Sticker circles with black outlines) ---
-            for (let i = sparkParticles.length - 1; i >= 0; i--) {
-                const p = sparkParticles[i];
-                p.x += p.vx;
-                p.y += p.vy;
-                p.vy -= 0.015; // Particle floats upward
-                p.life -= 1 / p.maxLife;
-                
-                if (p.life <= 0) {
-                    sparkParticles.splice(i, 1);
+            // Draw Vertices with Hazard Markers
+            projectedVertices.forEach((p, idx) => {
+                ctx.fillStyle = idx === 0 || idx === 5 ? "#ff2a2a" : "#eaeaea";
+                ctx.fillRect(p.x - 2, p.y - 2, 4, 4);
+            });
+
+            // 4. Draw Telemetry Pulses (Sonar Pings)
+            for (let i = pulses.length - 1; i >= 0; i--) {
+                const pulse = pulses[i];
+                pulse.radius += 1.2;
+                pulse.opacity -= 0.02;
+
+                if (pulse.opacity <= 0 || pulse.radius >= pulse.maxRadius) {
+                    pulses.splice(i, 1);
                     continue;
                 }
 
-                const currentSize = p.size * p.life * 1.5;
-
-                // Fill color
-                ctx.fillStyle = p.color;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
-                ctx.fill();
-
-                // Thick solid black outline (Neo-Brutalist sticker style)
-                ctx.strokeStyle = "#000000";
-                ctx.lineWidth = 1.8;
-                ctx.stroke();
+                ctx.strokeStyle = pulse.color;
+                ctx.globalAlpha = pulse.opacity;
+                ctx.strokeRect(
+                    pulse.x - pulse.radius,
+                    pulse.y - pulse.radius,
+                    pulse.radius * 2,
+                    pulse.radius * 2
+                );
             }
+            ctx.globalAlpha = 1.0;
 
-            // --- 4. Draw 3D Floating Shape (Thick solid black outlines, colorful vertex beads) ---
-            angleX += 0.006 + speed * 0.0008;
-            angleY += 0.010 + speed * 0.0012;
+            // 5. Draw Static Edge Telemetry Readouts (Corner Data Blocks)
+            ctx.font = "10px monospace";
+            ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
 
-            // Apply camera parallax displacement
-            const finalShapeX = shapeX + mouseX * 40;
-            const finalShapeY = shapeY + mouseY * 25;
+            // Top-left coordinates
+            ctx.fillText("[ TELEMETRY // RADAR ACTIVE ]", 24, 84);
+            ctx.fillText(`SYS.TICK: ${tick.toString().padStart(6, "0")} // LAT: -06.2088 LON: 106.8456`, 24, 98);
 
-            // Rotate and project 3D vertices
-            const projectedVertices = vertices.map((v) => {
-                const rx1 = v.x;
-                const ry1 = v.y * Math.cos(angleX) - v.z * Math.sin(angleX);
-                const rz1 = v.y * Math.sin(angleX) + v.z * Math.cos(angleX);
-
-                const rx2 = rx1 * Math.cos(angleY) + rz1 * Math.sin(angleY);
-                const ry2 = ry1;
-                const rz2 = -rx1 * Math.sin(angleY) + rz1 * Math.cos(angleY);
-
-                const distance = 3.8;
-                const sizeMultiplier = 130 * shapeScale;
-                const screenX = finalShapeX + (rx2 * sizeMultiplier) / (distance + rz2);
-                const screenY = finalShapeY + (ry2 * sizeMultiplier) / (distance + rz2);
-
-                return { x: screenX, y: screenY };
-            });
-
-            // Draw 3D edges (thick solid black outline)
-            ctx.strokeStyle = "#000000"; 
-            ctx.lineWidth = 3.5;
-            ctx.shadowBlur = 0; // No glow in Neo-Brutalism!
-
-            edges.forEach(([p1, p2]) => {
-                ctx.beginPath();
-                ctx.moveTo(projectedVertices[p1].x, projectedVertices[p1].y);
-                ctx.lineTo(projectedVertices[p2].x, projectedVertices[p2].y);
-                ctx.stroke();
-            });
-
-            // Draw 3D vertex points as colorful beads with black outlines
-            const vertexColors = ["#ff5e5e", "#ffd54f", "#3cd070", "#b088f9", "#3fc1e8", "#ff8a5c"];
-            projectedVertices.forEach((p, idx) => {
-                ctx.fillStyle = vertexColors[idx % vertexColors.length];
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, 7.5, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.strokeStyle = "#000000";
-                ctx.lineWidth = 2.2;
-                ctx.stroke();
-            });
-
-            // --- 5. Draw Horizon Line (Thick black line separating sky & ground) ---
-            ctx.strokeStyle = "#000000";
-            ctx.lineWidth = 4;
-            ctx.beginPath();
-            ctx.moveTo(0, horizonY);
-            ctx.lineTo(width, horizonY);
-            ctx.stroke();
-
-            // Accent stripe underneath the horizon (pink & yellow combo stripe)
-            ctx.strokeStyle = "#ffd54f"; // yellow accent stripe
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(0, horizonY + 3);
-            ctx.lineTo(width, horizonY + 3);
-            ctx.stroke();
-
-            ctx.strokeStyle = "#ff5e5e"; // red/salmon accent stripe
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(0, horizonY + 5);
-            ctx.lineTo(width, horizonY + 5);
-            ctx.stroke();
+            // Bottom-right cursor tracker
+            const cursorText = `CRS_POS: [X:${Math.round(mouseX).toString().padStart(4, "0")} Y:${Math.round(mouseY).toString().padStart(4, "0")}] // STATUS: OPERATIONAL`;
+            ctx.fillText(cursorText, width - 360, height - 20);
 
             animationFrameId = requestAnimationFrame(render);
         };
@@ -385,8 +225,8 @@ export default function RetroBackground() {
 
         return () => {
             window.removeEventListener("resize", handleResize);
-            window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("click", handleClick);
             cancelAnimationFrame(animationFrameId);
         };
     }, []);
@@ -394,8 +234,7 @@ export default function RetroBackground() {
     return (
         <canvas
             ref={canvasRef}
-            className="fixed inset-0 w-screen h-screen -z-10 pointer-events-none"
-            style={{ display: "block" }}
+            className="fixed inset-0 w-full h-full pointer-events-none -z-10 bg-[#0a0a0a]"
         />
     );
 }

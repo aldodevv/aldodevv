@@ -3,43 +3,33 @@
 import React, { useEffect, useState } from "react";
 import { motion, useSpring, useMotionValue } from "framer-motion";
 
-type CursorTheme = "transparent" | "light-pill" | "dark-pill" | "dark-full" | "default";
-
 export default function PortfolioCursor() {
-    const [theme, setTheme] = useState<CursorTheme>("default");
     const [isVisible, setIsVisible] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const [coords, setCoords] = useState({ x: 0, y: 0 });
 
-    // Raw mouse coordinates
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
-    // FAST spring for the center dot (instant feel)
-    const springFast = { damping: 25, stiffness: 300, mass: 0.5 };
-    const dotX = useSpring(mouseX, springFast);
-    const dotY = useSpring(mouseY, springFast);
-
-    // SLOW spring for the outer trailing circle (lag dragging feel)
-    const springSlow = { damping: 22, stiffness: 45, mass: 0.65 };
-    const ringX = useSpring(mouseX, springSlow);
-    const ringY = useSpring(mouseY, springSlow);
+    const springConfig = { damping: 28, stiffness: 400, mass: 0.2 };
+    const cursorX = useSpring(mouseX, springConfig);
+    const cursorY = useSpring(mouseY, springConfig);
 
     useEffect(() => {
         if (typeof window === "undefined") return;
 
         const handleMouseMove = (e: MouseEvent) => {
             if (!isVisible) setIsVisible(true);
-
             mouseX.set(e.clientX);
             mouseY.set(e.clientY);
+            setCoords({ x: e.clientX, y: e.clientY });
 
-            // Detect current section data-nav-theme
-            const element = document.elementFromPoint(e.clientX, e.clientY);
-            const section = element?.closest("[data-nav-theme]");
-
-            if (section) {
-                setTheme(section.getAttribute("data-nav-theme") as CursorTheme);
+            // Check if hovering interactive element
+            const target = e.target as HTMLElement | null;
+            if (target?.closest("a, button, [role='button'], input, select, textarea")) {
+                setIsHovered(true);
             } else {
-                setTheme("default");
+                setIsHovered(false);
             }
         };
 
@@ -56,124 +46,40 @@ export default function PortfolioCursor() {
 
     if (!isVisible) return null;
 
-    // Variants for trailing ring (Neo-Brutalist colored circles with black borders)
-    const ringVariants = {
-        default: {
-            width: 24,
-            height: 24,
-            backgroundColor: "rgba(255, 94, 94, 0.4)", // Salmon pink
-            border: "2px solid #000000",
-            borderRadius: "9999px",
-            mixBlendMode: "normal" as const,
-            backdropFilter: "blur(0px)",
-        },
-        transparent: {
-            width: 32,
-            height: 32,
-            backgroundColor: "rgba(255, 213, 79, 0.5)", // Yellow
-            border: "2px solid #000000",
-            borderRadius: "9999px",
-            mixBlendMode: "normal" as const,
-            backdropFilter: "blur(0px)",
-        },
-        "light-pill": {
-            width: 30,
-            height: 30,
-            backgroundColor: "rgba(176, 136, 249, 0.4)", // Lilac
-            border: "2px solid #000000",
-            borderRadius: "9999px",
-            mixBlendMode: "normal" as const,
-            backdropFilter: "blur(0px)",
-        },
-        "dark-pill": {
-            width: 36,
-            height: 36,
-            backgroundColor: "rgba(60, 208, 112, 0.5)", // Lime Green
-            border: "2px dashed #000000",
-            borderRadius: "9999px",
-            mixBlendMode: "normal" as const,
-            backdropFilter: "blur(0px)",
-        },
-        "dark-full": {
-            width: 28,
-            height: 28,
-            backgroundColor: "rgba(63, 193, 232, 0.5)", // Sky Blue
-            border: "2px solid #000000",
-            borderRadius: "9999px",
-            mixBlendMode: "normal" as const,
-            backdropFilter: "blur(0px)",
-        },
-    };
-
-    const dotVariants = {
-        default: {
-            width: 6,
-            height: 6,
-            backgroundColor: "#000000",
-            borderRadius: "9999px",
-        },
-        transparent: {
-            width: 8,
-            height: 8,
-            backgroundColor: "#000000",
-            borderRadius: "9999px",
-        },
-        "light-pill": {
-            width: 6,
-            height: 6,
-            backgroundColor: "#000000",
-            borderRadius: "9999px",
-        },
-        "dark-pill": {
-            width: 6,
-            height: 6,
-            backgroundColor: "#000000",
-            borderRadius: "9999px",
-        },
-        "dark-full": {
-            width: 6,
-            height: 6,
-            backgroundColor: "#000000",
-            borderRadius: "9999px",
-        },
-    };
-
     return (
-        <>
-            {/* Outer delayed trailing circle */}
+        <div className="hidden lg:block pointer-events-none fixed inset-0 z-[9999] overflow-hidden">
+            {/* Center Crosshair Target */}
             <motion.div
-                className="fixed top-0 left-0 pointer-events-none z-[9998] flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2"
                 style={{
-                    x: ringX,
-                    y: ringY,
+                    x: cursorX,
+                    y: cursorY,
+                    translateX: "-50%",
+                    translateY: "-50%",
                 }}
-                initial="default"
-                animate={theme}
-                variants={ringVariants}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-            />
-            {/* Inner fast pointer dot */}
-            <motion.div
-                className="fixed top-0 left-0 pointer-events-none z-[9999] transform -translate-x-1/2 -translate-y-1/2"
-                style={{
-                    x: dotX,
-                    y: dotY,
-                }}
-                initial="default"
-                animate={theme}
-                variants={dotVariants}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-            />
-            {/* Global style to hide default cursor over screen */}
-            <style dangerouslySetInnerHTML={{
-                __html: `
-        @media (pointer: fine) {
-          body {
-            /* Optional: uncomment to hide regular OS cursor */
-            /* cursor: none; */ 
-          }
-        }
-      `}} />
-        </>
+                className="absolute flex items-center justify-center pointer-events-none"
+            >
+                {/* Crosshair 90-degree square reticle */}
+                <div
+                    className={`relative transition-all duration-150 ${
+                        isHovered
+                            ? "w-8 h-8 border border-[#ff2a2a] bg-[#ff2a2a]/10"
+                            : "w-5 h-5 border border-[#eaeaea]/40"
+                    }`}
+                >
+                    {/* Reticle tick marks */}
+                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-0.5 h-1 bg-[#ff2a2a]" />
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0.5 h-1 bg-[#ff2a2a]" />
+                    <div className="absolute top-1/2 -left-1 -translate-y-1/2 h-0.5 w-1 bg-[#ff2a2a]" />
+                    <div className="absolute top-1/2 -right-1 -translate-y-1/2 h-0.5 w-1 bg-[#ff2a2a]" />
+                    {/* Center dot */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-[#ff2a2a]" />
+                </div>
+
+                {/* Telemetry coordinate readout label */}
+                <div className="absolute top-4 left-4 whitespace-nowrap bg-[#0a0a0a]/90 border border-[#262626] px-1 py-0.5 font-mono text-[9px] text-[#888888] select-none tracking-tighter">
+                    <span className="text-[#ff2a2a]">TGT</span> {coords.x},{coords.y}
+                </div>
+            </motion.div>
+        </div>
     );
 }

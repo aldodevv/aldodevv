@@ -1,153 +1,115 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { Github, Linkedin, Instagram } from "lucide-react";
+import { Github, Linkedin, Mail, Terminal } from "lucide-react";
 import Link from "next/link";
 
-type NavTheme = "dark-full" | "light-pill" | "dark-pill" | "transparent";
-
 export default function PortfolioNavbar() {
-    const [theme, setTheme] = useState<NavTheme>("transparent");
     const [isScrolled, setIsScrolled] = useState(false);
+    const [activeSection, setActiveSection] = useState("Hero");
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 50) {
-                setIsScrolled(true);
-            } else {
-                setIsScrolled(false);
-            }
+            setIsScrolled(window.scrollY > 20);
 
-            const sections = document.querySelectorAll<HTMLElement>("[data-nav-theme]");
-            let currentTheme: NavTheme = "transparent";
-
-            sections.forEach((section) => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top <= 100 && rect.bottom >= 100) {
-                    currentTheme = section.getAttribute("data-nav-theme") as NavTheme;
+            const sections = ["Hero", "PortfolioAbout", "TechStack", "WorkExperience"];
+            for (const sectionId of sections) {
+                const el = document.getElementById(sectionId);
+                if (el) {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top <= 200 && rect.bottom >= 200) {
+                        setActiveSection(sectionId);
+                        break;
+                    }
                 }
-            });
-
-            setTheme(currentTheme);
+            }
         };
 
         window.addEventListener("scroll", handleScroll, { passive: true });
         handleScroll();
-
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const getNavbarStyles = () => {
-        switch (theme) {
-            case "dark-full":
-                return "bg-[#ffd54f] text-black w-full rounded-none border-b-4 border-black top-0 mt-0 shadow-sm";
-            case "light-pill":
-                return "bg-white text-black w-[95%] md:w-[80%] max-w-5xl mx-auto rounded-none shadow-[6px_6px_0px_0px_#000000] border-4 border-black top-4 mt-0";
-            case "dark-pill":
-                return "bg-[#b088f9] text-black w-[95%] md:w-[80%] max-w-5xl mx-auto rounded-none shadow-[6px_6px_0px_0px_#000000] border-4 border-black top-4 mt-0";
-            case "transparent":
-            default:
-                return isScrolled
-                    ? "bg-white text-black w-full rounded-none border-b-4 border-black top-0 mt-0 shadow-sm"
-                    : "bg-transparent text-black w-full rounded-none border-b-4 border-transparent top-0 mt-0";
-        }
-    };
-
     return (
-        <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
-            <motion.nav
-                layout
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className={cn(
-                    "pointer-events-auto flex items-center justify-between px-6 md:px-10 py-4 overflow-hidden transition-colors duration-500 font-sans",
-                    getNavbarStyles()
-                )}
-            >
-                <motion.div
-                    layout="position"
-                    className="font-black text-2xl tracking-tight flex items-center gap-2 font-sans text-black"
-                >
-                    {/* Neo-Brutalist Triangle Logo */}
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="3.5"
-                        strokeLinecap="square"
-                        strokeLinejoin="miter"
-                        className="transition-colors duration-500 text-black fill-[#ffd54f]"
-                    >
-                        <path d="M12 4L4 20h16L12 4z" />
-                    </svg>
-                    ALDODEVV
-                </motion.div>
+        <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+            <div className="w-full border-b border-[#262626] bg-[#0a0a0a]/90 backdrop-blur-md pointer-events-auto transition-colors duration-200">
+                <div className="max-w-7xl mx-auto px-4 md:px-8 h-14 flex items-center justify-between font-mono text-xs tracking-wider">
+                    {/* Brand / System Identity */}
+                    <div className="flex items-center gap-4">
+                        <Link
+                            href="#Hero"
+                            className="flex items-center gap-2 text-[#eaeaea] font-bold hover:text-[#ff2a2a] transition-colors"
+                        >
+                            <Terminal className="w-4 h-4 text-[#ff2a2a]" />
+                            <span className="uppercase tracking-widest">[ ALDO // SYS.ENG ]</span>
+                        </Link>
+                        <div className="hidden sm:flex items-center gap-2 px-2 py-0.5 border border-[#262626] bg-[#121212] text-[#888888]">
+                            <span className="w-1.5 h-1.5 bg-[#4af626] animate-pulse" />
+                            <span className="text-[10px] text-[#4af626]">SYS.NOMINAL</span>
+                        </div>
+                    </div>
 
-                <motion.ul
-                    layout="position"
-                    className="hidden md:flex items-center gap-8 text-lg font-black font-sans"
-                >
-                    <AnimatePresence mode="popLayout">
+                    {/* Navigation Subsystems */}
+                    <nav className="hidden md:flex items-center gap-1 border-x border-[#262626] px-2 h-full">
                         {[
-                            { label: "Me", id: "Hero", path: "/" },
-                            { label: "About", id: "PortfolioAbout", path: "/about" },
-                            { label: "Tech Stack", id: "TechStack", path: "/tech-stack" },
-                            { label: "Experience", id: "WorkExperience", path: "/experience" },
-                        ].map((item, i) => {
-                            const isHero = theme === "transparent" && !isScrolled;
-
+                            { id: "Hero", label: "[ 00 // ROOT ]" },
+                            { id: "PortfolioAbout", label: "[ 01 // DOSSIER ]" },
+                            { id: "TechStack", label: "[ 02 // MATRIX ]" },
+                            { id: "WorkExperience", label: "[ 03 // LOGS ]" },
+                        ].map((item) => {
+                            const isActive = activeSection === item.id;
                             return (
-                                <motion.li
-                                    key={item.label}
-                                    layout
-                                    initial={isHero ? false : { opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    transition={{
-                                        duration: 0.4,
-                                        delay: isHero ? 0 : i * 0.1,
-                                        ease: "easeOut"
-                                    }}
-                                    className="list-none"
+                                <Link
+                                    key={item.id}
+                                    href={`#${item.id}`}
+                                    className={`px-3 py-1.5 transition-colors uppercase ${
+                                        isActive
+                                            ? "bg-[#eaeaea] text-[#0a0a0a] font-bold"
+                                            : "text-[#888888] hover:text-[#eaeaea] hover:bg-[#1a1a1a]"
+                                    }`}
                                 >
-                                    <Link
-                                        href={item.path}
-                                        onClick={(e) => {
-                                            const element = document.getElementById(item.id);
-                                            if (element) {
-                                                e.preventDefault();
-                                                element.scrollIntoView({ behavior: "smooth" });
-                                            }
-                                        }}
-                                        className="cursor-pointer text-black hover:text-[#ff5e5e] uppercase transition-all duration-350 relative group flex items-center gap-1 font-sans font-black"
-                                    >
-                                        <span className="opacity-0 group-hover:opacity-100 text-[#ff5e5e] transition-opacity font-sans text-xs">►</span>
-                                        <span>{item.label}</span>
-                                    </Link>
-                                </motion.li>
+                                    {item.label}
+                                </Link>
                             );
                         })}
-                    </AnimatePresence>
-                </motion.ul>
+                    </nav>
 
-                <motion.div layout="position" className="flex items-center gap-4 md:gap-5 text-black">
-                    <a href="https://github.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff5e5e] hover:scale-110 transition-all duration-300">
-                        <Github className="w-5 h-5 stroke-[2.5]" />
-                        <span className="sr-only">GitHub</span>
-                    </a>
-                    <a href="https://linkedin.com/in/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff5e5e] hover:scale-110 transition-all duration-300">
-                        <Linkedin className="w-5 h-5 stroke-[2.5]" />
-                        <span className="sr-only">LinkedIn</span>
-                    </a>
-                    <a href="https://instagram.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff5e5e] hover:scale-110 transition-all duration-300">
-                        <Instagram className="w-5 h-5 stroke-[2.5]" />
-                        <span className="sr-only">Instagram</span>
-                    </a>
-                </motion.div>
-            </motion.nav>
-        </div>
+                    {/* Action Telemetry & Socials */}
+                    <div className="flex items-center gap-2">
+                        <a
+                            href="https://github.com/aldodevv"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="GitHub Telemetry"
+                            className="w-8 h-8 flex items-center justify-center border border-[#262626] bg-[#121212] text-[#888888] hover:text-[#eaeaea] hover:border-[#eaeaea] hover:bg-[#1a1a1a] transition-colors"
+                        >
+                            <Github className="w-3.5 h-3.5" />
+                        </a>
+                        <a
+                            href="https://linkedin.com/in/akhmad-aldo"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="LinkedIn Telemetry"
+                            className="w-8 h-8 flex items-center justify-center border border-[#262626] bg-[#121212] text-[#888888] hover:text-[#eaeaea] hover:border-[#eaeaea] hover:bg-[#1a1a1a] transition-colors"
+                        >
+                            <Linkedin className="w-3.5 h-3.5" />
+                        </a>
+                        <a
+                            href="mailto:akhmadaldo3@gmail.com"
+                            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 border border-[#ff2a2a] bg-[#ff2a2a]/10 text-[#ff2a2a] hover:bg-[#ff2a2a] hover:text-[#0a0a0a] font-bold text-[11px] transition-colors uppercase"
+                        >
+                            <Mail className="w-3 h-3" />
+                            <span>TRANSMIT</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {/* Top edge sub-indicator */}
+            <div className="w-full bg-[#121212] border-b border-[#1f1f1f] h-5 hidden lg:flex items-center justify-between px-8 text-[9px] text-[#555555] font-mono select-none">
+                <span>SECURITY_LEVEL: DECLASSIFIED // CLEARANCE: LV-4</span>
+                <span>TIME_REF: UTC+7 // PROTOCOL: HTTP/3</span>
+                <span>BUILD: 2026.09-REV2</span>
+            </div>
+        </header>
     );
 }

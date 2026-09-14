@@ -1,97 +1,144 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f6f0;      /* Warm neo-brutalist eggshell cream background */
-  --foreground: #000000;      /* High contrast solid black */
-  --primary: #ff5e5e;         /* Bright Salmon/Red */
-  --secondary: #ffd54f;       /* Canary Yellow */
-  --accent-purple: #b088f9;   /* Saturated Lilac */
-  --accent-green: #3cd070;    /* Lime Green */
-  --accent-cyan: #3fc1e8;     /* Sky Blue */
-  --accent-orange: #ff8a5c;   /* Pastel Orange */
+  --background: #0a0a0a;       /* Deactivated CRT black */
+  --foreground: #eaeaea;       /* White phosphor */
+  --surface: #121212;          /* Component substrate */
+  --surface-hover: #1a1a1a;    /* Elevated substrate */
+  --border-dim: #222222;       /* Structural grid line */
+  --border-line: #2e2e2e;      /* Compartmentalization line */
+  --border-bright: #444444;    /* Active element border */
+  --accent-hazard: #ff2a2a;    /* Aviation/Hazard Red */
+  --accent-status: #4af626;    /* Terminal Green (Telemetry OK) */
+  --text-muted: #888888;       /* Declassified secondary text */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
-  --color-accent-purple: var(--accent-purple);
-  --color-accent-green: var(--accent-green);
-  --color-accent-cyan: var(--accent-cyan);
-  --color-accent-orange: var(--accent-orange);
-  --font-sans: var(--font-space-grotesk), system-ui;
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border-dim: var(--border-dim);
+  --color-border-line: var(--border-line);
+  --color-border-bright: var(--border-bright);
+  --color-accent-hazard: var(--accent-hazard);
+  --color-accent-status: var(--accent-status);
+  --color-text-muted: var(--text-muted);
+  --font-sans: var(--font-space-grotesk), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), monospace;
+}
+
+* {
+  border-radius: 0px !important;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-space-grotesk), system-ui;
-  image-rendering: auto;
+  font-family: var(--font-mono);
+  overflow-x: hidden;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Custom Neo-Brutalist Utilities */
-.neo-grid-dots {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.15) 1.5px, transparent 1.5px);
-  background-size: 24px 24px;
+/* CRT Scanlines Overlay */
+.crt-scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.35) 2px,
+    rgba(0, 0, 0, 0.35) 4px
+  );
 }
 
-.retro-grid {
+/* Mechanical Blueprint & Telemetry Grid */
+.telemetry-grid {
   background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
-.retro-grid-fine {
+.telemetry-grid-fine {
   background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-  background-size: 20px 20px;
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 16px 16px;
 }
 
-/* Neo-Brutalist Borders & Shadows */
-.neo-border {
-  border: 4px solid #000000;
+/* Industrial Corner Crosshairs */
+.crosshair-corner {
+  position: relative;
+}
+.crosshair-corner::before,
+.crosshair-corner::after {
+  content: "+";
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #555555;
+  line-height: 1;
+  pointer-events: none;
+}
+.crosshair-corner::before {
+  top: -6px;
+  left: -5px;
+}
+.crosshair-corner::after {
+  bottom: -6px;
+  right: -5px;
 }
 
-.neo-border-sm {
-  border: 2px solid #000000;
+/* Warning Hazard Stripe Banner */
+.hazard-stripes {
+  background: repeating-linear-gradient(
+    -45deg,
+    #ff2a2a,
+    #ff2a2a 8px,
+    #0a0a0a 8px,
+    #0a0a0a 16px
+  );
 }
 
-.neo-shadow {
-  box-shadow: 6px 6px 0px 0px #000000;
+/* Industrial Buttons */
+.industrial-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-bright);
+  background: #121212;
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.2rem;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  cursor: pointer;
+  position: relative;
+}
+.industrial-btn:hover {
+  background: #eaeaea;
+  color: #0a0a0a;
+  border-color: #eaeaea;
+}
+.industrial-btn-hazard {
+  border-color: var(--accent-hazard);
+  color: var(--accent-hazard);
+}
+.industrial-btn-hazard:hover {
+  background: var(--accent-hazard);
+  color: #0a0a0a;
+  border-color: var(--accent-hazard);
 }
 
-.neo-shadow-sm {
-  box-shadow: 4px 4px 0px 0px #000000;
-}
-
-.neo-shadow-lg {
-  box-shadow: 8px 8px 0px 0px #000000;
-}
-
-.neo-btn-active:active {
-  transform: translate(3px, 3px);
-  box-shadow: 3px 3px 0px 0px #000000;
-}
-
+/* Ticker Marquee */
 @keyframes marquee {
   0% { transform: translate3d(0, 0, 0); }
   100% { transform: translate3d(-50%, 0, 0); }
 }
 
 @utility animate-marquee {
-  animation: marquee 25s linear infinite;
+  animation: marquee 30s linear infinite;
 }
-
-@keyframes soundwave {
-  0%, 100% { height: 4px; }
-  50% { height: 20px; }
-}
-
-@utility animate-soundwave {
-  animation: soundwave 0.8s ease-in-out infinite;
-}
-
