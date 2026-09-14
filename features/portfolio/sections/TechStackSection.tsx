@@ -1,103 +1,101 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import { techStack } from "../constants/techStack";
+import RetroTypewriterText from "@/features/portfolio/components/RetroTypewriterText";
 
 export default function TechStackSection() {
-    const sectionRef = useRef<HTMLDivElement>(null);
-    const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-
     return (
         <section
             id="TechStack"
-            ref={sectionRef}
-            className="relative w-full py-24 md:py-32 px-6 flex flex-col items-center justify-center border-t border-[#eaeaea]"
+            data-nav-theme="dark-pill"
+            className="relative min-h-screen w-full flex flex-col items-center justify-center bg-transparent text-black py-32 px-4 border-t-4 border-black"
         >
-            <div className="max-w-5xl w-full mx-auto flex flex-col gap-14">
-                
-                {/* Section Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#eaeaea] pb-6"
+            {/* Visual grid lines overlay */}
+            <div className="absolute inset-0 bg-retro-grid-fine pointer-events-none opacity-20 z-1" />
+
+            <div className="max-w-6xl w-full text-center relative z-10">
+                <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-5xl md:text-7xl font-black tracking-tight mb-8 uppercase text-black font-sans animate-none"
                 >
-                    <div className="flex flex-col gap-2">
-                        <span className="font-mono text-xs text-[#787774] uppercase tracking-widest">
-                            02 / Technical Capabilities
-                        </span>
-                        <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-[#111111] font-normal tracking-tight">
-                            Languages, frameworks, and tooling.
-                        </h2>
-                    </div>
+                    <RetroTypewriterText text="ABILITY_LIST " />
+                </motion.h2>
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 }}
+                    className="text-lg md:text-xl text-black/75 max-w-2xl mx-auto mb-20 leading-relaxed font-mono font-medium"
+                >
+                    Here are the languages, frameworks, and software tools I actively use to bring applications to life. Select item for stats.
+                </motion.p>
 
-                    <p className="font-sans text-xs md:text-sm text-[#787774] max-w-sm">
-                        Curated toolchains utilized in building enterprise financial applications, APIs, and modern frontends.
-                    </p>
-                </motion.div>
-
-                {/* Categorized Tech Bento Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {techStack.map((category, catIdx) => {
-                        const pastelBadges = [
-                            "tag-pastel-blue",
-                            "tag-pastel-green",
-                            "tag-pastel-yellow",
-                            "tag-pastel-red",
-                        ];
-                        const badgeClass = pastelBadges[catIdx % pastelBadges.length];
-
-                        return (
-                            <motion.div
-                                key={category.title}
-                                initial={{ opacity: 0, y: 18 }}
-                                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-                                transition={{
-                                    duration: 0.5,
-                                    delay: 0.1 * catIdx,
-                                    ease: [0.16, 1, 0.3, 1]
-                                }}
-                                className="minimal-card p-6 md:p-8 flex flex-col justify-between gap-6"
+                <div className="flex flex-col gap-20">
+                    {techStack.map((category, catIdx) => (
+                        <div key={category.title} className="flex flex-col items-center md:items-start w-full font-sans">
+                            <motion.h3
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.2 }}
+                                className="text-xl md:text-2xl font-black mb-8 text-black border-2 border-black bg-white px-4 py-2 shadow-sm font-sans uppercase tracking-widest inline-flex"
                             >
-                                {/* Category Header */}
-                                <div className="flex items-center justify-between border-b border-[#eaeaea] pb-4">
-                                    <h3 className="font-sans font-medium text-base text-[#111111]">
-                                        {category.title}
-                                    </h3>
-                                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium uppercase ${badgeClass}`}>
-                                        {category.items.length} Technologies
-                                    </span>
-                                </div>
+                                ★ {category.title.replace(/\s+/g, "_")}
+                            </motion.h3>
 
-                                {/* Tech Items Grid */}
-                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                    {category.items.map((item) => (
-                                        <div
+                            <div className="flex flex-wrap gap-6 justify-center md:justify-start w-full">
+                                {category.items.map((item, idx) => {
+                                    const catColors = [
+                                        "#ff5e5e", // Salmon Red
+                                        "#ffd54f", // Canary Yellow
+                                        "#b088f9", // Lilac Purple
+                                    ];
+                                    const catColor = catColors[catIdx % catColors.length];
+                                    return (
+                                        <motion.div
                                             key={item.name}
-                                            className="flex items-center gap-2.5 p-2.5 rounded-lg border border-[#eaeaea] bg-[#ffffff] hover:bg-[#fbfbfa] hover:border-[#dcdcdc] transition-all duration-150 group"
+                                            initial={{ opacity: 0, scale: 0.9 }}
+                                            whileInView={{ opacity: 1, scale: 1 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: 0.03 * (idx % 10), duration: 0.4 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            className="relative overflow-hidden border-4 border-black w-28 h-28 md:w-32 md:h-32 rounded-none group cursor-pointer transition-all duration-300"
+                                            style={{
+                                                backgroundColor: catColor,
+                                                boxShadow: "4px 4px 0px #000000"
+                                            }}
                                         >
-                                            <div className="w-6 h-6 shrink-0 flex items-center justify-center">
-                                                <img
-                                                    src={item.image}
-                                                    alt={item.name}
-                                                    className="w-5 h-5 object-contain filter group-hover:contrast-125 transition-all"
-                                                    onError={(e) => {
-                                                        e.currentTarget.style.display = "none";
-                                                    }}
-                                                />
+                                            <div className={`flex flex-col items-center justify-center bg-white p-4 w-full h-full border-2 border-black transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] 
+                                                            ${idx % 3 === 0
+                                                    ? "group-hover:-translate-x-1.5 group-hover:-translate-y-1.5"
+                                                    : idx % 3 === 1
+                                                        ? "group-hover:translate-x-1.5 group-hover:-translate-y-1.5"
+                                                        : "group-hover:translate-x-1.5 group-hover:translate-y-1.5"}`}>
+                                                <div className="w-10 h-10 md:w-12 md:h-12 mb-3 bg-[#f7f6f0] border-2 border-black p-2 flex items-center justify-center transition-colors duration-300">
+                                                    <img
+                                                        src={item.image}
+                                                        alt={item.name}
+                                                        className="w-full h-full object-contain"
+                                                        onError={(e) => {
+                                                            e.currentTarget.src = "https://api.iconify.design/lucide/code-2.svg?color=%23000000";
+                                                        }}
+                                                    />
+                                                </div>
+                                                <span className="text-xs md:text-sm font-black text-black text-center tracking-tight font-mono uppercase">
+                                                    {item.name.replace(/\s+/g, "")}
+                                                </span>
                                             </div>
-                                            <span className="text-xs font-sans text-[#111111] group-hover:text-black truncate font-normal">
-                                                {item.name}
-                                            </span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </motion.div>
-                        );
-                    })}
+                                        </motion.div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ))}
                 </div>
-
             </div>
         </section>
     );

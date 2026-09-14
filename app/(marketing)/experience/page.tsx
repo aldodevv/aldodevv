@@ -1,9 +1,10 @@
 import Link from "next/link";
+import { ArrowLeft, Briefcase, Calendar, Award } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Work Experience & Career History | Akhmad Aldo",
-  description: "Explore the professional timeline, engineering roles, and enterprise contributions of Akhmad Aldo (Aldo).",
+  title: "Work Experience | Akhmad Aldo",
+  description: "Explore the professional timeline, engineering roles, and project achievements of Akhmad Aldo (Aldo).",
 };
 
 const experiences = [
@@ -11,96 +12,104 @@ const experiences = [
     role: "Mobile Developer & Squad Lead",
     company: "Bank Rakyat Indonesia (BRI)",
     period: "2022 - Present",
-    badgeClass: "tag-pastel-green",
+    color: "#ff5e5e",
     bullets: [
-      "Led the development, release cycles, and performance optimization of QLola Mobile, BRI's corporate internet banking application, using Flutter.",
-      "Integrated QLola IB Token, an offline secure OTP generation module utilizing native platform cryptographic layers.",
-      "Engineered comprehensive mobile security policies: root/jailbreak detection, SSL certificate pinning, screenshot prevention, and memory tamper resistance.",
-      "Coordinated enterprise CI/CD deployment pipelines, automated artifact packaging, and Play Store / App Store compliance."
+      "Led the development and optimization of QLola Mobile, BRI's corporate internet banking application, using Flutter.",
+      "Successfully integrated QLola IB Token, an offline secure OTP generator using native cryptographic layers.",
+      "Implemented security policies, root detection, jailbreak checks, and screenshot prevention mechanisms.",
+      "Coordinated app distribution, CI/CD pipelines, and app store deployment procedures."
     ]
   },
   {
-    role: "Fullstack Mobile & Web Developer",
-    company: "Software Engineering Agency / Contract",
+    role: "Fullstack Mobile Developer",
+    company: "Freelance / Software Agency",
     period: "2020 - 2022",
-    badgeClass: "tag-pastel-blue",
+    color: "#3cd070",
     bullets: [
-      "Built multi-platform consumer and business applications using React Native, Kotlin, Swift, and TypeScript.",
-      "Optimized API response caching and offline synchronization layers, cutting network overhead and latency.",
-      "Architected companion web dashboards with Next.js, implementing clean component systems and responsive data tables."
+      "Built multiple production-grade mobile apps using React Native, Kotlin, and Swift.",
+      "Optimized API response caching layers, reducing server loads and database overhead.",
+      "Developed web companion dashboards with Next.js and Tailwind CSS."
     ]
   }
 ];
 
 export default function ExperiencePage() {
   return (
-    <div className="flex flex-col gap-10">
-      {/* Navigation Breadcrumb */}
-      <div className="flex items-center justify-between border-b border-[#eaeaea] pb-5">
-        <Link 
-          href="/"
-          className="btn-secondary-minimal px-3.5 py-1.5 text-xs font-mono inline-flex items-center gap-2 text-[#787774] hover:text-[#111111]"
-        >
-          <span>←</span>
-          <span>Back to Overview</span>
-        </Link>
-        <div className="font-mono text-xs text-[#787774]">
-          career_history.md
-        </div>
-      </div>
+    <div className="flex flex-col gap-8 text-black">
+      {/* Back Button */}
+      <Link 
+        href="/"
+        className="self-start flex items-center gap-2 px-4 py-2 bg-[#3cd070] hover:bg-[#ffd54f] border-4 border-black text-black font-black font-sans uppercase tracking-widest text-xs shadow-[4px_4px_0px_#000000] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back To Dashboard
+      </Link>
 
-      {/* Page Header */}
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-2 font-mono text-xs text-[#787774]">
-          <span className="tag-pastel-green px-2.5 py-0.5 rounded-full text-[10px] uppercase font-medium">
-            03 / Career History
-          </span>
-          <span>/</span>
-          <span>Professional Experience</span>
+      {/* Main OS Window Card */}
+      <div className="border-4 border-black bg-[#3cd070] shadow-[10px_10px_0px_#000000] overflow-hidden">
+        {/* Header Bar */}
+        <div className="bg-black text-white px-4 py-3 flex items-center justify-between font-black font-mono tracking-widest text-xs uppercase">
+          <div className="flex gap-2">
+            <span className="w-3.5 h-3.5 rounded-full bg-[#ff5e5e] border-2 border-black" />
+            <span className="w-3.5 h-3.5 rounded-full bg-[#ffd54f] border-2 border-black" />
+            <span className="w-3.5 h-3.5 rounded-full bg-[#3cd070] border-2 border-black" />
+          </div>
+          <span>EXPERIENCE_LEDGER.EXE</span>
+          <Link href="/" className="hover:text-[#ff5e5e] transition-colors">✕</Link>
         </div>
-        <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#111111] font-normal tracking-tight">
-          Enterprise roles, projects, and architecture leadership.
-        </h1>
-        <p className="text-sm md:text-base text-[#787774] max-w-2xl leading-relaxed">
-          Detailed chronology of software engineering positions, key responsibilities, and system impact.
-        </p>
-      </div>
 
-      {/* Experience Ledger Cards */}
-      <div className="flex flex-col gap-8">
-        {experiences.map((exp) => (
-          <article 
-            key={exp.role}
-            className="minimal-card p-6 md:p-10 flex flex-col gap-6"
-          >
-            {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-[#eaeaea] pb-5">
-              <div>
-                <div className="flex items-center gap-3 flex-wrap">
-                  <h2 className="font-sans font-medium text-xl md:text-2xl text-[#111111] tracking-tight">
-                    {exp.role}
-                  </h2>
-                  <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium ${exp.badgeClass}`}>
+        {/* Content */}
+        <div className="p-8 bg-white border-t-4 border-black flex flex-col gap-8">
+          <div>
+            <div className="inline-block bg-[#ffd54f] text-black font-black uppercase text-xs px-2.5 py-1 border-2 border-black shadow-sm mb-3">
+              CAREER TIMELINE
+            </div>
+            <h2 className="text-3xl font-black uppercase tracking-tight mb-4">
+              Professional Work History
+            </h2>
+            <p className="text-base font-medium leading-relaxed text-black/85">
+              A timeline of my professional career, detailing key engineering roles, architectural achievements, and team leadership.
+            </p>
+          </div>
+
+          {/* Timeline list */}
+          <div className="flex flex-col gap-8 relative pl-6 border-l-4 border-black">
+            {experiences.map((exp, index) => (
+              <div key={index} className="relative flex flex-col gap-3">
+                {/* Bullet node on timeline */}
+                <div 
+                  className="absolute -left-[38px] top-1.5 w-6 h-6 rounded-full border-4 border-black shadow-[2px_2px_0px_#000000]"
+                  style={{ backgroundColor: exp.color }}
+                />
+
+                {/* Company & Role header block */}
+                <div className="border-4 border-black p-4 bg-[#f7f6f0] shadow-[4px_4px_0px_#000000] flex flex-col md:flex-row justify-between md:items-center gap-2">
+                  <div>
+                    <h3 className="font-black text-xl uppercase leading-tight">{exp.role}</h3>
+                    <span className="font-mono text-xs font-bold text-black/60 flex items-center gap-1 mt-1">
+                      <Briefcase className="w-3.5 h-3.5" />
+                      {exp.company}
+                    </span>
+                  </div>
+                  <span className="font-mono text-xs font-black uppercase px-2.5 py-1 border-2 border-black bg-white shadow-sm flex items-center gap-1.5 self-start md:self-auto">
+                    <Calendar className="w-3.5 h-3.5" />
                     {exp.period}
                   </span>
                 </div>
-                <p className="text-sm font-mono text-[#787774] mt-1">
-                  {exp.company}
-                </p>
-              </div>
-            </div>
 
-            {/* Bullet Points */}
-            <ul className="space-y-3 font-sans text-sm md:text-base text-[#787774] leading-relaxed">
-              {exp.bullets.map((bullet, idx) => (
-                <li key={idx} className="flex items-start gap-3">
-                  <span className="text-[#111111] mt-1 text-xs select-none">•</span>
-                  <span>{bullet}</span>
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))}
+                {/* Detailed description bullets */}
+                <div className="bg-white border-2 border-black p-4 shadow-[2px_2px_0px_#000000] flex flex-col gap-2">
+                  {exp.bullets.map((bullet, bulletIdx) => (
+                    <div key={bulletIdx} className="flex gap-2.5 items-start text-sm font-medium text-black/85">
+                      <Award className="w-4 h-4 shrink-0 text-black mt-0.5" />
+                      <span>{bullet}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

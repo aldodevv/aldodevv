@@ -1,133 +1,97 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fbfbfa;      /* Warm bone/off-white canvas */
-  --foreground: #111111;      /* Charcoal off-black */
-  --muted: #787774;           /* Refined muted secondary text */
-  --border-subtle: #eaeaea;   /* Hairline 1px border */
-  --card-surface: #ffffff;    /* Primary card surface */
-  
-  /* Muted Pastels from Protocol */
-  --pastel-green-bg: #edf3ec;
-  --pastel-green-text: #346538;
-  --pastel-blue-bg: #e1f3fe;
-  --pastel-blue-text: #1f6c9f;
-  --pastel-yellow-bg: #fbf3db;
-  --pastel-yellow-text: #956400;
-  --pastel-red-bg: #fdebec;
-  --pastel-red-text: #9f2f2d;
+  --background: #f7f6f0;      /* Warm neo-brutalist eggshell cream background */
+  --foreground: #000000;      /* High contrast solid black */
+  --primary: #ff5e5e;         /* Bright Salmon/Red */
+  --secondary: #ffd54f;       /* Canary Yellow */
+  --accent-purple: #b088f9;   /* Saturated Lilac */
+  --accent-green: #3cd070;    /* Lime Green */
+  --accent-cyan: #3fc1e8;     /* Sky Blue */
+  --accent-orange: #ff8a5c;   /* Pastel Orange */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-border-subtle: var(--border-subtle);
-  --color-card-surface: var(--card-surface);
-  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
-  --font-serif: var(--font-newsreader), "Lyon Text", "Playfair Display", Georgia, serif;
-  --font-mono: var(--font-geist-mono), "SF Mono", "JetBrains Mono", monospace;
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent-purple: var(--accent-purple);
+  --color-accent-green: var(--accent-green);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-orange: var(--accent-orange);
+  --font-sans: var(--font-space-grotesk), system-ui;
+  --font-mono: var(--font-jetbrains-mono), monospace;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans);
-  line-height: 1.6;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+  font-family: var(--font-space-grotesk), system-ui;
+  image-rendering: auto;
 }
 
-/* Utilitarian Hairline Borders & Subtle Hover Elevation */
-.minimal-border {
-  border: 1px solid var(--border-subtle);
+/* Custom Neo-Brutalist Utilities */
+.neo-grid-dots {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.15) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
 }
 
-.minimal-card {
-  background-color: var(--card-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  transition: box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
-}
-
-.minimal-card:hover {
-  border-color: #dfdfdf;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-/* Subtle architectural hairline grid */
-.minimal-grid-bg {
+.retro-grid {
   background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-  background-size: 32px 32px;
+    linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-/* Keystroke Micro-UI */
-.kbd-shortcut {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  border: 1px solid var(--border-subtle);
-  border-radius: 4px;
-  background-color: #f7f6f3;
-  color: var(--muted);
-  padding: 0.15rem 0.4rem;
-  line-height: 1;
+.retro-grid-fine {
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
 }
 
-/* Muted Pastel Tag Utilities */
-.tag-pastel-green {
-  background-color: var(--pastel-green-bg);
-  color: var(--pastel-green-text);
+/* Neo-Brutalist Borders & Shadows */
+.neo-border {
+  border: 4px solid #000000;
 }
 
-.tag-pastel-blue {
-  background-color: var(--pastel-blue-bg);
-  color: var(--pastel-blue-text);
+.neo-border-sm {
+  border: 2px solid #000000;
 }
 
-.tag-pastel-yellow {
-  background-color: var(--pastel-yellow-bg);
-  color: var(--pastel-yellow-text);
+.neo-shadow {
+  box-shadow: 6px 6px 0px 0px #000000;
 }
 
-.tag-pastel-red {
-  background-color: var(--pastel-red-bg);
-  color: var(--pastel-red-text);
+.neo-shadow-sm {
+  box-shadow: 4px 4px 0px 0px #000000;
 }
 
-/* Primary Button active state */
-.btn-primary-minimal {
-  background-color: #111111;
-  color: #ffffff;
-  border-radius: 6px;
-  transition: background-color 0.15s ease, transform 0.1s ease;
+.neo-shadow-lg {
+  box-shadow: 8px 8px 0px 0px #000000;
 }
 
-.btn-primary-minimal:hover {
-  background-color: #2a2a2a;
+.neo-btn-active:active {
+  transform: translate(3px, 3px);
+  box-shadow: 3px 3px 0px 0px #000000;
 }
 
-.btn-primary-minimal:active {
-  transform: scale(0.98);
+@keyframes marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 
-.btn-secondary-minimal {
-  background-color: #ffffff;
-  color: #111111;
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+@utility animate-marquee {
+  animation: marquee 25s linear infinite;
 }
 
-.btn-secondary-minimal:hover {
-  background-color: #f7f6f3;
-  border-color: #dcdcdc;
+@keyframes soundwave {
+  0%, 100% { height: 4px; }
+  50% { height: 20px; }
 }
 
-.btn-secondary-minimal:active {
-  transform: scale(0.98);
+@utility animate-soundwave {
+  animation: soundwave 0.8s ease-in-out infinite;
 }
+

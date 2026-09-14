@@ -1,32 +1,26 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Newsreader } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-});
-
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
-  subsets: ["latin"],
-  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.akhmadaldo.my.id"),
   title: {
-    default: "Akhmad Aldo | Software Engineer",
-    template: "%s | Akhmad Aldo",
+    default: "Akhmad Aldo (Aldo) | Mobile & Web Developer",
+    template: "%s | Akhmad Aldo (Aldo)",
   },
-  description: "Portfolio of Akhmad Aldo, a software engineer specializing in cross-platform mobile architecture and web applications (Flutter, React Native, Kotlin, Swift, Next.js).",
+  description: "Portfolio of Akhmad Aldo (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer specializing in Flutter, React Native, Kotlin, Swift, and Next.js.",
   alternates: {
     canonical: "./",
   },
@@ -45,8 +39,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} antialiased bg-[#fbfbfa] text-[#111111] font-sans selection:bg-[#e1f3fe] selection:text-[#1f6c9f]`}
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased bg-[#f7f6f0] text-black font-sans`}
       >
+        <div className="fixed inset-0 w-screen h-screen pointer-events-none neo-grid-dots -z-20 opacity-30" />
         {children}
         <Analytics />
         <SpeedInsights />
