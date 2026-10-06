@@ -1,144 +1,81 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;       /* Deactivated CRT black */
-  --foreground: #eaeaea;       /* White phosphor */
-  --surface: #121212;          /* Component substrate */
-  --surface-hover: #1a1a1a;    /* Elevated substrate */
-  --border-dim: #222222;       /* Structural grid line */
-  --border-line: #2e2e2e;      /* Compartmentalization line */
-  --border-bright: #444444;    /* Active element border */
-  --accent-hazard: #ff2a2a;    /* Aviation/Hazard Red */
-  --accent-status: #4af626;    /* Terminal Green (Telemetry OK) */
-  --text-muted: #888888;       /* Declassified secondary text */
+  --background: #08080a;
+  --foreground: #ffffff;
+  --primary: #fa520f;
+  --secondary: #ffb83e;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-surface: var(--surface);
-  --color-surface-hover: var(--surface-hover);
-  --color-border-dim: var(--border-dim);
-  --color-border-line: var(--border-line);
-  --color-border-bright: var(--border-bright);
-  --color-accent-hazard: var(--accent-hazard);
-  --color-accent-status: var(--accent-status);
-  --color-text-muted: var(--text-muted);
-  --font-sans: var(--font-space-grotesk), system-ui, sans-serif;
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --font-sans: var(--font-vt323), system-ui;
   --font-mono: var(--font-jetbrains-mono), monospace;
-}
-
-* {
-  border-radius: 0px !important;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-mono);
-  overflow-x: hidden;
-  text-rendering: geometricPrecision;
-  -webkit-font-smoothing: antialiased;
+  font-family: var(--font-vt323), system-ui;
+  image-rendering: pixelated;
 }
 
-/* CRT Scanlines Overlay */
-.crt-scanlines {
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.35) 2px,
-    rgba(0, 0, 0, 0.35) 4px
-  );
+/* Custom Retro Utilities */
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+  background-size: 100% 4px;
+  z-index: 9999;
+  pointer-events: none;
 }
 
-/* Mechanical Blueprint & Telemetry Grid */
-.telemetry-grid {
+.retro-grid {
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(250, 82, 15, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(250, 82, 15, 0.15) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
-.telemetry-grid-fine {
+.retro-grid-fine {
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 16px 16px;
+    linear-gradient(to right, rgba(255, 184, 62, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 184, 62, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
 }
 
-/* Industrial Corner Crosshairs */
-.crosshair-corner {
-  position: relative;
-}
-.crosshair-corner::before,
-.crosshair-corner::after {
-  content: "+";
-  position: absolute;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: #555555;
-  line-height: 1;
-  pointer-events: none;
-}
-.crosshair-corner::before {
-  top: -6px;
-  left: -5px;
-}
-.crosshair-corner::after {
-  bottom: -6px;
-  right: -5px;
+/* Hard edge pixelated borders and flat offset shadows */
+.retro-border {
+  border: 4px solid #ffffff;
 }
 
-/* Warning Hazard Stripe Banner */
-.hazard-stripes {
-  background: repeating-linear-gradient(
-    -45deg,
-    #ff2a2a,
-    #ff2a2a 8px,
-    #0a0a0a 8px,
-    #0a0a0a 16px
-  );
+.retro-border-primary {
+  border: 4px solid var(--primary);
 }
 
-/* Industrial Buttons */
-.industrial-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--border-bright);
-  background: #121212;
-  color: var(--foreground);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0.6rem 1.2rem;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-  cursor: pointer;
-  position: relative;
-}
-.industrial-btn:hover {
-  background: #eaeaea;
-  color: #0a0a0a;
-  border-color: #eaeaea;
-}
-.industrial-btn-hazard {
-  border-color: var(--accent-hazard);
-  color: var(--accent-hazard);
-}
-.industrial-btn-hazard:hover {
-  background: var(--accent-hazard);
-  color: #0a0a0a;
-  border-color: var(--accent-hazard);
+.retro-border-secondary {
+  border: 4px solid var(--secondary);
 }
 
-/* Ticker Marquee */
-@keyframes marquee {
-  0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-50%, 0, 0); }
+.retro-shadow-primary {
+  box-shadow: 6px 6px 0px 0px var(--primary);
 }
 
-@utility animate-marquee {
-  animation: marquee 30s linear infinite;
+.retro-shadow-secondary {
+  box-shadow: 6px 6px 0px 0px var(--secondary);
+}
+
+.retro-shadow-white {
+  box-shadow: 6px 6px 0px 0px #ffffff;
+}
+
+.retro-btn-active:active {
+  transform: translate(3px, 3px);
+  box-shadow: 3px 3px 0px 0px currentColor;
 }

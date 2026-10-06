@@ -3,33 +3,45 @@
 import React, { useEffect, useState } from "react";
 import { motion, useSpring, useMotionValue } from "framer-motion";
 
-export default function PortfolioCursor() {
-    const [isVisible, setIsVisible] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
-    const [coords, setCoords] = useState({ x: 0, y: 0 });
+type CursorTheme = "transparent" | "light-pill" | "dark-pill" | "dark-full" | "default";
 
+export default function PortfolioCursor() {
+    const [theme, setTheme] = useState<CursorTheme>("default");
+    const [isVisible, setIsVisible] = useState(false);
+
+    // Raw mouse coordinates
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
-    const springConfig = { damping: 28, stiffness: 400, mass: 0.2 };
-    const cursorX = useSpring(mouseX, springConfig);
-    const cursorY = useSpring(mouseY, springConfig);
+    // FAST spring for the center dot (instant feel)
+    const springFast = { damping: 25, stiffness: 300, mass: 0.5 };
+    const dotX = useSpring(mouseX, springFast);
+    const dotY = useSpring(mouseY, springFast);
+
+    // SLOW spring for the outer particle (~500ms delay feel)
+    // Lower stiffness and higher mass creates a beautiful dragging delay
+    const springSlow = { damping: 20, stiffness: 35, mass: 0.6 };
+    const ringX = useSpring(mouseX, springSlow);
+    const ringY = useSpring(mouseY, springSlow);
 
     useEffect(() => {
+        // Only run on client
         if (typeof window === "undefined") return;
 
         const handleMouseMove = (e: MouseEvent) => {
             if (!isVisible) setIsVisible(true);
+
             mouseX.set(e.clientX);
             mouseY.set(e.clientY);
-            setCoords({ x: e.clientX, y: e.clientY });
 
-            // Check if hovering interactive element
-            const target = e.target as HTMLElement | null;
-            if (target?.closest("a, button, [role='button'], input, select, textarea")) {
-                setIsHovered(true);
+            // Detect which section the mouse is currently hovering over
+            const element = document.elementFromPoint(e.clientX, e.clientY);
+            const section = element?.closest("[data-nav-theme]");
+
+            if (section) {
+                setTheme(section.getAttribute("data-nav-theme") as CursorTheme);
             } else {
-                setIsHovered(false);
+                setTheme("default");
             }
         };
 
@@ -46,40 +58,124 @@ export default function PortfolioCursor() {
 
     if (!isVisible) return null;
 
-    return (
-        <div className="hidden lg:block pointer-events-none fixed inset-0 z-[9999] overflow-hidden">
-            {/* Center Crosshair Target */}
-            <motion.div
-                style={{
-                    x: cursorX,
-                    y: cursorY,
-                    translateX: "-50%",
-                    translateY: "-50%",
-                }}
-                className="absolute flex items-center justify-center pointer-events-none"
-            >
-                {/* Crosshair 90-degree square reticle */}
-                <div
-                    className={`relative transition-all duration-150 ${
-                        isHovered
-                            ? "w-8 h-8 border border-[#ff2a2a] bg-[#ff2a2a]/10"
-                            : "w-5 h-5 border border-[#eaeaea]/40"
-                    }`}
-                >
-                    {/* Reticle tick marks */}
-                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-0.5 h-1 bg-[#ff2a2a]" />
-                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0.5 h-1 bg-[#ff2a2a]" />
-                    <div className="absolute top-1/2 -left-1 -translate-y-1/2 h-0.5 w-1 bg-[#ff2a2a]" />
-                    <div className="absolute top-1/2 -right-1 -translate-y-1/2 h-0.5 w-1 bg-[#ff2a2a]" />
-                    {/* Center dot */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-[#ff2a2a]" />
-                </div>
+    // Variants for the delayed trailing particle (arcade style squares)
+    const ringVariants = {
+        default: {
+            width: 24,
+            height: 24,
+            backgroundColor: "rgba(255, 184, 62, 0.05)",
+            border: "2px solid #ffb83e",
+            mixBlendMode: "normal" as const,
+            backdropFilter: "blur(0px)",
+            borderRadius: "0px",
+        },
+        transparent: {
+            width: 32,
+            height: 32,
+            backgroundColor: "rgba(250, 82, 15, 0.1)",
+            border: "2px solid #fa520f",
+            mixBlendMode: "normal" as const,
+            backdropFilter: "blur(1px)",
+            borderRadius: "0px",
+        },
+        "light-pill": {
+            width: 30,
+            height: 30,
+            backgroundColor: "rgba(0, 0, 0, 0)",
+            border: "2px solid #ffb83e",
+            mixBlendMode: "normal" as const,
+            backdropFilter: "blur(0px)",
+            borderRadius: "0px",
+        },
+        "dark-pill": {
+            width: 40,
+            height: 40,
+            backgroundColor: "rgba(255, 255, 255, 0.05)",
+            border: "2px dashed #fa520f",
+            mixBlendMode: "normal" as const,
+            backdropFilter: "blur(2px)",
+            borderRadius: "0px",
+        },
+        "dark-full": {
+            width: 24,
+            height: 24,
+            backgroundColor: "#ffb83e",
+            border: "2px solid #ffffff",
+            mixBlendMode: "difference" as const,
+            backdropFilter: "blur(0px)",
+            borderRadius: "0px",
+        },
+    };
 
-                {/* Telemetry coordinate readout label */}
-                <div className="absolute top-4 left-4 whitespace-nowrap bg-[#0a0a0a]/90 border border-[#262626] px-1 py-0.5 font-mono text-[9px] text-[#888888] select-none tracking-tighter">
-                    <span className="text-[#ff2a2a]">TGT</span> {coords.x},{coords.y}
-                </div>
-            </motion.div>
-        </div>
+    const dotVariants = {
+        default: {
+            width: 6,
+            height: 6,
+            backgroundColor: "#ffb83e",
+            borderRadius: "0px",
+        },
+        transparent: {
+            width: 8,
+            height: 8,
+            backgroundColor: "#fa520f",
+            borderRadius: "0px",
+        },
+        "light-pill": {
+            width: 6,
+            height: 6,
+            backgroundColor: "#ffb83e",
+            borderRadius: "0px",
+        },
+        "dark-pill": {
+            width: 6,
+            height: 6,
+            backgroundColor: "#fa520f",
+            borderRadius: "0px",
+        },
+        "dark-full": {
+            width: 0,
+            height: 0,
+            backgroundColor: "rgba(255, 255, 255, 0)",
+            borderRadius: "0px",
+        },
+    };
+
+    return (
+        <>
+            {/* Outer delayed particle */}
+            <motion.div
+                className="fixed top-0 left-0 pointer-events-none z-[9998] rounded-none flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2"
+                style={{
+                    x: ringX,
+                    y: ringY,
+                }}
+                initial="default"
+                animate={theme}
+                variants={ringVariants}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+            />
+            {/* Inner fast pointer dot */}
+            <motion.div
+                className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-none transform -translate-x-1/2 -translate-y-1/2"
+                style={{
+                    x: dotX,
+                    y: dotY,
+                }}
+                initial="default"
+                animate={theme}
+                variants={dotVariants}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+            />
+            {/* Global style to hide default cursor over interactive elements using the custom cursor */}
+            <style dangerouslySetInnerHTML={{
+                __html: `
+        @media (pointer: fine) {
+          body {
+            /* Optional: To hide original cursor everywhere uncomment the next line */
+            /* cursor: none; */ 
+          }
+        }
+      `}} />
+        </>
     );
 }

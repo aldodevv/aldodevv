@@ -1,182 +1,155 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Github, Linkedin, Mail, Terminal, Compass, FileText } from "lucide-react";
-import Link from "next/link";
-import { useTacticalWorld, WindowId } from "../context/TacticalWorldContext";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Github, Linkedin, Instagram } from "lucide-react";
+
+type NavTheme = "dark-full" | "light-pill" | "dark-pill" | "transparent";
 
 export default function PortfolioNavbar() {
+    const [theme, setTheme] = useState<NavTheme>("transparent");
     const [isScrolled, setIsScrolled] = useState(false);
-    const [activeSection, setActiveSection] = useState("Hero");
-    const { mode, toggleMode, openWindow, setMode } = useTacticalWorld();
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
-
-            const sections = ["Hero", "PortfolioAbout", "TechStack", "WorkExperience"];
-            for (const sectionId of sections) {
-                const el = document.getElementById(sectionId);
-                if (el) {
-                    const rect = el.getBoundingClientRect();
-                    if (rect.top <= 200 && rect.bottom >= 200) {
-                        setActiveSection(sectionId);
-                        break;
-                    }
-                }
+            // Check if scrolled passing first section
+            if (window.scrollY > 50) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
             }
+
+            const sections = document.querySelectorAll<HTMLElement>("[data-nav-theme]");
+            let currentTheme: NavTheme = "transparent";
+
+            sections.forEach((section) => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 100 && rect.bottom >= 100) {
+                    currentTheme = section.getAttribute("data-nav-theme") as NavTheme;
+                }
+            });
+
+            setTheme(currentTheme);
         };
 
         window.addEventListener("scroll", handleScroll, { passive: true });
         handleScroll();
+
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const handleNavClick = (sectionId: string, windowId?: WindowId) => {
-        if (mode === "map" && windowId) {
-            openWindow(windowId);
-        } else {
-            if (mode === "map") {
-                setMode("dossier");
-            }
-            const el = document.getElementById(sectionId);
-            if (el) {
-                el.scrollIntoView({ behavior: "smooth" });
-            }
+    const getNavbarStyles = () => {
+        switch (theme) {
+            case "dark-full":
+                return "bg-black text-white w-full rounded-none border-b-4 border-primary top-0 mt-0";
+            case "light-pill":
+                return "bg-white text-black w-[95%] md:w-[80%] max-w-5xl mx-auto rounded-none shadow-[6px_6px_0px_0px_#4502FF] border-4 border-black top-4 mt-0";
+            case "dark-pill":
+                return "bg-black text-white w-[95%] md:w-[80%] max-w-5xl mx-auto rounded-none shadow-[6px_6px_0px_0px_#FFDA14] border-4 border-primary top-4 mt-0";
+            case "transparent":
+            default:
+                return isScrolled
+                    ? "bg-black text-white w-full rounded-none border-b-4 border-secondary top-0 mt-0"
+                    : "bg-transparent text-white w-full rounded-none border-b-4 border-transparent top-0 mt-0";
         }
     };
 
-    return (
-        <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
-            <div className="w-full border-b border-[#262626] bg-[#0a0a0a]/90 backdrop-blur-md pointer-events-auto transition-colors duration-200">
-                <div className="max-w-7xl mx-auto px-4 md:px-8 h-14 flex items-center justify-between font-mono text-xs tracking-wider">
-                    {/* Brand / System Identity */}
-                    <div className="flex items-center gap-3 sm:gap-4">
-                        <button
-                            type="button"
-                            onClick={() => {
-                                if (mode === "map") {
-                                    openWindow("about");
-                                } else {
-                                    window.scrollTo({ top: 0, behavior: "smooth" });
-                                }
-                            }}
-                            className="flex items-center gap-2 text-[#eaeaea] font-bold hover:text-[#ff2a2a] transition-colors text-left"
-                        >
-                            <Terminal className="w-4 h-4 text-[#ff2a2a]" />
-                            <span className="uppercase tracking-widest">[ ALDO // SYS.ENG ]</span>
-                        </button>
-                        <div className="hidden sm:flex items-center gap-2 px-2 py-0.5 border border-[#262626] bg-[#121212] text-[#888888]">
-                            <span className="w-1.5 h-1.5 bg-[#4af626] animate-pulse" />
-                            <span className="text-[10px] text-[#4af626]">
-                                {mode === "map" ? "MAP.ONLINE" : "DOCS.ONLINE"}
-                            </span>
-                        </div>
-                    </div>
+    const getLogoColor = () => {
+        if (theme === "light-pill") return "text-black";
+        return "text-secondary";
+    };
 
-                    {/* Navigation Subsystems */}
-                    <nav className="hidden lg:flex items-center gap-1 border-x border-[#262626] px-2 h-full">
+    return (
+        <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
+            <motion.nav
+                layout
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className={cn(
+                    "pointer-events-auto flex items-center justify-between px-6 md:px-10 py-4 overflow-hidden transition-colors duration-500 font-sans",
+                    getNavbarStyles()
+                )}
+            >
+                <motion.div
+                    layout="position"
+                    className={cn("font-bold text-2xl tracking-widest flex items-center gap-2 font-sans", getLogoColor())}
+                >
+                    {/* Mock Logo */}
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="transition-colors duration-500 text-secondary"
+                    >
+                        <path d="M12 4L4 20h16L12 4z" />
+                    </svg>
+                    ALDODEVV
+                </motion.div>
+
+                <motion.ul
+                    layout="position"
+                    className="hidden md:flex items-center gap-8 text-2xl font-normal font-sans"
+                >
+                    <AnimatePresence mode="popLayout">
                         {[
-                            { id: "Hero", windowId: "about" as WindowId, label: "[ 00 // ROOT ]" },
-                            { id: "PortfolioAbout", windowId: "about" as WindowId, label: "[ 01 // DOSSIER ]" },
-                            { id: "TechStack", windowId: "skills" as WindowId, label: "[ 02 // MATRIX ]" },
-                            { id: "WorkExperience", windowId: "experience" as WindowId, label: "[ 03 // LOGS ]" },
-                        ].map((item) => {
-                            const isActive = mode === "dossier" && activeSection === item.id;
+                            { label: "Me", id: "Hero" },
+                            { label: "About", id: "PortfolioAbout" },
+                            { label: "Tech Stack", id: "TechStack" },
+                            { label: "Experience", id: "WorkExperience" },
+                        ].map((item, i) => {
+                            const isHero = theme === "transparent" && !isScrolled;
+
                             return (
-                                <button
-                                    key={item.id}
-                                    type="button"
-                                    onClick={() => handleNavClick(item.id, item.windowId)}
-                                    className={`px-3 py-1.5 transition-colors uppercase cursor-pointer ${
-                                        isActive
-                                            ? "bg-[#eaeaea] text-[#0a0a0a] font-bold"
-                                            : "text-[#888888] hover:text-[#eaeaea] hover:bg-[#1a1a1a]"
-                                    }`}
+                                <motion.li
+                                    key={item.label}
+                                    layout
+                                    initial={isHero ? false : { opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{
+                                        duration: 0.4,
+                                        delay: isHero ? 0 : i * 0.1,
+                                        ease: "easeOut"
+                                    }}
+                                    onClick={() => {
+                                        const element = document.getElementById(item.id);
+                                        if (element) {
+                                            element.scrollIntoView({ behavior: "smooth" });
+                                        }
+                                    }}
+                                    className={cn(
+                                        "cursor-pointer hover:text-secondary uppercase transition-all duration-300 relative group flex items-center gap-1 font-sans",
+                                        theme === "light-pill" ? "text-black hover:text-primary" : "text-white"
+                                    )}
                                 >
-                                    {item.label}
-                                </button>
+                                    <span className="opacity-0 group-hover:opacity-100 text-secondary transition-opacity font-sans text-xl">►</span>
+                                    <span>{item.label}</span>
+                                </motion.li>
                             );
                         })}
-                    </nav>
+                    </AnimatePresence>
+                </motion.ul>
 
-                    {/* Action Telemetry & Mode Toggle */}
-                    <div className="flex items-center gap-2">
-                        {/* Interactive Mode Toggle Button */}
-                        <button
-                            type="button"
-                            onClick={toggleMode}
-                            className={`px-2.5 py-1.5 border font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 ${
-                                mode === "map"
-                                    ? "border-[#4af626] bg-[#4af626]/10 text-[#4af626] hover:bg-[#4af626] hover:text-black"
-                                    : "border-[#ff2a2a] bg-[#ff2a2a]/10 text-[#ff2a2a] hover:bg-[#ff2a2a] hover:text-black"
-                            }`}
-                            title="Toggle Mode"
-                        >
-                            {mode === "map" ? (
-                                <>
-                                    <FileText className="w-3.5 h-3.5" />
-                                    <span className="hidden sm:inline">DOCS VIEW</span>
-                                    <span className="sm:hidden">DOCS</span>
-                                </>
-                            ) : (
-                                <>
-                                    <Compass className="w-3.5 h-3.5" />
-                                    <span className="hidden sm:inline">MAP WORLD</span>
-                                    <span className="sm:hidden">MAP</span>
-                                </>
-                            )}
-                        </button>
-
-                        {/* Terminal Button */}
-                        <button
-                            type="button"
-                            onClick={() => openWindow("terminal")}
-                            className="w-8 h-8 flex items-center justify-center border border-[#262626] bg-[#121212] text-[#888888] hover:text-[#39ff14] hover:border-[#39ff14] hover:bg-[#1a1a1a] transition-colors"
-                            title="Launch Interactive Terminal"
-                        >
-                            <Terminal className="w-3.5 h-3.5" />
-                        </button>
-
-                        {/* Social Links */}
-                        <a
-                            href="https://github.com/aldodevv"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="GitHub Telemetry"
-                            className="w-8 h-8 flex items-center justify-center border border-[#262626] bg-[#121212] text-[#888888] hover:text-[#eaeaea] hover:border-[#eaeaea] hover:bg-[#1a1a1a] transition-colors"
-                        >
-                            <Github className="w-3.5 h-3.5" />
-                        </a>
-                        <a
-                            href="https://linkedin.com/in/akhmad-aldo"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="LinkedIn Telemetry"
-                            className="w-8 h-8 flex items-center justify-center border border-[#262626] bg-[#121212] text-[#888888] hover:text-[#eaeaea] hover:border-[#eaeaea] hover:bg-[#1a1a1a] transition-colors"
-                        >
-                            <Linkedin className="w-3.5 h-3.5" />
-                        </a>
-                        <button
-                            type="button"
-                            onClick={() => openWindow("contact")}
-                            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 border border-[#ff2a2a] bg-[#ff2a2a]/10 text-[#ff2a2a] hover:bg-[#ff2a2a] hover:text-[#0a0a0a] font-bold text-[11px] transition-colors uppercase"
-                        >
-                            <Mail className="w-3 h-3" />
-                            <span>TRANSMIT</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            {/* Top edge sub-indicator */}
-            <div className="w-full bg-[#121212] border-b border-[#1f1f1f] h-5 hidden lg:flex items-center justify-between px-8 text-[9px] text-[#555555] font-mono select-none">
-                <span>SECURITY_LEVEL: DECLASSIFIED // CLEARANCE: LV-4</span>
-                <span>
-                    MODE: {mode === "map" ? "TACTICAL EXPLORATION WORLD" : "STANDALONE DOSSIER DOCUMENT"}
-                </span>
-                <span>BUILD: 2026.09-GAMIFIED-REV</span>
-            </div>
-        </header>
+                <motion.div layout="position" className={cn("flex items-center gap-4 md:gap-5", getLogoColor())}>
+                    <a href="https://github.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition-all duration-300">
+                        <Github className="w-6 h-6" />
+                        <span className="sr-only">GitHub</span>
+                    </a>
+                    <a href="https://linkedin.com/in/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition-all duration-300">
+                        <Linkedin className="w-6 h-6" />
+                        <span className="sr-only">LinkedIn</span>
+                    </a>
+                    <a href="https://instagram.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition-all duration-300">
+                        <Instagram className="w-6 h-6" />
+                        <span className="sr-only">Instagram</span>
+                    </a>
+                </motion.div>
+            </motion.nav>
+        </div>
     );
 }

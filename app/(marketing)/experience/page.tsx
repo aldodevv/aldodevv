@@ -1,17 +1,18 @@
 import Link from "next/link";
-import { ArrowLeft, Briefcase, Calendar, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Briefcase, Calendar, CheckCircle2 } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Service Records & Experience | Akhmad Aldo",
-  description: "Chronological deployment log and mission history of Akhmad Aldo (Aldo).",
+  title: "Experience | Akhmad Aldo",
+  description: "Chronological professional work experience and deployment history of Akhmad Aldo (Aldo).",
 };
 
 const experiences = [
   {
     role: "Mobile Developer & Squad Lead",
     company: "Bank Rakyat Indonesia (BRI)",
-    period: "2022 - PRESENT",
+    period: "2023 - PRESENT",
+    accent: "#fa520f",
     bullets: [
       "Led engineering and stabilization of QLola Mobile, BRI's corporate internet banking application with Flutter.",
       "Integrated QLola IB Token, an offline cryptographic OTP generator communicating via native platform channels.",
@@ -21,91 +22,91 @@ const experiences = [
   },
   {
     role: "Fullstack Mobile Developer",
-    company: "Freelance / Software Agency",
-    period: "2020 - 2022",
+    company: "Freelance & Agency Projects",
+    period: "2020 - 2023",
+    accent: "#ffb83e",
     bullets: [
       "Architected production-grade cross-platform mobile systems using React Native, Kotlin, and Swift.",
       "Engineered high-concurrency API caching layers, reducing server overhead and accelerating client response times.",
-      "Delivered real-time telemetry dashboards with Next.js, WebSockets, and modern data-binding patterns."
+      "Delivered real-time telemetry dashboards and enterprise platforms with Next.js and modern component patterns."
     ]
   }
 ];
 
 export default function ExperiencePage() {
   return (
-    <div className="flex flex-col gap-8 text-[#eaeaea] font-mono">
-      {/* Return Button */}
+    <div className="flex flex-col gap-8 text-white font-sans">
+      {/* Back Button */}
       <Link 
         href="/"
-        className="self-start industrial-btn industrial-btn-hazard flex items-center gap-2"
+        className="self-start flex items-center gap-2 px-5 py-2.5 bg-[#fa520f] hover:bg-[#ffb83e] hover:text-black border-4 border-white text-white font-bold uppercase tracking-widest text-lg shadow-[4px_4px_0px_#ffffff] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all"
       >
-        <ArrowLeft className="w-3.5 h-3.5" />
-        <span>RETURN TO TERMINAL</span>
+        <ArrowLeft className="w-5 h-5" />
+        <span>BACK TO HOME</span>
       </Link>
 
-      {/* Main Ledger Card */}
-      <div className="border border-[#262626] bg-[#121212] overflow-hidden">
-        {/* Header Telemetry Bar */}
-        <div className="bg-[#0a0a0a] border-b border-[#262626] px-4 py-3 flex items-center justify-between text-xs tracking-widest uppercase">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-[#ff2a2a]" />
-            <span className="text-[#eaeaea] font-bold">[ AUDIT // DEPLOYMENT-LEDGER ]</span>
+      {/* Main Container */}
+      <div className="border-4 border-white bg-[#08080a] shadow-[8px_8px_0px_#fa520f] overflow-hidden">
+        {/* Header Bar */}
+        <div className="bg-[#fa520f] text-white px-5 py-3 flex items-center justify-between font-mono tracking-widest text-xs uppercase border-b-4 border-white">
+          <div className="flex gap-2">
+            <span className="w-3.5 h-3.5 bg-white border border-black inline-block" />
+            <span className="w-3.5 h-3.5 bg-[#ffb83e] border border-black inline-block" />
+            <span className="w-3.5 h-3.5 bg-black border border-white inline-block" />
           </div>
-          <span className="text-[#4af626]">STATUS: VERIFIED</span>
+          <span className="font-bold tracking-wider">[ QUEST_LOG_DETAILED.EXE ]</span>
+          <Link href="/" className="hover:text-black transition-colors font-bold">✕</Link>
         </div>
 
         {/* Content */}
         <div className="p-6 md:p-10 flex flex-col gap-8">
           <div>
-            <div className="inline-block bg-[#ff2a2a]/10 border border-[#ff2a2a] text-[#ff2a2a] uppercase text-[10px] px-2 py-0.5 font-bold mb-3 tracking-widest">
-              [ CHRONOLOGICAL MISSIONS ]
+            <div className="inline-block bg-[#fa520f] text-white uppercase text-base px-3 py-0.5 border-2 border-white mb-3 tracking-widest font-sans">
+              WORK HISTORY
             </div>
-            <h1 className="text-3xl md:text-4xl font-black font-sans uppercase tracking-tight text-[#eaeaea]">
-              Operational Service Record
+            <h1 className="text-4xl md:text-5xl font-bold uppercase tracking-tight text-white mb-2">
+              Professional Experience
             </h1>
-            <p className="text-sm text-[#aaaaaa] mt-2 leading-relaxed">
-              Comprehensive audit log of commercial engagements, architecture leadership, and mission deployments.
+            <p className="text-sm md:text-base font-mono text-zinc-300">
+              Chronological track record of building, scaling, and maintaining mission-critical mobile and web systems.
             </p>
           </div>
 
-          {/* Missions List */}
           <div className="flex flex-col gap-8">
-            {experiences.map((exp, index) => (
-              <div 
+            {experiences.map((exp, idx) => (
+              <div
                 key={exp.company}
-                className="border border-[#262626] bg-[#0c0c0c] p-6 md:p-8 flex flex-col gap-6"
+                className="border-4 border-white bg-black p-6 md:p-8 flex flex-col gap-4 relative shadow-[6px_6px_0px_#fa520f]"
+                style={{
+                  boxShadow: `6px 6px 0px 0px ${exp.accent}`
+                }}
               >
-                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#1f1f1f] pb-4">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b-2 border-white/20 pb-4">
                   <div>
-                    <div className="text-[10px] text-[#ff2a2a] uppercase tracking-wider mb-1">
-                      [ MISSION-0{index + 1} ]
-                    </div>
-                    <h2 className="text-2xl font-bold font-sans text-[#eaeaea] uppercase">
+                    <h2 className="text-2xl md:text-3xl font-bold uppercase text-white font-sans">
                       {exp.role}
                     </h2>
-                    <div className="text-sm text-[#888888] uppercase mt-0.5">
-                      ORG: {exp.company}
-                    </div>
+                    <span 
+                      className="font-mono text-sm uppercase tracking-wider font-bold"
+                      style={{ color: exp.accent }}
+                    >
+                      ★ {exp.company}
+                    </span>
                   </div>
-                  <div className="flex items-center gap-2 border border-[#262626] bg-[#141414] px-3 py-1.5 text-xs text-[#eaeaea]">
-                    <Calendar className="w-3.5 h-3.5 text-[#ff2a2a]" />
+                  <div className="flex items-center gap-2 font-mono text-xs bg-[#111115] border border-white/30 px-3 py-1.5 self-start md:self-auto text-zinc-300">
+                    <Calendar className="w-4 h-4 text-[#ffb83e]" />
                     <span>{exp.period}</span>
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-3">
-                  <div className="text-xs text-[#666666] uppercase tracking-wider">
-                    OPERATIONAL DIRECTIVES EXECUTED:
-                  </div>
-                  <ul className="flex flex-col gap-2.5 text-xs md:text-sm text-[#aaaaaa]">
-                    {exp.bullets.map((b, i) => (
-                      <li key={i} className="flex items-start gap-2.5">
-                        <span className="text-[#ff2a2a] mt-0.5 select-none font-bold">›</span>
-                        <span className="leading-relaxed">{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <ul className="flex flex-col gap-3 font-mono text-xs md:text-sm text-zinc-300 pt-2">
+                  {exp.bullets.map((bullet, bIdx) => (
+                    <li key={bIdx} className="flex items-start gap-2.5">
+                      <span className="text-[#fa520f] font-bold mt-0.5">►</span>
+                      <span className="leading-relaxed">{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
