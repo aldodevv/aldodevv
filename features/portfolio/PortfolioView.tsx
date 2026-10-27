@@ -8,6 +8,7 @@ import HeroSection from "./sections/HeroSection";
 import PortfolioAboutSection from "./sections/PortfolioAboutSection";
 import TechStackSection from "./sections/TechStackSection";
 import WorkExperienceSection from "./sections/WorkExperienceSection";
+import PortfolioFooter from "./components/PortfolioFooter";
 
 export default function PortfolioView() {
     return (
@@ -22,6 +23,8 @@ export default function PortfolioView() {
                 <TechStackSection />
                 <WorkExperienceSection />
             </main>
+
+            <PortfolioFooter />
         </>
     );
 }

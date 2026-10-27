@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
-import { VT323, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-
-const vt323 = VT323({
-  weight: "400",
-  variable: "--font-vt323",
-  subsets: ["latin"],
-});
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
@@ -21,7 +15,7 @@ export const metadata: Metadata = {
     default: "Akhmad Aldo (Aldo) | Mobile & Web Developer",
     template: "%s | Akhmad Aldo (Aldo)",
   },
-  description: "Portfolio of Akhmad Aldo (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer specializing in Flutter, React Native, Kotlin, Swift, and Next.js.",
+  description: "Portfolio of Akhmad Aldo, Software Engineer specializing in Flutter, React Native, Kotlin, Swift, and Next.js.",
   alternates: {
     canonical: "./",
   },
@@ -35,14 +29,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
+        <link href="https://api.fontshare.com/v2/css?f[]=chillax@500,600&display=swap" rel="stylesheet" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://api.iconify.design" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
       </head>
       <body
-        className={`${vt323.variable} ${jetbrainsMono.variable} antialiased bg-black text-white font-sans selection:bg-[#fa520f] selection:text-black`}
+        className={`${jetbrainsMono.variable} antialiased paper-grain min-h-screen selection:bg-[#fae438] selection:text-[#1a2230]`}
       >
-        <div className="crt-overlay" />
         {children}
         <Analytics />
         <SpeedInsights />

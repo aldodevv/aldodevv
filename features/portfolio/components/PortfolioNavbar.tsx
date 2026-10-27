@@ -1,36 +1,28 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { Github, Linkedin, Instagram } from "lucide-react";
-
-type NavTheme = "dark-full" | "light-pill" | "dark-pill" | "transparent";
+import { motion } from "framer-motion";
+import { Github, Linkedin, Instagram, Sparkles } from "lucide-react";
 
 export default function PortfolioNavbar() {
-    const [theme, setTheme] = useState<NavTheme>("transparent");
     const [isScrolled, setIsScrolled] = useState(false);
+    const [activeSection, setActiveSection] = useState("Hero");
 
     useEffect(() => {
         const handleScroll = () => {
-            // Check if scrolled passing first section
-            if (window.scrollY > 50) {
-                setIsScrolled(true);
-            } else {
-                setIsScrolled(false);
-            }
+            setIsScrolled(window.scrollY > 40);
 
-            const sections = document.querySelectorAll<HTMLElement>("[data-nav-theme]");
-            let currentTheme: NavTheme = "transparent";
-
-            sections.forEach((section) => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top <= 100 && rect.bottom >= 100) {
-                    currentTheme = section.getAttribute("data-nav-theme") as NavTheme;
+            const sections = ["Hero", "PortfolioAbout", "TechStack", "WorkExperience"];
+            for (const id of sections) {
+                const el = document.getElementById(id);
+                if (el) {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top <= 200 && rect.bottom >= 200) {
+                        setActiveSection(id);
+                        break;
+                    }
                 }
-            });
-
-            setTheme(currentTheme);
+            }
         };
 
         window.addEventListener("scroll", handleScroll, { passive: true });
@@ -39,117 +31,97 @@ export default function PortfolioNavbar() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const getNavbarStyles = () => {
-        switch (theme) {
-            case "dark-full":
-                return "bg-black text-white w-full rounded-none border-b-4 border-primary top-0 mt-0";
-            case "light-pill":
-                return "bg-white text-black w-[95%] md:w-[80%] max-w-5xl mx-auto rounded-none shadow-[6px_6px_0px_0px_#4502FF] border-4 border-black top-4 mt-0";
-            case "dark-pill":
-                return "bg-black text-white w-[95%] md:w-[80%] max-w-5xl mx-auto rounded-none shadow-[6px_6px_0px_0px_#FFDA14] border-4 border-primary top-4 mt-0";
-            case "transparent":
-            default:
-                return isScrolled
-                    ? "bg-black text-white w-full rounded-none border-b-4 border-secondary top-0 mt-0"
-                    : "bg-transparent text-white w-full rounded-none border-b-4 border-transparent top-0 mt-0";
+    const navItems = [
+        { label: "Home", id: "Hero" },
+        { label: "About", id: "PortfolioAbout" },
+        { label: "Stack", id: "TechStack" },
+        { label: "Experience", id: "WorkExperience" },
+    ];
+
+    const scrollTo = (id: string) => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth" });
         }
     };
 
-    const getLogoColor = () => {
-        if (theme === "light-pill") return "text-black";
-        return "text-secondary";
-    };
-
     return (
-        <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
+        <header className="fixed top-0 left-0 right-0 z-50 flex justify-center p-4 md:p-6 pointer-events-none">
             <motion.nav
-                layout
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className={cn(
-                    "pointer-events-auto flex items-center justify-between px-6 md:px-10 py-4 overflow-hidden transition-colors duration-500 font-sans",
-                    getNavbarStyles()
-                )}
+                initial={{ y: -30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+                className={`pointer-events-auto flex items-center justify-between gap-4 md:gap-8 px-5 md:px-7 py-3 md:py-3.5 rounded-full transition-all duration-300 ${
+                    isScrolled
+                        ? "bg-[#fefefc]/90 backdrop-blur-md border border-[var(--color-rule)] shadow-[0_8px_24px_-6px_rgba(20,20,30,0.12)]"
+                        : "bg-[#fefefc] border border-[var(--color-rule)] shadow-[0_4px_16px_-4px_rgba(20,20,30,0.08)]"
+                }`}
             >
-                <motion.div
-                    layout="position"
-                    className={cn("font-bold text-2xl tracking-widest flex items-center gap-2 font-sans", getLogoColor())}
+                {/* Brand Logo with Hum Pear Highlight */}
+                <button
+                    onClick={() => scrollTo("Hero")}
+                    className="flex items-center gap-2 group text-left cursor-pointer"
                 >
-                    {/* Mock Logo */}
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="transition-colors duration-500 text-secondary"
-                    >
-                        <path d="M12 4L4 20h16L12 4z" />
-                    </svg>
-                    ALDODEVV
-                </motion.div>
+                    <div className="w-8 h-8 rounded-full bg-[var(--color-accent)] flex items-center justify-center border border-[var(--color-accent-deep)] shadow-[0_2px_0_0_var(--color-accent-deep)] group-hover:rotate-12 transition-transform duration-200">
+                        <Sparkles className="w-4 h-4 text-[var(--color-ink)]" />
+                    </div>
+                    <span className="font-semibold text-base md:text-lg text-[var(--color-ink)] tracking-tight">
+                        aldodevv
+                    </span>
+                </button>
 
-                <motion.ul
-                    layout="position"
-                    className="hidden md:flex items-center gap-8 text-2xl font-normal font-sans"
-                >
-                    <AnimatePresence mode="popLayout">
-                        {[
-                            { label: "Me", id: "Hero" },
-                            { label: "About", id: "PortfolioAbout" },
-                            { label: "Tech Stack", id: "TechStack" },
-                            { label: "Experience", id: "WorkExperience" },
-                        ].map((item, i) => {
-                            const isHero = theme === "transparent" && !isScrolled;
-
-                            return (
-                                <motion.li
-                                    key={item.label}
-                                    layout
-                                    initial={isHero ? false : { opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    transition={{
-                                        duration: 0.4,
-                                        delay: isHero ? 0 : i * 0.1,
-                                        ease: "easeOut"
-                                    }}
-                                    onClick={() => {
-                                        const element = document.getElementById(item.id);
-                                        if (element) {
-                                            element.scrollIntoView({ behavior: "smooth" });
-                                        }
-                                    }}
-                                    className={cn(
-                                        "cursor-pointer hover:text-secondary uppercase transition-all duration-300 relative group flex items-center gap-1 font-sans",
-                                        theme === "light-pill" ? "text-black hover:text-primary" : "text-white"
-                                    )}
+                {/* Navigation Pills */}
+                <ul className="flex items-center gap-1 md:gap-2">
+                    {navItems.map((item) => {
+                        const isActive = activeSection === item.id;
+                        return (
+                            <li key={item.id}>
+                                <button
+                                    onClick={() => scrollTo(item.id)}
+                                    className={`relative px-3 md:px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                                        isActive
+                                            ? "text-[var(--color-ink)] bg-[var(--color-accent)] shadow-[0_2px_0_0_var(--color-accent-deep)]"
+                                            : "text-[var(--color-muted)] hover:text-[var(--color-ink)] hover:bg-[var(--color-paper-2)]"
+                                    }`}
                                 >
-                                    <span className="opacity-0 group-hover:opacity-100 text-secondary transition-opacity font-sans text-xl">►</span>
-                                    <span>{item.label}</span>
-                                </motion.li>
-                            );
-                        })}
-                    </AnimatePresence>
-                </motion.ul>
+                                    {item.label}
+                                </button>
+                            </li>
+                        );
+                    })}
+                </ul>
 
-                <motion.div layout="position" className={cn("flex items-center gap-4 md:gap-5", getLogoColor())}>
-                    <a href="https://github.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition-all duration-300">
-                        <Github className="w-6 h-6" />
-                        <span className="sr-only">GitHub</span>
+                {/* Social Links as tactile mini-pills */}
+                <div className="hidden sm:flex items-center gap-2 border-l border-[var(--color-rule)] pl-3">
+                    <a
+                        href="https://github.com/aldodevv"
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="GitHub"
+                        className="w-8 h-8 rounded-full bg-[var(--color-card)] hover:bg-[var(--color-paper-2)] border border-[var(--color-rule)] flex items-center justify-center text-[var(--color-ink)] hover:translate-y-[-1px] transition-all"
+                    >
+                        <Github className="w-4 h-4" />
                     </a>
-                    <a href="https://linkedin.com/in/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition-all duration-300">
-                        <Linkedin className="w-6 h-6" />
-                        <span className="sr-only">LinkedIn</span>
+                    <a
+                        href="https://linkedin.com/in/aldodevv"
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="LinkedIn"
+                        className="w-8 h-8 rounded-full bg-[var(--color-card)] hover:bg-[var(--color-paper-2)] border border-[var(--color-rule)] flex items-center justify-center text-[var(--color-accent-2)] hover:translate-y-[-1px] transition-all"
+                    >
+                        <Linkedin className="w-4 h-4" />
                     </a>
-                    <a href="https://instagram.com/aldodevv" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition-all duration-300">
-                        <Instagram className="w-6 h-6" />
-                        <span className="sr-only">Instagram</span>
+                    <a
+                        href="https://instagram.com/aldodevv"
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="Instagram"
+                        className="w-8 h-8 rounded-full bg-[var(--color-card)] hover:bg-[var(--color-paper-2)] border border-[var(--color-rule)] flex items-center justify-center text-[var(--color-accent-3)] hover:translate-y-[-1px] transition-all"
+                    >
+                        <Instagram className="w-4 h-4" />
                     </a>
-                </motion.div>
+                </div>
             </motion.nav>
-        </div>
+        </header>
     );
 }

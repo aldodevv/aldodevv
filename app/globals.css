@@ -1,81 +1,227 @@
+/* Hallmark · theme: Hum (by request) · posture: full-palette · hero: settled · job: portfolio */
 @import "tailwindcss";
 
 :root {
-  --background: #08080a;
-  --foreground: #ffffff;
-  --primary: #fa520f;
-  --secondary: #ffb83e;
+  /* Hallmark Hum Tokens */
+  --color-paper: oklch(97% 0.012 95);
+  --color-paper-2: oklch(94.5% 0.018 95);
+  --color-paper-3: oklch(91% 0.022 95);
+  --color-card: oklch(98.8% 0.007 95);
+  
+  --color-ink: oklch(20% 0.014 255);
+  --color-ink-2: oklch(29% 0.014 255);
+  --color-muted: oklch(47% 0.014 255);
+  --color-rule: oklch(87% 0.016 95);
+  
+  /* Three Accents that never blend */
+  --color-accent: oklch(87% 0.175 96); /* Pear yellow primary */
+  --color-accent-deep: oklch(72% 0.16 92); /* 5px solid edge for pear */
+  --color-accent-ink: oklch(20% 0.014 255);
+  
+  --color-accent-2: oklch(50% 0.17 250); /* Blue links & focus */
+  --color-accent-3: oklch(70% 0.2 22); /* Coral accent */
+  
+  --color-mint: oklch(82% 0.15 152); /* Mint for growth */
+  --color-mint-deep: oklch(48% 0.12 155);
+  
+  --color-edge: oklch(83% 0.04 88);
+  --color-focus: oklch(50% 0.17 250);
+
+  /* Literal-free shadow & border tokens */
+  --border-accent-primary: oklch(80% 0.15 95 / 0.5);
+  --shadow-color-btn: oklch(20% 0.014 255 / 0.2);
+  --shadow-color-btn-hover: oklch(20% 0.014 255 / 0.25);
+  --shadow-color-btn-active: oklch(20% 0.014 255 / 0.18);
+  --shadow-color-card: oklch(20% 0.014 255 / 0.12);
+  --shadow-color-card-hover: oklch(20% 0.014 255 / 0.16);
+  --shadow-color-card-active: oklch(20% 0.014 255 / 0.1);
+  --grain-dot: oklch(20% 0.014 255 / 0.04);
+  
+  /* Typography */
+  --font-display: "Chillax", ui-rounded, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-body: "Chillax", ui-rounded, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --tracking-display: -0.025em;
+  --display-weight: 600;
+  
+  /* Geometry */
+  --radius-card: 24px;
+  --radius-stock: 16px;
+  --radius-input: 14px;
+  --radius-pill: 999px;
+  --rule-hair: 1px;
+  
+  /* Lighting & Shadows */
+  --shadow-card: 0 1px 3px oklch(20% 0.014 255 / 0.06), 0 14px 28px -12px oklch(20% 0.014 255 / 0.16);
+  --shadow-card-lifted: 0 2px 5px oklch(20% 0.014 255 / 0.08), 0 22px 36px -12px oklch(20% 0.014 255 / 0.22);
+  
+  /* Motion Curves */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-snap: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-micro: 180ms;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
-  --font-sans: var(--font-vt323), system-ui;
+  --color-paper: var(--color-paper);
+  --color-paper-2: var(--color-paper-2);
+  --color-paper-3: var(--color-paper-3);
+  --color-card: var(--color-card);
+  --color-ink: var(--color-ink);
+  --color-ink-2: var(--color-ink-2);
+  --color-muted: var(--color-muted);
+  --color-rule: var(--color-rule);
+  --color-accent: var(--color-accent);
+  --color-accent-deep: var(--color-accent-deep);
+  --color-accent-2: var(--color-accent-2);
+  --color-accent-3: var(--color-accent-3);
+  --color-mint: var(--color-mint);
+  --color-mint-deep: var(--color-mint-deep);
+  --font-sans: var(--font-display);
   --font-mono: var(--font-jetbrains-mono), monospace;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-vt323), system-ui;
-  image-rendering: pixelated;
+html, body {
+  overflow-x: clip;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  scrollbar-color: var(--color-rule) var(--color-paper);
 }
 
-/* Custom Retro Utilities */
-.crt-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
-  background-size: 100% 4px;
-  z-index: 9999;
-  pointer-events: none;
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-ink);
 }
 
-.retro-grid {
-  background-image: 
-    linear-gradient(to right, rgba(250, 82, 15, 0.15) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(250, 82, 15, 0.15) 1px, transparent 1px);
-  background-size: 40px 40px;
+/* Accessible focus ring per Hallmark Floor Rule 6 */
+:focus-visible {
+  outline: 2.5px solid var(--color-focus);
+  outline-offset: 3px;
 }
 
-.retro-grid-fine {
-  background-image: 
-    linear-gradient(to right, rgba(255, 184, 62, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 184, 62, 0.08) 1px, transparent 1px);
-  background-size: 20px 20px;
+/* Reduced motion fallback per Hallmark Floor Rule 7 */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-/* Hard edge pixelated borders and flat offset shadows */
-.retro-border {
-  border: 4px solid #ffffff;
+/* Tactile Card-Stock Controls (Hum signature press-down effect) */
+.btn-hum-primary {
+  --edge: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 52px;
+  padding: 0 1.6rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-accent-ink);
+  background-color: var(--color-accent);
+  border-radius: var(--radius-stock);
+  border: 1px solid var(--border-accent-primary);
+  box-shadow: 0 var(--edge) 0 0 var(--color-accent-deep), 0 calc(var(--edge) + 4px) 14px -2px var(--shadow-color-btn);
+  cursor: pointer;
+  user-select: none;
+  transition: translate var(--dur-micro) var(--ease-spring), box-shadow var(--dur-micro) var(--ease-spring);
 }
 
-.retro-border-primary {
-  border: 4px solid var(--primary);
+.btn-hum-primary:hover {
+  --edge: 7px;
+  translate: 0 -2px;
+  box-shadow: 0 var(--edge) 0 0 var(--color-accent-deep), 0 calc(var(--edge) + 6px) 18px -2px var(--shadow-color-btn-hover);
 }
 
-.retro-border-secondary {
-  border: 4px solid var(--secondary);
+.btn-hum-primary:active {
+  --edge: 1px;
+  translate: 0 4px;
+  box-shadow: 0 var(--edge) 0 0 var(--color-accent-deep), 0 calc(var(--edge) + 2px) 6px -1px var(--shadow-color-btn-active);
 }
 
-.retro-shadow-primary {
-  box-shadow: 6px 6px 0px 0px var(--primary);
+.btn-hum-secondary {
+  --edge: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 52px;
+  padding: 0 1.5rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-ink);
+  background-color: var(--color-card);
+  border-radius: var(--radius-stock);
+  border: 1px solid var(--color-rule);
+  box-shadow: 0 var(--edge) 0 0 var(--color-edge), 0 calc(var(--edge) + 4px) 12px -2px var(--shadow-color-card);
+  cursor: pointer;
+  user-select: none;
+  transition: translate var(--dur-micro) var(--ease-snap), box-shadow var(--dur-micro) var(--ease-snap);
 }
 
-.retro-shadow-secondary {
-  box-shadow: 6px 6px 0px 0px var(--secondary);
+.btn-hum-secondary:hover {
+  --edge: 6px;
+  translate: 0 -2px;
+  box-shadow: 0 var(--edge) 0 0 var(--color-edge), 0 calc(var(--edge) + 6px) 16px -2px var(--shadow-color-card-hover);
 }
 
-.retro-shadow-white {
-  box-shadow: 6px 6px 0px 0px #ffffff;
+.btn-hum-secondary:active {
+  --edge: 1px;
+  translate: 0 3px;
+  box-shadow: 0 var(--edge) 0 0 var(--color-edge), 0 calc(var(--edge) + 2px) 6px -1px var(--shadow-color-card-active);
 }
 
-.retro-btn-active:active {
-  transform: translate(3px, 3px);
-  box-shadow: 3px 3px 0px 0px currentColor;
+/* Cut Paper Cards */
+.hum-card {
+  background-color: var(--color-card);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-rule);
+  box-shadow: var(--shadow-card);
+  transition: translate var(--dur-micro) var(--ease-snap), box-shadow var(--dur-micro) var(--ease-snap);
+}
+
+.hum-card-hover:hover {
+  translate: 0 -3px;
+  box-shadow: var(--shadow-card-lifted);
+}
+
+/* Highlighter mark bands */
+mark, .mark-pear {
+  background: color-mix(in oklab, var(--color-accent) 70%, transparent);
+  color: inherit;
+  padding: 0.08em 0.35em;
+  border-radius: 6px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.mark-mint {
+  background: color-mix(in oklab, var(--color-mint) 65%, transparent);
+  color: inherit;
+  padding: 0.08em 0.35em;
+  border-radius: 6px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.mark-coral {
+  background: color-mix(in oklab, var(--color-accent-3) 30%, transparent);
+  color: inherit;
+  padding: 0.08em 0.35em;
+  border-radius: 6px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Subtle organic paper texture */
+.paper-grain {
+  background-color: var(--color-paper);
+  background-image: radial-gradient(var(--grain-dot) 1px, transparent 0);
+  background-size: 24px 24px;
 }

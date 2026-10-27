@@ -1,100 +1,112 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { techStack } from "../constants/techStack";
-import RetroTypewriterText from "@/features/portfolio/components/RetroTypewriterText";
+import Image from "next/image";
 
 export default function TechStackSection() {
+    const sectionRef = useRef<HTMLDivElement>(null);
+    const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
+
+    const categories = ["All", ...techStack.map((c) => c.title)];
+    const [selectedCategory, setSelectedCategory] = useState("All");
+
+    const filteredItems =
+        selectedCategory === "All"
+            ? techStack.flatMap((c) => c.items.map((item) => ({ ...item, category: c.title })))
+            : techStack
+                  .find((c) => c.title === selectedCategory)
+                  ?.items.map((item) => ({ ...item, category: selectedCategory })) || [];
+
+    // Deduplicate items if any item appears under multiple lists
+    const uniqueItems = Array.from(
+        new Map(filteredItems.map((item) => [item.name, item])).values()
+    );
+
     return (
         <section
             id="TechStack"
-            data-nav-theme="dark-pill"
-            className="relative min-h-screen w-full flex flex-col items-center justify-center bg-transparent text-white py-32 px-4 border-t-4 border-white"
+            ref={sectionRef}
+            className="relative w-full py-24 px-4 md:px-8 max-w-6xl mx-auto"
         >
-            {/* Visual grid lines overlay */}
-            <div className="absolute inset-0 bg-retro-grid-fine pointer-events-none opacity-40 z-1" />
-
-            <div className="max-w-6xl w-full text-center relative z-10">
-                <motion.h2
+            <div className="flex flex-col gap-10">
+                {/* Section Header */}
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-5xl md:text-7xl font-bold tracking-widest mb-8 uppercase text-white font-sans"
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[var(--color-rule)] pb-6"
                 >
-                    <RetroTypewriterText text="ABILITY_LIST.EXE" />
-                </motion.h2>
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.1 }}
-                    className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-20 leading-relaxed font-mono"
-                >
-                    Here are the languages, frameworks, and software tools I actively use to bring applications to life. Select item for stats.
-                </motion.p>
+                    <div>
+                        <span className="text-xs font-semibold uppercase tracking-wider text-[var(--color-mint-deep)]">
+                            02 / Tooling &amp; Stack
+                        </span>
+                        <h2 className="text-3xl md:text-5xl font-semibold tracking-tight text-[var(--color-ink)] mt-1">
+                            Languages, <mark className="mark-mint">frameworks &amp; craft</mark>
+                        </h2>
+                    </div>
+                    <p className="text-sm text-[var(--color-muted)] max-w-sm">
+                        Curated set of technologies I use to build scalable, battle-tested apps.
+                    </p>
+                </motion.div>
 
-                <div className="flex flex-col gap-20">
-                    {techStack.map((category, catIdx) => (
-                        <div key={category.title} className="flex flex-col items-center md:items-start w-full font-sans">
-                            <motion.h3
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.2 }}
-                                className="text-2xl md:text-3xl font-bold mb-8 text-secondary font-sans uppercase tracking-widest"
+                {/* Filter Pills with Framer Motion spring layout */}
+                <div className="flex flex-wrap gap-2.5 items-center">
+                    {categories.map((category) => {
+                        const isSelected = selectedCategory === category;
+                        return (
+                            <button
+                                key={category}
+                                onClick={() => setSelectedCategory(category)}
+                                className={`relative px-4 py-2 rounded-full text-xs md:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                                    isSelected
+                                        ? "text-[var(--color-ink)] bg-[var(--color-accent)] shadow-[0_2px_0_0_var(--color-accent-deep)]"
+                                        : "text-[var(--color-muted)] bg-[var(--color-card)] hover:text-[var(--color-ink)] hover:bg-[var(--color-paper-2)] border border-[var(--color-rule)]"
+                                }`}
                             >
-                                ★ {category.title.replace(/\s+/g, "_")}
-                            </motion.h3>
-
-                            <div className="flex flex-wrap gap-6 justify-center md:justify-start w-full">
-                                {category.items.map((item, idx) => {
-                                    const catColors = [
-                                        "#fa520f", // Orange (Frontend)
-                                        "#ffb83e", // Yellow (Mobile)
-                                        "#3b82f6", // Blue (Backend/Other)
-                                    ];
-                                    const catColor = catColors[catIdx % catColors.length];
-                                    return (
-                                        <motion.div
-                                            key={item.name}
-                                            initial={{ opacity: 0, scale: 0.9 }}
-                                            whileInView={{ opacity: 1, scale: 1 }}
-                                            viewport={{ once: true }}
-                                            transition={{ delay: 0.03 * (idx % 10), duration: 0.4 }}
-                                            whileTap={{ scale: 0.95 }}
-                                            className="relative overflow-hidden border-4 border-white w-28 h-28 md:w-32 md:h-32 rounded-none group cursor-pointer transition-all duration-300"
-                                            style={{
-                                                backgroundColor: catColor,
-                                                boxShadow: `4px 4px 0px ${catColor}`
-                                            }}
-                                        >
-                                            <div className={`flex flex-col items-center justify-center bg-zinc-950 p-4 w-full h-full transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] 
-                                                            ${idx % 2 === 0 
-                                                                ? "group-hover:-translate-x-1.5 group-hover:-translate-y-1.5 group-hover:rotate-[-2deg]" 
-                                                                : "group-hover:translate-x-1.5 group-hover:-translate-y-1.5 group-hover:rotate-[2deg]"}`}>
-                                                <div className="w-10 h-10 md:w-12 md:h-12 mb-3 bg-zinc-900 border-2 border-white/20 p-2 flex items-center justify-center transition-colors duration-300">
-                                                    <img
-                                                        src={item.image}
-                                                        alt={item.name}
-                                                        className="w-full h-full object-contain"
-                                                        onError={(e) => {
-                                                            // Fallback if image fails to load
-                                                            e.currentTarget.src = "https://api.iconify.design/lucide/code-2.svg?color=%23ffffff";
-                                                        }}
-                                                    />
-                                                </div>
-                                                <span className="text-xs md:text-sm font-bold text-zinc-400 group-hover:text-secondary transition-colors duration-300 text-center uppercase tracking-widest font-mono">
-                                                    {item.name.replace(/\s+/g, "")}
-                                                </span>
-                                            </div>
-                                        </motion.div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    ))}
+                                {category}
+                            </button>
+                        );
+                    })}
                 </div>
+
+                {/* Tech Cards Grid with smooth layout animation */}
+                <motion.div
+                    layout
+                    className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5 sm:gap-4"
+                >
+                    <AnimatePresence mode="popLayout">
+                        {uniqueItems.map((item, idx) => (
+                            <motion.div
+                                key={item.name}
+                                layout
+                                initial={{ opacity: 0, scale: 0.9, y: 15 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                                transition={{
+                                    duration: 0.35,
+                                    delay: Math.min(idx * 0.025, 0.3),
+                                    ease: [0.34, 1.56, 0.64, 1],
+                                }}
+                                whileHover={{ y: -3, transition: { duration: 0.15 } }}
+                                className="hum-card p-4 flex flex-col items-center justify-center text-center gap-3 cursor-default group"
+                            >
+                                <div className="w-12 h-12 rounded-2xl bg-[var(--color-paper-2)] p-2.5 flex items-center justify-center border border-[var(--color-rule)] group-hover:scale-105 group-hover:bg-[var(--color-accent)]/15 transition-all duration-200">
+                                    <img
+                                        src={item.image}
+                                        alt={item.name}
+                                        className="w-full h-full object-contain"
+                                        loading="lazy"
+                                    />
+                                </div>
+                                <span className="text-xs sm:text-sm font-semibold text-[var(--color-ink)] tracking-tight">
+                                    {item.name}
+                                </span>
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
+                </motion.div>
             </div>
         </section>
     );
