@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     siteName: "Akhmad Aldo Portfolio",
     images: [
       {
-        url: "/assets/me.png",
+        url: "/assets/mu.png",
         width: 1200,
         height: 630,
         alt: "Akhmad Aldo",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title: "Akhmad Aldo (Aldo) | Mobile & Web Developer",
     description: "Portfolio of Akhmad Aldo (commonly known as Aldo or Ahmad Aldo), an expert mobile and web developer based in Depok, Indonesia. Specializing in high-performance applications with Flutter, React Native, Kotlin, Swift, and Next.js.",
     creator: "@aldodevv",
-    images: ["/assets/me.png"],
+    images: ["/assets/mu.png"],
   },
   robots: {
     index: true,
