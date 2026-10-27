@@ -16,9 +16,7 @@ export default function PortfolioFooter() {
                     <div className="text-xl font-semibold tracking-tight text-[var(--color-ink)]">
                         Akhmad Aldo
                     </div>
-                    <p className="text-xs text-[var(--color-muted)] max-w-sm">
-                        Designed with Hallmark Hum &bull; Handcrafted paper aesthetic &bull; Built with Next.js, React &amp; Tailwind CSS.
-                    </p>
+
                 </div>
 
                 {/* Center social links */}
