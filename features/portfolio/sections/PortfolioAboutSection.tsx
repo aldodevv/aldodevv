@@ -52,7 +52,7 @@ export default function PortfolioAboutSection() {
 
                             <div className="w-full aspect-[4/5] relative rounded-[18px] overflow-hidden bg-[var(--color-paper-2)] border border-[var(--color-rule)]">
                                 <Image
-                                    src="/assets/me.png"
+                                    src="/assets/mu.png"
                                     alt="Akhmad Aldo"
                                     fill
                                     className="object-cover object-center group-hover:scale-102 transition-transform duration-500"

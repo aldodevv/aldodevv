@@ -82,7 +82,7 @@ export default function Home() {
         "name": "Akhmad Aldo",
         "alternateName": ["Ahmad Aldo", "Aldo", "Ahmad Aldo Sari", "Akhmad Aldo", "aldodevv", "akhmadaldo", "aldos"],
         "url": "https://www.akhmadaldo.my.id",
-        "image": "https://www.akhmadaldo.my.id/assets/me.png",
+        "image": "https://www.akhmadaldo.my.id/assets/mu.png",
         "jobTitle": "Mobile & Web Developer",
         "gender": "Male",
         "nationality": {
