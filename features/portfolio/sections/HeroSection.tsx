@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, Sparkles, Smartphone, Globe, Briefcase, MapPin } from "lucide-react";
+import { ArrowDown, Smartphone, Globe, Briefcase, MapPin } from "lucide-react";
 
 export default function HeroSection() {
     const scrollToSection = (id: string) => {

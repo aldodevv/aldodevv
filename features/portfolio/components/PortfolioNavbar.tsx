@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Instagram, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { Github, Linkedin, Instagram } from "lucide-react";
 
 export default function PortfolioNavbar() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -57,13 +58,19 @@ export default function PortfolioNavbar() {
                         : "bg-[#fefefc] border border-[var(--color-rule)] shadow-[0_4px_16px_-4px_rgba(20,20,30,0.08)]"
                 }`}
             >
-                {/* Brand Logo with Hum Pear Highlight */}
+                {/* Brand Logo with Authentic User Logo */}
                 <button
                     onClick={() => scrollTo("Hero")}
-                    className="flex items-center gap-2 group text-left cursor-pointer"
+                    className="flex items-center gap-2.5 group text-left cursor-pointer"
                 >
-                    <div className="w-8 h-8 rounded-full bg-[var(--color-accent)] flex items-center justify-center border border-[var(--color-accent-deep)] shadow-[0_2px_0_0_var(--color-accent-deep)] group-hover:rotate-12 transition-transform duration-200">
-                        <Sparkles className="w-4 h-4 text-[var(--color-ink)]" />
+                    <div className="w-8 h-8 rounded-full bg-[var(--color-paper-2)] flex items-center justify-center border border-[var(--color-rule)] overflow-hidden p-1 shadow-xs group-hover:scale-105 transition-transform duration-200">
+                        <Image
+                            src="/assets/logo.png"
+                            alt="aldodevv"
+                            width={24}
+                            height={24}
+                            className="w-full h-full object-contain"
+                        />
                     </div>
                     <span className="font-semibold text-base md:text-lg text-[var(--color-ink)] tracking-tight">
                         aldodevv

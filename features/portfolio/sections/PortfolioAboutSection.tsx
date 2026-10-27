@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { MapPin, GraduationCap, Code2, Sparkles, HeartHandshake } from "lucide-react";
+import { MapPin, GraduationCap, Code2 } from "lucide-react";
 import Image from "next/image";
 
 export default function PortfolioAboutSection() {
@@ -62,8 +62,8 @@ export default function PortfolioAboutSection() {
 
                             <div className="mt-4 flex items-center justify-between text-xs text-[var(--color-muted)] font-medium">
                                 <span>Akhmad Aldo (Aldo)</span>
-                                <span className="inline-flex items-center gap-1 font-semibold text-[var(--color-ink)]">
-                                    <Sparkles className="w-3.5 h-3.5 text-[var(--color-accent)] fill-[var(--color-accent)]" />
+                                <span className="inline-flex items-center gap-1.5 font-semibold text-[var(--color-ink)]">
+                                    <span className="w-2 h-2 rounded-full bg-[var(--color-mint)] border border-[var(--color-mint-deep)]" />
                                     Software Engineer
                                 </span>
                             </div>
